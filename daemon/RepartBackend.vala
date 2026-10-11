@@ -962,8 +962,26 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         }
     }
 
+    private void require_dave_boot_selection () throws GLib.Error {
+        if (NormalBoot.read_variable ("BootNext", NormalBoot.EFI) != null ||
+            NormalBoot.read_variable ("LoaderEntryOneShot", NormalBoot.LOADER) != null ||
+            NormalBoot.read_variable ("LoaderEntrySysFail", NormalBoot.LOADER) != null) {
+            throw new IOError.BUSY ("Resolve pending boot selections before installing DAVE");
+        }
+        // EFI defaults take precedence over the target's loader.conf.
+        var value = NormalBoot.read_variable ("LoaderEntryDefault", NormalBoot.LOADER);
+        if (value != null) {
+            var selection = NormalBoot.loader_string (value);
+            if (selection != "elementary-dave_*" &&
+                !Regex.match_simple ("\\Aelementary-dave_[0-9]+(?:_x86-64)?\\.efi\\z", selection)) {
+                throw new IOError.BUSY ("Resolve the incompatible EFI boot default before installing DAVE");
+            }
+        }
+    }
+
     private void publish_dave_boot (DaveInstall dave, string[] first, string destination, string work,
                                     int target_fd, Posix.Stat selected, string sequence) throws GLib.Error {
+        require_dave_boot_selection ();
         string[] publish = {};
         foreach (var argument in first) {
             if (argument == "--empty=force") {
@@ -1960,6 +1978,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 FileUtils.set_contents (path, contents);
                 repart_args = {"--json=short"};
             } else {
+                require_dave_boot_selection ();
                 // The authenticated producer's ESP is first, at 1 MiB. Reject
                 // older Normal-only sources before destructive repart starts.
                 run_capture ({"mtools", "-c", "mdir", "-i", fd_path (media.fds[4]) + "@@1048576",
@@ -2046,6 +2065,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             check_source_mount (live_mount, media.identities[5].st_dev, "squashfs");
             check_source_mount (squash_mount, media.identities[4].st_dev, "squashfs");
             check_root_image (root_image);
+            if (dave != null) require_dave_boot_selection ();
             run ({"/usr/sbin/wipefs", "-a", "--force", target});
             validate_target (dest_dev, fd, selected, sequence, raw_squashfs);
             repart_command[3] = "--dry-run=no";
@@ -2132,6 +2152,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             normal_boot.publish (dest_dev, (uint32) json_integer (normal_plan.esp, "partno") + 1,
                 json_string (normal_plan.esp, "uuid"), json_integer (normal_plan.esp, "offset") / sector_size,
                 json_integer (normal_plan.esp, "raw_size") / sector_size);
+        } else if (dave != null) {
+            require_dave_boot_selection ();
         }
     }
 

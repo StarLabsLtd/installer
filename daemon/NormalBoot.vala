@@ -12,8 +12,8 @@ internal class InstallerDaemon.NormalBoot {
     }
 
     private const string VARIABLES = "/sys/firmware/efi/efivars";
-    private const string EFI = "8be4df61-93ca-11d2-aa0d-00e098032b8c";
-    private const string LOADER = "4a67b082-0a4c-41cf-b6c7-440b29bb8c4f";
+    internal const string EFI = "8be4df61-93ca-11d2-aa0d-00e098032b8c";
+    internal const string LOADER = "4a67b082-0a4c-41cf-b6c7-440b29bb8c4f";
     private HashTable<string, Bytes> entries;
     private Bytes? order;
     private Bytes? default_entry;
@@ -106,7 +106,7 @@ internal class InstallerDaemon.NormalBoot {
         require_selection (order, default_entry);
     }
 
-    private static Bytes? read_variable (string name, string guid) throws GLib.Error {
+    internal static Bytes? read_variable (string name, string guid) throws GLib.Error {
         var file = File.new_for_path (VARIABLES + "/" + name + "-" + guid);
         try {
             uint8[] data;
@@ -124,7 +124,7 @@ internal class InstallerDaemon.NormalBoot {
         return first == null ? second == null : second != null && first.compare (second) == 0;
     }
 
-    private static string loader_string (Bytes value) throws GLib.Error {
+    internal static string loader_string (Bytes value) throws GLib.Error {
         unowned uint8[] data = value.get_data ();
         if (data.length < 6 || data.length % 2 != 0 || data[data.length - 2] != 0 || data[data.length - 1] != 0) {
             throw new IOError.FAILED ("Invalid loader selection");
