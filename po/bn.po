@@ -1,0 +1,702 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2022-04-20 09:20+0000\n"
+"Last-Translator: David Hewitt <davidmhewitt@gmail.com>\n"
+"Language-Team: Bengali <https://l10n.elementary.io/projects/installer/"
+"installer/bn/>\n"
+"Language: bn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.4.2\n"
+"X-Launchpad-Export-Date: 2016-09-27 06:40+0000\n"
+
+#: src/Application.vala:54
+msgid "Connect to a Power Source"
+msgstr "বৈদ্যুতিক উৎসে কানেক্ট করুন"
+
+#: src/Application.vala:55
+msgid "Installation will not succeed if this device loses power."
+msgstr ""
+
+#: src/Application.vala:68
+#, c-format
+msgid "Install %s"
+msgstr "%s ইনস্টল করুন"
+
+#: src/Application.vala:76
+msgid "operating system is being installed"
+msgstr ""
+
+#: src/Utils.vala:34
+msgid "Test mode shutdown"
+msgstr ""
+
+#: src/Utils.vala:48
+msgid "Test mode reboot"
+msgstr ""
+
+#: src/Utils.vala:74
+msgid "Test mode switch user"
+msgstr ""
+
+#: src/Helpers/LocaleHelper.vala:126 src/Views/KeyboardLayoutView.vala:200
+#, c-format
+msgid "%s…"
+msgstr ""
+
+#: src/Objects/KeyboardVariant.vala:27
+msgid "Default"
+msgstr "ডিফল্ট"
+
+#: src/Views/AbstractInstallerView.vala:55
+#, fuzzy
+msgid "Test Mode"
+msgstr "ডেমো মোড ব্যবহার করে দেখুন"
+
+#: src/Views/AbstractInstallerView.vala:64
+msgid "Cancel Installation"
+msgstr "ইনস্টলেশন বাতিল করুন"
+
+#: src/Views/CheckView.vala:48
+#, fuzzy
+#| msgid "Try Installing Again"
+msgid "Before Installing"
+msgstr "পুনরায় ইনস্টল করে দেখুন"
+
+#: src/Views/CheckView.vala:55
+msgid "Pre-Release Version"
+msgstr ""
+
+#: src/Views/CheckView.vala:56
+msgid ""
+"Only install on devices dedicated for development. <b>You will not be able "
+"to upgrade to a stable release</b>."
+msgstr ""
+
+#: src/Views/CheckView.vala:61
+msgid "Virtual Machine"
+msgstr ""
+
+#: src/Views/CheckView.vala:62
+#, c-format
+msgid "Some parts of %s may run slowly, freeze, or not function properly."
+msgstr ""
+
+#: src/Views/CheckView.vala:67
+msgid "Your Device May Be Too Slow"
+msgstr "আপনার ডিভাইসটি হয়তো খুব ধীরে কাজ করছে"
+
+#: src/Views/CheckView.vala:68
+msgid "This may cause it to run slowly or freeze."
+msgstr ""
+
+#: src/Views/CheckView.vala:86
+#, fuzzy
+#| msgid "Install %s"
+msgid "Install Anyway"
+msgstr "%s ইনস্টল করুন"
+
+#: src/Views/CheckView.vala:230
+msgid "Recommended:"
+msgstr "প্রস্তাবিত:"
+
+#: src/Views/CheckView.vala:236
+msgid "Your Device:"
+msgstr "আপনার ডিভাইস:"
+
+#: src/Views/CheckView.vala:242 src/Views/CheckView.vala:246
+msgid "Processor:"
+msgstr "প্রসেসর:"
+
+#: src/Views/CheckView.vala:258 src/Views/CheckView.vala:262
+#, fuzzy
+msgid "Memory:"
+msgstr "মেমরি (RAM):"
+
+#: src/Views/DiskView.vala:46
+#, fuzzy
+msgid "Select a Drive"
+msgstr "একটি ভাষা বেছে নিন"
+
+#: src/Views/DiskView.vala:51
+msgid ""
+"This will erase all data on the selected drive. If you have not backed your "
+"data up, you can cancel the installation and use Demo Mode."
+msgstr ""
+"এই পদক্ষেপটি এই ড্রাইভের সমস্ত ডেটা মুছে ফেলবে। আপনি যদি আপনার প্রয়োজনীয় ডাটা "
+"সুরক্ষিত উপায় সংরক্ষিত না করে থাকেন, তাহলে আপনি ইন্টিস্টল্যাশন বাতিল করে ডেমো মোড "
+"ব্যাবহার করতে পারেন।"
+
+#: src/Views/DiskView.vala:71 src/Views/PartitioningView.vala:112
+msgid "Getting the current configuration…"
+msgstr "বর্তমান কনফিগারেশন সম্বন্ধে তথ্য সংগ্রহ করা হচ্ছে…"
+
+#: src/Views/DiskView.vala:96 src/Views/PartitioningView.vala:145
+#: src/Views/TryInstallView.vala:83
+msgid "Next"
+msgstr ""
+
+#: src/Views/DriversView.vala:24
+#, fuzzy
+#| msgid "Partitioning Drive"
+msgid "Additional Drivers"
+msgstr "ড্রাইভ বিভক্ত করা হচ্ছে"
+
+#: src/Views/DriversView.vala:28
+msgid ""
+"Broadcom® Wi-Fi adapters, NVIDIA® graphics, and some virtual machines may "
+"not function properly without additional drivers. Most devices do not "
+"require additional drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:35
+msgid ""
+"Proprietary drivers contain private code that can't be reviewed. Security "
+"and other updates are dependent on the driver vendor."
+msgstr ""
+
+#: src/Views/DriversView.vala:41
+msgid "An Internet connection is required to install NVIDIA® graphics drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:47
+msgid ""
+"Proprietary drivers can be installed later through System Settings → System, "
+"but an Internet connection will be required for all drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:52
+msgid ""
+"Include third-party proprietary drivers when installing. I agree to their "
+"respective licenses and terms of use."
+msgstr ""
+
+#: src/Views/DriversView.vala:75 src/Views/KeyboardLayoutView.vala:54
+#: src/Views/PartitioningView.vala:141 src/Views/TryInstallView.vala:79
+msgid "Back"
+msgstr "ব্যাক"
+
+#: src/Views/DriversView.vala:79
+msgid "Erase and Install"
+msgstr "সব মুছে ইনস্টল করুন"
+
+#: src/Views/EncryptView.vala:27
+msgid "Don’t Encrypt"
+msgstr ""
+
+#: src/Views/EncryptView.vala:53
+msgid "Enable Drive Encryption"
+msgstr ""
+
+#: src/Views/EncryptView.vala:58
+msgid ""
+"Data will only be protected from others with physical access to this device "
+"when it is shut down."
+msgstr ""
+
+#: src/Views/EncryptView.vala:64
+msgid ""
+"The encryption password will be required each time this device is turned on. "
+"If you forget it, <b>you will not be able to recover data.</b>"
+msgstr ""
+
+#: src/Views/EncryptView.vala:70
+msgid ""
+"A built-in or USB keyboard will be required to type the encryption password "
+"each time this device is turned on."
+msgstr ""
+
+#: src/Views/EncryptView.vala:89
+msgid "Encryption Password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:91
+msgid ""
+"A unique password for this device, not the password for your user account."
+msgstr ""
+
+#: src/Views/EncryptView.vala:106
+msgid "Confirm Password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:129
+msgid "Set Encryption Password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:204
+msgid "Acceptable password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:206
+msgid "Good password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:208
+msgid "Great password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:229
+msgid "Passwords do not match"
+msgstr ""
+
+#: src/Views/EncryptView.vala:235
+msgid "Passwords match"
+msgstr ""
+
+#: src/Views/ErrorView.vala:31
+#, fuzzy
+msgid "Could Not Install"
+msgstr "%s ইনস্টল করা সম্ভব হয়নি"
+
+#: src/Views/ErrorView.vala:35
+#, fuzzy, c-format
+msgid ""
+"Installing %s failed, possibly due to a hardware error. The device may not "
+"restart properly. You can try the following:"
+msgstr ""
+"ইনস্টলেশন ব্যর্থ হয়েছে, তাই আপনার ডিভাইস সঠিকভাবে রিস্টার্ট হতে নাও পারে। আপনি "
+"নিম্নলিখিত বিকল্পগুলির মধ্যে একটি চেষ্টা করে দেখতে পারেন:"
+
+#: src/Views/ErrorView.vala:45
+#, fuzzy
+#| msgid "• Try the installation again"
+msgid "Try the installation again"
+msgstr "• পুনরায় ইনস্টল করার চেষ্টা করুন"
+
+#: src/Views/ErrorView.vala:55
+#, fuzzy
+#| msgid "• Use Demo Mode and try to manually recover"
+msgid "Use Demo Mode and try to manually recover"
+msgstr "• ডেমো মোড ব্যবহার করুন এবং নিজ উপায় পুনরুদ্ধার করার চেষ্টা করুন"
+
+#: src/Views/ErrorView.vala:64
+#, fuzzy
+#| msgid "• Restart your device to boot from another drive"
+msgid "Restart the device and boot from another drive"
+msgstr "• ডিভাইস রিস্টার্ট করে অন্য ড্রাইভ থেকে বুট করার চেষ্টা করুন"
+
+#: src/Views/ErrorView.vala:69
+msgid "Details"
+msgstr ""
+
+#: src/Views/ErrorView.vala:114 src/Views/SuccessView.vala:61
+msgid "Restart Device"
+msgstr "ডিভাইস রিস্টার্ট করুন"
+
+#: src/Views/ErrorView.vala:116 src/Views/TryInstallView.vala:36
+msgid "Try Demo Mode"
+msgstr "ডেমো মোড ব্যবহার করে দেখুন"
+
+#: src/Views/ErrorView.vala:118
+msgid "Try Installing Again"
+msgstr "পুনরায় ইনস্টল করে দেখুন"
+
+#: src/Views/KeyboardLayoutView.vala:30
+msgid "Input Language"
+msgstr "ইনপুটের জন্য ভাষা"
+
+#: src/Views/KeyboardLayoutView.vala:32
+#, fuzzy
+#| msgid "Keyboard Layout"
+msgid "Select Keyboard Layout"
+msgstr "কিবোর্ডের ভিত্তি ধরণ"
+
+#: src/Views/KeyboardLayoutView.vala:39
+msgid "Type to test your layout"
+msgstr "কিবোর্ডের ভিত্তি ধরণ পরীক্ষা করে দেখবার জন্য টাইপ করুন"
+
+#: src/Views/KeyboardLayoutView.vala:42
+msgid "Show keyboard layout"
+msgstr "কিবোর্ডের ভিত্তি ধরণ দেখাও"
+
+#: src/Views/KeyboardLayoutView.vala:58 src/Views/LanguageView.vala:104
+msgid "Select"
+msgstr "সিলেক্ট"
+
+#: src/Views/LanguageView.vala:67
+msgid "Languages"
+msgstr "ভাষা"
+
+#: src/Views/LanguageView.vala:272
+msgid "Select a Language"
+msgstr "একটি ভাষা বেছে নিন"
+
+#: src/Views/LanguageView.vala:295 src/Views/LanguageView.vala:355
+msgid "Currently active language"
+msgstr "বর্তমানে সক্রিয় ভাষা"
+
+#: src/Views/PartitioningView.vala:51
+#, fuzzy
+msgid "Select Partitions"
+msgstr "একটি ভাষা বেছে নিন"
+
+#: src/Views/PartitioningView.vala:56
+msgid ""
+"Selecting “Format” will erase <i>all</i> data on the selected partition."
+msgstr ""
+
+#. Device is in BIOS mode, so we just require a root partition
+#: src/Views/PartitioningView.vala:65
+msgid "You must at least select a <b>Root (/)</b> partition."
+msgstr ""
+
+#. Device is in EFI mode, so we also require a boot partition
+#: src/Views/PartitioningView.vala:69
+msgid ""
+"You must at least select a <b>Root (/)</b> partition and an optional <b>Boot "
+"(/boot/efi)</b> partition."
+msgstr ""
+
+#: src/Views/PartitioningView.vala:80
+msgid "It is also recommended to select a <b>Swap</b> partition."
+msgstr ""
+
+#: src/Views/PartitioningView.vala:138
+msgid "Modify Partitions…"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:283
+msgid "EFI partition has the wrong file system"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:285
+msgid "EFI partition is too small"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:288
+msgid "Invalid file system for root"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:290
+msgid "Invalid file system for home"
+msgstr ""
+
+#: src/Views/ProgressView.vala:64 src/Views/ProgressView.vala:99
+msgid "Show log"
+msgstr ""
+
+#: src/Views/ProgressView.vala:90
+#, fuzzy
+#| msgid "Try Installing Again"
+msgid "Installing"
+msgstr "পুনরায় ইনস্টল করে দেখুন"
+
+#: src/Views/ProgressView.vala:95
+msgid "Hide log"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:224
+msgid "Partitioning Drive"
+msgstr "ড্রাইভ বিভক্ত করা হচ্ছে"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:229
+msgid "Extracting Files"
+msgstr "ফাইলগুলি নির্যাস করা হচ্ছে"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:234
+msgid "Configuring the System"
+msgstr "সিস্টেম কনফিগার করা হচ্ছে"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:239
+msgid "Finishing the Installation"
+msgstr "ইনস্টলেশন সম্পন্ন হচ্ছে"
+
+#: src/Views/TryInstallView.vala:26
+#, fuzzy
+msgid "Try or Install"
+msgstr "পুনরায় ইনস্টল করে দেখুন"
+
+#: src/Views/TryInstallView.vala:38
+msgid ""
+"Changes will not be saved, and data from your previous OS will be unchanged. "
+"Performance and features may not reflect the installed experience."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:44
+#, fuzzy
+#| msgid "Erase and Install"
+msgid "Erase Disk and Install"
+msgstr "সব মুছে ইনস্টল করুন"
+
+#: src/Views/TryInstallView.vala:46
+#, c-format
+msgid "Erase everything and install a fresh copy of %s."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:52
+msgid "Custom Install (Advanced)"
+msgstr ""
+
+#: src/Views/TryInstallView.vala:54
+msgid ""
+"Create, resize, or otherwise manage partitions manually. This method may "
+"lead to data loss."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:107
+#, fuzzy
+msgid "Custom Install"
+msgstr "%s ইনস্টল করা সম্ভব হয়নি"
+
+#: src/Views/SuccessView.vala:28
+msgid "Continue Setting Up"
+msgstr ""
+
+#: src/Views/SuccessView.vala:32
+#, c-format
+msgid "%s has been installed"
+msgstr ""
+
+#: src/Views/SuccessView.vala:58
+msgid "Shut Down"
+msgstr "বন্ধ"
+
+#: src/Views/SuccessView.vala:89
+#, c-format
+msgid "Your device will automatically restart in %i second."
+msgid_plural "Your device will automatically restart in %i seconds."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Views/SuccessView.vala:93
+#, fuzzy
+msgid ""
+"After restarting you can set up a new user, or you can shut down now and set "
+"up a new user later."
+msgstr ""
+"%s _এর ইনস্টলেশন সম্পন্ন হয়েছে। আপনার ডিভাইসটি নিজে থেকেই ৩০ সেকেন্ড পর পুনরায় "
+"চালু হবে নতুন ব্যবহারকারী স্থাপন করার জন্য, অথবা আপনি এখন ডিভাইসটিকে বন্ধ করে অন্য "
+"কোনো সময় নতুন ব্যাবহারকারী স্থাপন করতে পারেন।"
+
+#: src/Widgets/DecryptMenu.vala:66
+msgid "Decrypt This Partition"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:70
+msgid ""
+"Enter the partition's encryption password and set a device name for the "
+"decrypted partition."
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:82
+msgid "Password:"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:95
+msgid "Device name:"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:108
+msgid "Decrypt"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:182
+msgid "LUKS volume was decrypted"
+msgstr ""
+
+#: src/Widgets/DiskBar.vala:259
+#, c-format
+msgid "%s (%s)"
+msgstr ""
+
+#: src/Widgets/DiskBar.vala:260
+#, c-format
+msgid "%s (%s: <b>%s</b>)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:56
+msgid "Use Partition"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:60
+msgid "Format"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:61
+msgid "Delete all data and set up a new file system"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:64
+msgid "Use as:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:71
+msgid "Root (/)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:72
+msgid "Home (/home)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:73
+#, c-format
+msgid "Boot (%s)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:74
+msgid "Swap"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:75
+msgid "Custom"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:79
+msgid "Custom:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:86
+msgid "Filesystem:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:98
+#, fuzzy
+msgid "Default (ext4)"
+msgstr "ডিফল্ট"
+
+#: src/Widgets/PartitionMenu.vala:261
+msgid "Custom value must begin with /"
+msgstr ""
+
+#~ msgid ""
+#~ "Your device is running on battery power. It's recommended to be plugged "
+#~ "in while installing."
+#~ msgstr ""
+#~ "আপনার ডিভাইসটি  ব্যাটারিতে চলছে। এটি প্রস্তাবিত যে ইন্সটলেশনের সময় আপনি এই "
+#~ "ডিভাইসটি বৈদ্যুতিক উৎসে বা প্লাগে কানেক্ট করুন।"
+
+#~ msgid "Ignore"
+#~ msgstr "উপেক্ষা করুন"
+
+#, fuzzy
+#~ msgid "Not Enough Space"
+#~ msgstr "যথেষ্ট জায়গা নেই"
+
+#~ msgid ""
+#~ "There is not enough room on your device to install %s. We recommend a "
+#~ "minimum of %s of storage."
+#~ msgstr ""
+#~ "আপনার ডিভাইসে %s ইনস্টল করার জন্য যথেষ্ট জায়গা নেই। আমরা সুপারিশ করি যে আপনার "
+#~ "ডিভাইসে কমপক্ষে %s জায়গা রয়েছে বা থাকা দরকার।"
+
+#~ msgid ""
+#~ "Your device doesn't meet the recommended hardware requirements. This may "
+#~ "cause it to run slowly or freeze."
+#~ msgstr ""
+#~ "আপনার ডিভাইসে প্রস্তাবিত হার্ডওয়্যার নেই। এই কারণে, আপনার ডিভাইস ধীরে চলতে "
+#~ "পারে অথবা বিকল হতে পারে।"
+
+#~ msgid ""
+#~ "You can install %s on this device now, or try Demo Mode without "
+#~ "installing."
+#~ msgstr ""
+#~ "আপনি এখন %s এই ডিভাইসে ইনস্টল করতে পারেন, অথবা ডেমো মোড ব্যাবহার করে দেখতে "
+#~ "পারেন কোনো ইনস্টলেশন ছাড়া।"
+
+#, fuzzy
+#~ msgid "Clean Install"
+#~ msgstr "সব মুছে ইনস্টল করুন"
+
+#, fuzzy
+#~ msgid "Starting installation"
+#~ msgstr "ইনস্টলেশন শুরু হচ্ছে\n"
+
+#~ msgid "Are you sure you want to Shut Down?"
+#~ msgstr "আপনি কি নিশ্চিত যে আপনি ডিভাইসটি বন্ধ করতে চান?"
+
+#~ msgid "This will cancel installation and turn off this device."
+#~ msgstr "এটি ইনস্টলেশন বন্ধ করে দেবে এবং ডিভাইসটি বন্ধ হয়ে যাবে।"
+
+#~ msgid "Restart"
+#~ msgstr "পুনরারম্ভ"
+
+#~ msgid "Cancel"
+#~ msgstr "বাতিল"
+
+#~ msgid "Operating System"
+#~ msgstr "অপারেটিং সিস্টেম"
+
+#, fuzzy
+#~ msgid "Install or Try Demo Mode"
+#~ msgstr "ডেমো মোড ব্যবহার করে দেখুন"
+
+#, fuzzy
+#~ msgid ""
+#~ "You can always return to the installer from Demo Mode by selecting the "
+#~ "Install icon."
+#~ msgstr ""
+#~ "আপনি যেকোন সময় ইনস্টল (Install) আইকনটি সিলেক্ট করে ডেমো মোড থেকে ইনস্টলারে "
+#~ "ফিরে যেতে পারেন।"
+
+#~ msgid "Select a drive to use for installation"
+#~ msgstr "ইন্সটলেশনের জন্য একটি ড্রাইভ বেছে নিন"
+
+#~ msgid "Restart your device to continue setting up"
+#~ msgstr "সেট আপ বজায় রাখার জন্য আপনার ডিভাইস পুনরায় চালু করুন"
+
+#~ msgid "Formating Drive"
+#~ msgstr "ড্রাইভ ফরম্যাট করা হচ্ছে"
+
+#~ msgid "Data from your previous operating system is unchanged in Demo Mode."
+#~ msgstr "ডেমো মোডে আপনার আগের অপারেটিং সিস্টেমের সমস্ত ডাটা অপরিবর্তিত থাকবে।"
+
+#~ msgid "Any changes you make in Demo Mode will not be saved."
+#~ msgstr "ডেমো মোডে আপনার করা কোনও পরিবর্তন সংরক্ষণ করা হবে না।"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Launchpad Contributions:\n"
+#~ "  Maxwell Barvian https://launchpad.net/~mbarvian-deactivatedaccount\n"
+#~ "  Mishkat Nur Rahman https://launchpad.net/~mishkat2008\n"
+#~ "  Soumen Kamilya https://launchpad.net/~soumen-kamilya"
+
+#~ msgid "Use English"
+#~ msgstr "Use Bengali"
+
+#~ msgid "Calculator"
+#~ msgstr "ক্যালকুলেটর"
+
+#~ msgid "History"
+#~ msgstr "পূর্ববর্তী ফলাফল"
+
+#~ msgid "Value to add:"
+#~ msgstr "যা যোগ করতে চানঃ"
+
+#~ msgid "Result"
+#~ msgstr "ফলাফল"
+
+#~ msgid "Expression"
+#~ msgstr "অভিব্যক্তি"
+
+#~ msgid "Close"
+#~ msgstr "বন্ধ করুন"
+
+#~ msgid "Add"
+#~ msgstr "যোগ করুন"
+
+#~ msgid "Show extended functionality"
+#~ msgstr "বর্ধিত কার্যকারিতা দেখান"
+
+#~ msgid "Add last result"
+#~ msgstr "শেষ ফলাফল যোগ করুন"
+
+#~ msgid "Clear entry"
+#~ msgstr "এন্ট্রি মুছে ফেলুন"
+
+#~ msgid "Hide extended functionality"
+#~ msgstr "বর্ধিত কার্যকারিতা লুকান"
+
+#~ msgid "'%s' is invalid."
+#~ msgstr "'%s' গ্রহণযোগ্য নয়"
+
+#~ msgid "'%s' is unknown."
+#~ msgstr "'%s\" অজানা"

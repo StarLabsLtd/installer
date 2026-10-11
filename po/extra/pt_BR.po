@@ -1,0 +1,138 @@
+# Brazilian Portuguese translation for pantheon-calculator
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
+# This file is distributed under the same license as the pantheon-calculator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pantheon-calculator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2025-05-17 18:55+0000\n"
+"Last-Translator: Leonardo Lemos <leonardolemos@live.com>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.elementaryos.org/projects/"
+"installer/extra/pt_BR/>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.11.4\n"
+"X-Launchpad-Export-Date: 2016-09-27 06:42+0000\n"
+
+#: data/installer.metainfo.xml.in:9
+msgid "Installer"
+msgstr "Instalador"
+
+#: data/installer.metainfo.xml.in:10 data/io.elementary.installer.desktop.in:3
+msgid "Install elementary OS"
+msgstr "Instalar o elementary OS"
+
+#: data/installer.metainfo.xml.in:12
+msgid "Step by step installer for elementary OS itself."
+msgstr "Instalador passo a passo para o elementary OS."
+
+#: data/installer.metainfo.xml.in:53
+msgid "elementary, Inc."
+msgstr "elementary, Inc."
+
+#: data/installer.metainfo.xml.in:61 data/installer.metainfo.xml.in:73
+#: data/installer.metainfo.xml.in:88 data/installer.metainfo.xml.in:102
+#: data/installer.metainfo.xml.in:127 data/installer.metainfo.xml.in:141
+#: data/installer.metainfo.xml.in:155 data/installer.metainfo.xml.in:169
+#: data/installer.metainfo.xml.in:180
+msgid "Improvements:"
+msgstr "Melhorias:"
+
+#: data/installer.metainfo.xml.in:63 data/installer.metainfo.xml.in:76
+#: data/installer.metainfo.xml.in:90 data/installer.metainfo.xml.in:109
+#: data/installer.metainfo.xml.in:130 data/installer.metainfo.xml.in:144
+#: data/installer.metainfo.xml.in:157 data/installer.metainfo.xml.in:173
+#: data/installer.metainfo.xml.in:185
+msgid "Updated translations"
+msgstr "Traduções atualizadas"
+
+#: data/installer.metainfo.xml.in:75 data/installer.metainfo.xml.in:108
+msgid "Improve screen reader support"
+msgstr "Melhore o suporte ao leitor de tela"
+
+#: data/installer.metainfo.xml.in:104
+msgid ""
+"Sort language variants alphabetically and automatically select main variant "
+"by default"
+msgstr ""
+"Ordenar as variantes linguísticas por ordem alfabética e selecionar "
+"automaticamente a variante principal por padrão"
+
+#: data/installer.metainfo.xml.in:105
+msgid "Provide more feedback for invalid values when doing a custom install"
+msgstr ""
+"Forneça mais feedback para valores inválidos ao fazer uma instalação "
+"personalizada"
+
+#: data/installer.metainfo.xml.in:106
+msgid "Battery warning is sent as a notification instead of an infobar"
+msgstr ""
+"Aviso de bateria é enviado como uma notificação em vez de uma barra de "
+"informações"
+
+#: data/installer.metainfo.xml.in:107
+msgid "Update post-install driver installation instructions"
+msgstr "Atualize as instruções de instalação do driver pós-instalação"
+
+#: data/installer.metainfo.xml.in:129
+msgid "Keyboard layout preview is now in a resizable window"
+msgstr ""
+"A pré-visualização do layout do teclado agora está em uma janela "
+"redimensionável"
+
+#: data/installer.metainfo.xml.in:143
+msgid "Swipe to navigate back"
+msgstr "Deslize para navegar de volta"
+
+#: data/installer.metainfo.xml.in:171
+msgid "Use large icons in views"
+msgstr "Use ícones grandes nas visualizações"
+
+#: data/installer.metainfo.xml.in:172
+msgid "Add a custom icon for Before Installing view"
+msgstr "Adicione um ícone personalizado para a seção Antes da Instalação"
+
+#: data/installer.metainfo.xml.in:182
+msgid "Show an infobar on battery instead of switching to a different page"
+msgstr ""
+"Mostrar uma barra de informações sobre a bateria em vez de alternar para uma "
+"página diferente"
+
+#: data/installer.metainfo.xml.in:183
+msgid "Show all system requirements warnings on a single page"
+msgstr "Mostrar todos os avisos de requisitos do sistema em uma única página"
+
+#: data/installer.metainfo.xml.in:184
+msgid "Warn about installing developer builds"
+msgstr "Avisar sobre a instalação de compilações de desenvolvedores"
+
+#: data/io.elementary.installer.desktop.in:4
+msgid "Install the system"
+msgstr "Instalar o sistema"
+
+#~ msgid "system-os-installer"
+#~ msgstr "system-os-installer"
+
+#~ msgid "Calculator"
+#~ msgstr "Calculadora"
+
+#~ msgid "Solve simple equations"
+#~ msgstr "Resolva equações simples"
+
+#~ msgid "About Calculator"
+#~ msgstr "Sobre a calculadora"
+
+#~ msgid ""
+#~ "A simple calculator for everyday use. It supports basic and some "
+#~ "scientific calculations including trigonometry functions, sin, cos, and "
+#~ "tan."
+#~ msgstr ""
+#~ "Uma calculadora simples para uso diário. Ela suporta cálculos básicos e "
+#~ "alguns científicos, incluindo funções de trigonometria, seno, cosseno e "
+#~ "tangente."

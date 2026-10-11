@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [stable, unstable, development-target]
+    container:
+      image: ghcr.io/elementary/docker:${{ matrix.version }}
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Install Dependencies
+      run: |
+        apt update
+        apt install -y desktop-file-utils gettext libadwaita-1-dev libdistinst-dev libgee-0.8-dev libgranite-7-dev libgtk-4-dev libxkbregistry-dev libjson-glib-dev libpantheon-wayland-1-dev systemd-dev libpwquality-dev meson valac
+    - name: Build and Test
+      env:
+        DESTDIR: out
+      run: |
+        meson setup build
+        ninja -C build install
+        ninja -C build test
+
+  lint:
+    runs-on: ubuntu-latest
+
+    container:
+      image: valalang/lint
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Lint
+      run: io.elementary.vala-lint -d .

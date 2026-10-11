@@ -1,0 +1,707 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2022-04-20 09:24+0000\n"
+"Last-Translator: David Hewitt <davidmhewitt@gmail.com>\n"
+"Language-Team: Moldovan <https://l10n.elementary.io/projects/installer/"
+"installer/mo/>\n"
+"Language: mo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.4.2\n"
+
+#: src/Application.vala:54
+msgid "Connect to a Power Source"
+msgstr "Conectați-vă la o sursă de alimentare"
+
+#: src/Application.vala:55
+msgid "Installation will not succeed if this device loses power."
+msgstr ""
+
+#: src/Application.vala:68
+#, c-format
+msgid "Install %s"
+msgstr "Instalați %s 1"
+
+#: src/Application.vala:76
+msgid "operating system is being installed"
+msgstr ""
+
+#: src/Utils.vala:34
+msgid "Test mode shutdown"
+msgstr "Mod de oprire a testului"
+
+#: src/Utils.vala:48
+msgid "Test mode reboot"
+msgstr "Mod de testare reporniți"
+
+#: src/Utils.vala:74
+msgid "Test mode switch user"
+msgstr "Utilizator comutator mod de testare"
+
+#: src/Helpers/LocaleHelper.vala:126 src/Views/KeyboardLayoutView.vala:200
+#, c-format
+msgid "%s…"
+msgstr "%s 1…"
+
+#: src/Objects/KeyboardVariant.vala:27
+msgid "Default"
+msgstr "Mod implicit"
+
+#: src/Views/AbstractInstallerView.vala:55
+msgid "Test Mode"
+msgstr "Modul test"
+
+#: src/Views/AbstractInstallerView.vala:64
+msgid "Cancel Installation"
+msgstr "Anularea instalării"
+
+#: src/Views/CheckView.vala:48
+#, fuzzy
+#| msgid "Try Installing Again"
+msgid "Before Installing"
+msgstr "Încercați să instalați din nou"
+
+#: src/Views/CheckView.vala:55
+msgid "Pre-Release Version"
+msgstr ""
+
+#: src/Views/CheckView.vala:56
+msgid ""
+"Only install on devices dedicated for development. <b>You will not be able "
+"to upgrade to a stable release</b>."
+msgstr ""
+
+#: src/Views/CheckView.vala:61
+msgid "Virtual Machine"
+msgstr ""
+
+#: src/Views/CheckView.vala:62
+#, c-format
+msgid "Some parts of %s may run slowly, freeze, or not function properly."
+msgstr ""
+
+#: src/Views/CheckView.vala:67
+msgid "Your Device May Be Too Slow"
+msgstr "Dispozitivul dvs. poate fi prea lent"
+
+#: src/Views/CheckView.vala:68
+msgid "This may cause it to run slowly or freeze."
+msgstr ""
+
+#: src/Views/CheckView.vala:86
+#, fuzzy
+#| msgid "Install %s"
+msgid "Install Anyway"
+msgstr "Instalați %s 1"
+
+#: src/Views/CheckView.vala:230
+msgid "Recommended:"
+msgstr "Recomandat:"
+
+#: src/Views/CheckView.vala:236
+msgid "Your Device:"
+msgstr "Dispozitivul tău:"
+
+#: src/Views/CheckView.vala:242 src/Views/CheckView.vala:246
+msgid "Processor:"
+msgstr "Procesador:"
+
+#: src/Views/CheckView.vala:258 src/Views/CheckView.vala:262
+msgid "Memory:"
+msgstr "Memorie:"
+
+#: src/Views/DiskView.vala:46
+msgid "Select a Drive"
+msgstr "Selectați unitate"
+
+#: src/Views/DiskView.vala:51
+msgid ""
+"This will erase all data on the selected drive. If you have not backed your "
+"data up, you can cancel the installation and use Demo Mode."
+msgstr ""
+"Aceasta va șterge toate datele de pe unitatea selectată. Dacă nu ați "
+"susținut datele, puteți să anulați instalarea și să utilizați modul Demo."
+
+#: src/Views/DiskView.vala:71 src/Views/PartitioningView.vala:112
+msgid "Getting the current configuration…"
+msgstr "Obținerea configurației curente …"
+
+#: src/Views/DiskView.vala:96 src/Views/PartitioningView.vala:145
+#: src/Views/TryInstallView.vala:83
+msgid "Next"
+msgstr ""
+
+#: src/Views/DriversView.vala:24
+#, fuzzy
+#| msgid "Partitioning Drive"
+msgid "Additional Drivers"
+msgstr "Unitate de partiționare"
+
+#: src/Views/DriversView.vala:28
+msgid ""
+"Broadcom® Wi-Fi adapters, NVIDIA® graphics, and some virtual machines may "
+"not function properly without additional drivers. Most devices do not "
+"require additional drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:35
+msgid ""
+"Proprietary drivers contain private code that can't be reviewed. Security "
+"and other updates are dependent on the driver vendor."
+msgstr ""
+
+#: src/Views/DriversView.vala:41
+msgid "An Internet connection is required to install NVIDIA® graphics drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:47
+msgid ""
+"Proprietary drivers can be installed later through System Settings → System, "
+"but an Internet connection will be required for all drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:52
+msgid ""
+"Include third-party proprietary drivers when installing. I agree to their "
+"respective licenses and terms of use."
+msgstr ""
+
+#: src/Views/DriversView.vala:75 src/Views/KeyboardLayoutView.vala:54
+#: src/Views/PartitioningView.vala:141 src/Views/TryInstallView.vala:79
+msgid "Back"
+msgstr "Înapoi"
+
+#: src/Views/DriversView.vala:79
+msgid "Erase and Install"
+msgstr "Ștergeți și instalați"
+
+#: src/Views/EncryptView.vala:27
+#, fuzzy
+#| msgid "Don't Encrypt"
+msgid "Don’t Encrypt"
+msgstr "Nu criptați"
+
+#: src/Views/EncryptView.vala:53
+#, fuzzy
+#| msgid "Drive Encryption"
+msgid "Enable Drive Encryption"
+msgstr "Codarea unității"
+
+#: src/Views/EncryptView.vala:58
+#, fuzzy
+#| msgid ""
+#| "Encrypting this drive protects data from being read by others with "
+#| "physical access to this device."
+msgid ""
+"Data will only be protected from others with physical access to this device "
+"when it is shut down."
+msgstr ""
+"Criptarea acestei unități protejează datele de a fi citite de alții cu acces "
+"fizic la acest dispozitiv."
+
+#: src/Views/EncryptView.vala:64
+#, fuzzy
+#| msgid ""
+#| "The encryption password will be required each time you turn on this "
+#| "device or restart."
+msgid ""
+"The encryption password will be required each time this device is turned on. "
+"If you forget it, <b>you will not be able to recover data.</b>"
+msgstr ""
+"Parola de criptare va fi necesară de fiecare dată când porniți acest "
+"dispozitiv sau reporniți."
+
+#: src/Views/EncryptView.vala:70
+msgid ""
+"A built-in or USB keyboard will be required to type the encryption password "
+"each time this device is turned on."
+msgstr ""
+
+#: src/Views/EncryptView.vala:89
+#, fuzzy
+#| msgid "Choose Encryption Password"
+msgid "Encryption Password"
+msgstr "Alegeți parola de criptare"
+
+#: src/Views/EncryptView.vala:91
+#, fuzzy
+#| msgid ""
+#| "If you forget the encryption password, <b>you will not be able to recover "
+#| "data.</b> This is a unique password for this device, not the password for "
+#| "your user account."
+msgid ""
+"A unique password for this device, not the password for your user account."
+msgstr ""
+"Dacă ați uitat parola de criptare, <b>1 nu veți putea recupera datele.</b>2 "
+"Aceasta este o parolă unică pentru acest dispozitiv, nu și parola pentru "
+"contul dvs. de utilizator."
+
+#: src/Views/EncryptView.vala:106
+msgid "Confirm Password"
+msgstr "Confirmă parola"
+
+#: src/Views/EncryptView.vala:129
+#, fuzzy
+#| msgid "Choose Encryption Password"
+msgid "Set Encryption Password"
+msgstr "Alegeți parola de criptare"
+
+#: src/Views/EncryptView.vala:204
+#, fuzzy
+#| msgid "Set Password"
+msgid "Acceptable password"
+msgstr "Setați parola"
+
+#: src/Views/EncryptView.vala:206
+#, fuzzy
+#| msgid "Choose Password"
+msgid "Good password"
+msgstr "Alege parola"
+
+#: src/Views/EncryptView.vala:208
+#, fuzzy
+#| msgid "Set Password"
+msgid "Great password"
+msgstr "Setați parola"
+
+#: src/Views/EncryptView.vala:229
+msgid "Passwords do not match"
+msgstr "Parolele nu se potrivesc"
+
+#: src/Views/EncryptView.vala:235
+#, fuzzy
+#| msgid "Passwords do not match"
+msgid "Passwords match"
+msgstr "Parolele nu se potrivesc"
+
+#: src/Views/ErrorView.vala:31
+msgid "Could Not Install"
+msgstr "Nu sa putet instala"
+
+#: src/Views/ErrorView.vala:35
+#, fuzzy, c-format
+#| msgid ""
+#| "Installing %s failed, possibly due to a hardware error. Your device may "
+#| "not restart properly. You can try the following:"
+msgid ""
+"Installing %s failed, possibly due to a hardware error. The device may not "
+"restart properly. You can try the following:"
+msgstr ""
+"Instalarea %s 1 a eșuat, posibil din cauza unei erori de hardware. Este "
+"posibil ca Pc Dvs. să nu se repornească corect. Puteți încerca următoarele:"
+
+#: src/Views/ErrorView.vala:45
+#, fuzzy
+#| msgid "• Try the installation again"
+msgid "Try the installation again"
+msgstr "• Încercați instalarea din nou"
+
+#: src/Views/ErrorView.vala:55
+#, fuzzy
+#| msgid "• Use Demo Mode and try to manually recover"
+msgid "Use Demo Mode and try to manually recover"
+msgstr "• Utilizați modul Demo și încercați să recuperați manualmente"
+
+#: src/Views/ErrorView.vala:64
+#, fuzzy
+#| msgid "• Restart your device to boot from another drive"
+msgid "Restart the device and boot from another drive"
+msgstr "• Reporniți dispozitivul pentru a porni de la o altă unitate"
+
+#: src/Views/ErrorView.vala:69
+msgid "Details"
+msgstr ""
+
+#: src/Views/ErrorView.vala:114 src/Views/SuccessView.vala:61
+msgid "Restart Device"
+msgstr "Reporniți dispozitivul"
+
+#: src/Views/ErrorView.vala:116 src/Views/TryInstallView.vala:36
+msgid "Try Demo Mode"
+msgstr "Încercați modul Demo"
+
+#: src/Views/ErrorView.vala:118
+msgid "Try Installing Again"
+msgstr "Încercați să instalați din nou"
+
+#: src/Views/KeyboardLayoutView.vala:30
+msgid "Input Language"
+msgstr "Limba de introducere"
+
+#: src/Views/KeyboardLayoutView.vala:32
+#, fuzzy
+#| msgid "Keyboard Layout"
+msgid "Select Keyboard Layout"
+msgstr "Configurarea tastaturii"
+
+#: src/Views/KeyboardLayoutView.vala:39
+msgid "Type to test your layout"
+msgstr "Tastați pentru a testa aspectul"
+
+#: src/Views/KeyboardLayoutView.vala:42
+msgid "Show keyboard layout"
+msgstr "Afișați aspectul tastaturii"
+
+#: src/Views/KeyboardLayoutView.vala:58 src/Views/LanguageView.vala:104
+msgid "Select"
+msgstr "Selectați"
+
+#: src/Views/LanguageView.vala:67
+msgid "Languages"
+msgstr "Limbi"
+
+#: src/Views/LanguageView.vala:272
+msgid "Select a Language"
+msgstr "Selectați limba"
+
+#: src/Views/LanguageView.vala:295 src/Views/LanguageView.vala:355
+msgid "Currently active language"
+msgstr "Limba activă în prezent"
+
+#: src/Views/PartitioningView.vala:51
+#, fuzzy
+#| msgid "Use partition:"
+msgid "Select Partitions"
+msgstr "Utilizați partiția:"
+
+#: src/Views/PartitioningView.vala:56
+#, fuzzy
+#| msgid ""
+#| "Select which partitions to use across all drives. <b>Selecting \"Format\" "
+#| "will erase ALL data on the selected partition.</b>"
+msgid ""
+"Selecting “Format” will erase <i>all</i> data on the selected partition."
+msgstr ""
+"Selectați care partiții să fie utilizate pe toate unitățile. <b> 1 Selectați "
+"\"Format\" va șterge TOATE datele de pe partiția selectată. </b> 2"
+
+#. Device is in BIOS mode, so we just require a root partition
+#: src/Views/PartitioningView.vala:65
+msgid "You must at least select a <b>Root (/)</b> partition."
+msgstr "Trebuie să selectați cel puțin o partiție <b> 1Root (/) </b> 2."
+
+#. Device is in EFI mode, so we also require a boot partition
+#: src/Views/PartitioningView.vala:69
+#, fuzzy
+#| msgid ""
+#| "You must at least select a <b>Root (/)</b> partition and a <b>Boot (/boot/"
+#| "efi)</b> partition."
+msgid ""
+"You must at least select a <b>Root (/)</b> partition and an optional <b>Boot "
+"(/boot/efi)</b> partition."
+msgstr ""
+"Trebuie să selectați cel puțin o partiție <b> 1Root (/) </b> 2 și o partiție "
+"<b> 3 Boot (/ boot /efi) </b> 4."
+
+#: src/Views/PartitioningView.vala:80
+msgid "It is also recommended to select a <b>Swap</b> partition."
+msgstr "De asemenea, este recomandat să selectați o partiție <b> 1Swap </b> 2."
+
+#: src/Views/PartitioningView.vala:138
+msgid "Modify Partitions…"
+msgstr "Modificați partițiile …"
+
+#: src/Views/PartitioningView.vala:283
+msgid "EFI partition has the wrong file system"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:285
+msgid "EFI partition is too small"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:288
+msgid "Invalid file system for root"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:290
+msgid "Invalid file system for home"
+msgstr ""
+
+#: src/Views/ProgressView.vala:64 src/Views/ProgressView.vala:99
+msgid "Show log"
+msgstr ""
+
+#: src/Views/ProgressView.vala:90
+#, fuzzy
+#| msgid "Try Installing Again"
+msgid "Installing"
+msgstr "Încercați să instalați din nou"
+
+#: src/Views/ProgressView.vala:95
+msgid "Hide log"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:224
+msgid "Partitioning Drive"
+msgstr "Unitate de partiționare"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:229
+msgid "Extracting Files"
+msgstr "Extragerea fișierelor"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:234
+msgid "Configuring the System"
+msgstr "Configurarea sistemului"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:239
+msgid "Finishing the Installation"
+msgstr "Finalizarea instalării"
+
+#: src/Views/TryInstallView.vala:26
+#, fuzzy
+msgid "Try or Install"
+msgstr "Încercați să instalați din nou"
+
+#: src/Views/TryInstallView.vala:38
+#, fuzzy
+msgid ""
+"Changes will not be saved, and data from your previous OS will be unchanged. "
+"Performance and features may not reflect the installed experience."
+msgstr ""
+"În modul Demo, modificările pe care le faceți nu vor fi salvate, iar datele "
+"din sistemul de operare anterior vor fi neschimbate. Este posibil ca "
+"performanțele și caracteristicile să nu reflecte experiența instalată."
+
+#: src/Views/TryInstallView.vala:44
+#, fuzzy
+#| msgid "Erase and Install"
+msgid "Erase Disk and Install"
+msgstr "Ștergeți și instalați"
+
+#: src/Views/TryInstallView.vala:46
+#, c-format
+msgid "Erase everything and install a fresh copy of %s."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:52
+msgid "Custom Install (Advanced)"
+msgstr ""
+
+#: src/Views/TryInstallView.vala:54
+msgid ""
+"Create, resize, or otherwise manage partitions manually. This method may "
+"lead to data loss."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:107
+#, fuzzy
+#| msgid "Could Not Install"
+msgid "Custom Install"
+msgstr "Nu sa putet instala"
+
+#: src/Views/SuccessView.vala:28
+msgid "Continue Setting Up"
+msgstr "Continuați să configurați"
+
+#: src/Views/SuccessView.vala:32
+#, c-format
+msgid "%s has been installed"
+msgstr ""
+
+#: src/Views/SuccessView.vala:58
+msgid "Shut Down"
+msgstr "Închide"
+
+#: src/Views/SuccessView.vala:89
+#, c-format
+msgid "Your device will automatically restart in %i second."
+msgid_plural "Your device will automatically restart in %i seconds."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Views/SuccessView.vala:93
+msgid ""
+"After restarting you can set up a new user, or you can shut down now and set "
+"up a new user later."
+msgstr ""
+"După repornire, puteți configura un utilizator nou sau puteți închide acum "
+"și configurați un utilizator nou mai târziu."
+
+#: src/Widgets/DecryptMenu.vala:66
+msgid "Decrypt This Partition"
+msgstr "Decriptați această partiție"
+
+#: src/Widgets/DecryptMenu.vala:70
+#, fuzzy
+msgid ""
+"Enter the partition's encryption password and set a device name for the "
+"decrypted partition."
+msgstr ""
+"Introduceți parola de criptare a partiției și setați un nume de dispozitiv "
+"LUKS."
+
+#: src/Widgets/DecryptMenu.vala:82
+msgid "Password:"
+msgstr "Parola:"
+
+#: src/Widgets/DecryptMenu.vala:95
+msgid "Device name:"
+msgstr "Nume dispozitiv:"
+
+#: src/Widgets/DecryptMenu.vala:108
+msgid "Decrypt"
+msgstr "Decriptaţi"
+
+#: src/Widgets/DecryptMenu.vala:182
+msgid "LUKS volume was decrypted"
+msgstr "Volumul LUKS a fost decriptat"
+
+#: src/Widgets/DiskBar.vala:259
+#, c-format
+msgid "%s (%s)"
+msgstr "%s 1(%s 2)"
+
+#: src/Widgets/DiskBar.vala:260
+#, c-format
+msgid "%s (%s: <b>%s</b>)"
+msgstr "%s 1(%s 2: <b>3 %s 4</b>5)"
+
+#: src/Widgets/PartitionMenu.vala:56
+#, fuzzy
+#| msgid "Use partition:"
+msgid "Use Partition"
+msgstr "Utilizați partiția:"
+
+#: src/Widgets/PartitionMenu.vala:60
+#, fuzzy
+#| msgid "Format:"
+msgid "Format"
+msgstr "Formatul:"
+
+#: src/Widgets/PartitionMenu.vala:61
+msgid "Delete all data and set up a new file system"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:64
+msgid "Use as:"
+msgstr "Foloșește ca:"
+
+#: src/Widgets/PartitionMenu.vala:71
+msgid "Root (/)"
+msgstr "Rădăcină (/)"
+
+#: src/Widgets/PartitionMenu.vala:72
+msgid "Home (/home)"
+msgstr "Acasă (/ acasă)"
+
+#: src/Widgets/PartitionMenu.vala:73
+#, c-format
+msgid "Boot (%s)"
+msgstr "Boot (%s1)"
+
+#: src/Widgets/PartitionMenu.vala:74
+msgid "Swap"
+msgstr "Schimbă"
+
+#: src/Widgets/PartitionMenu.vala:75
+msgid "Custom"
+msgstr "Personalizat"
+
+#: src/Widgets/PartitionMenu.vala:79
+msgid "Custom:"
+msgstr "Personalizat:"
+
+#: src/Widgets/PartitionMenu.vala:86
+msgid "Filesystem:"
+msgstr "Sistemul de fișiere:"
+
+#: src/Widgets/PartitionMenu.vala:98
+msgid "Default (ext4)"
+msgstr "Implicit (ext4)"
+
+#: src/Widgets/PartitionMenu.vala:261
+msgid "Custom value must begin with /"
+msgstr ""
+
+#~ msgid "Choose Encryption Password"
+#~ msgstr "Alegeți parola de criptare"
+
+#~ msgid ""
+#~ "Your device is running on battery power. It's recommended to be plugged "
+#~ "in while installing."
+#~ msgstr ""
+#~ "Dispozitivul dvs. rulează cu baterie. Se recomandă conectarea la o sursă "
+#~ "de curent înainte de instalare."
+
+#~ msgid "Ignore"
+#~ msgstr "Ignoră"
+
+#~ msgid "Not Enough Space"
+#~ msgstr "Spațiu insuficient"
+
+#~ msgid ""
+#~ "There is not enough room on your device to install %s. We recommend a "
+#~ "minimum of %s of storage."
+#~ msgstr ""
+#~ "Nu este suficient spațiu pe dispozitivul dvs. pentru a instala %s 1. Vă "
+#~ "recomandăm un minim de %s 2 de stocare."
+
+#~ msgid ""
+#~ "Your device doesn't meet the recommended hardware requirements. This may "
+#~ "cause it to run slowly or freeze."
+#~ msgstr ""
+#~ "Dispozitivul dvs. nu îndeplinește cerințele hardware recomandate. Acest "
+#~ "lucru poate cauza încetinirea sau înghețarea."
+
+#~ msgid ""
+#~ "You can install %s on this device now, or try Demo Mode without "
+#~ "installing."
+#~ msgstr ""
+#~ "Puteți instala acum%s 1 pe acest dispozitiv sau încercați modul Demo fără "
+#~ "a instala."
+
+#, fuzzy
+#~ msgid "Clean Install"
+#~ msgstr "Ștergeți și instalați"
+
+#, fuzzy
+#~| msgid ""
+#~| "Drive encryption may minimally impact read and write speed when "
+#~| "performing intense tasks."
+#~ msgid ""
+#~ "Read and write speeds may be minimally impacted during intense tasks."
+#~ msgstr ""
+#~ "Criptarea unității poate avea un impact minim asupra vitezei de citire și "
+#~ "scriere atunci când efectuează sarcini intense."
+
+#~ msgid "Unable to set the Distinst log callback"
+#~ msgstr "Nu s-a putut seta apelul Distinst callback"
+
+#~ msgid "Starting installation"
+#~ msgstr "Începeți instalarea"
+
+#~ msgid "Are you sure you want to Shut Down?"
+#~ msgstr "Sigur vrei să închizi?"
+
+#~ msgid "This will cancel installation and turn off this device."
+#~ msgstr "Aceasta va anula instalarea și va opri acest dispozitiv."
+
+#~ msgid "Restart"
+#~ msgstr "Repornire"
+
+#~ msgid "Cancel"
+#~ msgstr "Anulare"
+
+#~ msgid "Operating System"
+#~ msgstr "Sistemul de operare"
+
+#~ msgid "Customize Partitions…"
+#~ msgstr "Personalizați partițiile …"
+
+#~ msgid "Install or Try Demo Mode"
+#~ msgstr "Instalați sau încercați modul demonstrativ"
+
+#~ msgid ""
+#~ "You can always return to the installer from Demo Mode by selecting the "
+#~ "Install icon."
+#~ msgstr ""
+#~ "Puteți reveni întotdeauna la programul de instalare din modul Demo "
+#~ "selectând pictograma Instalare."

@@ -1,0 +1,803 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2025-08-17 12:55+0000\n"
+"Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
+"Language-Team: Japanese <https://l10n.elementaryos.org/projects/installer/"
+"installer/ja/>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.11.4\n"
+"X-Launchpad-Export-Date: 2016-09-27 06:40+0000\n"
+
+#: src/Application.vala:54
+msgid "Connect to a Power Source"
+msgstr "電源に接続してください"
+
+#: src/Application.vala:55
+msgid "Installation will not succeed if this device loses power."
+msgstr "デバイスの電源が落ちると、インストールは成功しません。"
+
+#: src/Application.vala:68
+#, c-format
+msgid "Install %s"
+msgstr "%s をインストール"
+
+#: src/Application.vala:76
+msgid "operating system is being installed"
+msgstr "オペレーティングシステムをインストール中"
+
+#: src/Utils.vala:34
+msgid "Test mode shutdown"
+msgstr "テストモードのシャットダウン"
+
+#: src/Utils.vala:48
+msgid "Test mode reboot"
+msgstr "テストモードの再起動"
+
+#: src/Utils.vala:74
+msgid "Test mode switch user"
+msgstr "テストモードのユーザー切り替え"
+
+#: src/Helpers/LocaleHelper.vala:126 src/Views/KeyboardLayoutView.vala:200
+#, c-format
+msgid "%s…"
+msgstr "%s…"
+
+#: src/Objects/KeyboardVariant.vala:27
+msgid "Default"
+msgstr "デフォルト"
+
+#: src/Views/AbstractInstallerView.vala:55
+msgid "Test Mode"
+msgstr "テストモード"
+
+#: src/Views/AbstractInstallerView.vala:64
+msgid "Cancel Installation"
+msgstr "インストールをキャンセル"
+
+#: src/Views/CheckView.vala:48
+msgid "Before Installing"
+msgstr "インストールの前に"
+
+#: src/Views/CheckView.vala:55
+msgid "Pre-Release Version"
+msgstr "プレリリース版"
+
+#: src/Views/CheckView.vala:56
+msgid ""
+"Only install on devices dedicated for development. <b>You will not be able "
+"to upgrade to a stable release</b>."
+msgstr ""
+"テスト専用のデバイスにのみインストールしてください。<b>安定版へのアップグレー"
+"ドはできません</b>。"
+
+#: src/Views/CheckView.vala:61
+msgid "Virtual Machine"
+msgstr "仮想マシン"
+
+#: src/Views/CheckView.vala:62
+#, c-format
+msgid "Some parts of %s may run slowly, freeze, or not function properly."
+msgstr ""
+"%s の一部の機能の動作が遅くなったり、フリーズしたり、適切に動作しなかったりす"
+"る恐れがあります。"
+
+#: src/Views/CheckView.vala:67
+msgid "Your Device May Be Too Slow"
+msgstr "デバイスが遅すぎる可能性があります"
+
+#: src/Views/CheckView.vala:68
+msgid "This may cause it to run slowly or freeze."
+msgstr "動作が遅くなったりフリーズしたりすることがあります。"
+
+#: src/Views/CheckView.vala:86
+msgid "Install Anyway"
+msgstr "了解してインストール"
+
+#: src/Views/CheckView.vala:230
+msgid "Recommended:"
+msgstr "推奨要件:"
+
+#: src/Views/CheckView.vala:236
+msgid "Your Device:"
+msgstr "お使いのデバイス:"
+
+#: src/Views/CheckView.vala:242 src/Views/CheckView.vala:246
+msgid "Processor:"
+msgstr "プロセッサー:"
+
+#: src/Views/CheckView.vala:258 src/Views/CheckView.vala:262
+msgid "Memory:"
+msgstr "メモリー:"
+
+#: src/Views/DiskView.vala:46
+msgid "Select a Drive"
+msgstr "ドライブを選択"
+
+#: src/Views/DiskView.vala:51
+msgid ""
+"This will erase all data on the selected drive. If you have not backed your "
+"data up, you can cancel the installation and use Demo Mode."
+msgstr ""
+"続行すると、選択されたドライブ上のすべてのデータを削除します。データをバック"
+"アップしていない場合は、インストールをキャンセルしてデモモードを使うことで、"
+"データをバックアップできます。"
+
+#: src/Views/DiskView.vala:71 src/Views/PartitioningView.vala:112
+msgid "Getting the current configuration…"
+msgstr "現在の設定を取得しています…"
+
+#: src/Views/DiskView.vala:96 src/Views/PartitioningView.vala:145
+#: src/Views/TryInstallView.vala:83
+msgid "Next"
+msgstr "次へ"
+
+#: src/Views/DriversView.vala:24
+msgid "Additional Drivers"
+msgstr "追加のドライバー"
+
+#: src/Views/DriversView.vala:28
+msgid ""
+"Broadcom® Wi-Fi adapters, NVIDIA® graphics, and some virtual machines may "
+"not function properly without additional drivers. Most devices do not "
+"require additional drivers."
+msgstr ""
+"Broadcom® Wi-Fi アダプター、NVIDIA® グラフィックス、および一部の仮想マシン"
+"は、追加のドライバーがないと正しく動作しないことがあります。ほとんどのデバイ"
+"スには追加のドライバーは不要です。"
+
+#: src/Views/DriversView.vala:35
+msgid ""
+"Proprietary drivers contain private code that can't be reviewed. Security "
+"and other updates are dependent on the driver vendor."
+msgstr ""
+"プロプライエタリードライバーには、検査不能な非公開のコードが含まれます。セ"
+"キュリティアップデートやその他のアップデートは、ドライバーの開発元に左右され"
+"ます。"
+
+#: src/Views/DriversView.vala:41
+msgid "An Internet connection is required to install NVIDIA® graphics drivers."
+msgstr ""
+"NVIDIA® グラフィックスドライバーをインストールするには、インターネット接続が"
+"必要です。"
+
+#: src/Views/DriversView.vala:47
+msgid ""
+"Proprietary drivers can be installed later through System Settings → System, "
+"but an Internet connection will be required for all drivers."
+msgstr ""
+"プロプライエタリードライバーは後からでも“システム設定” → “システム”経由でイン"
+"ストール可能ですが、NVIDIA® グラフィックス以外のドライバーでもインターネット"
+"接続が必要になります。"
+
+#: src/Views/DriversView.vala:52
+msgid ""
+"Include third-party proprietary drivers when installing. I agree to their "
+"respective licenses and terms of use."
+msgstr ""
+"インストール時にサードパーティ製のプロプライエタリードライバーを導入します。"
+"各ライセンスおよび利用規約に合意します。"
+
+#: src/Views/DriversView.vala:75 src/Views/KeyboardLayoutView.vala:54
+#: src/Views/PartitioningView.vala:141 src/Views/TryInstallView.vala:79
+msgid "Back"
+msgstr "戻る"
+
+#: src/Views/DriversView.vala:79
+msgid "Erase and Install"
+msgstr "削除してインストール"
+
+#: src/Views/EncryptView.vala:27
+msgid "Don’t Encrypt"
+msgstr "暗号化しない"
+
+#: src/Views/EncryptView.vala:53
+msgid "Enable Drive Encryption"
+msgstr "ドライブの暗号化を有効にする"
+
+#: src/Views/EncryptView.vala:58
+msgid ""
+"Data will only be protected from others with physical access to this device "
+"when it is shut down."
+msgstr ""
+"データの保護は、電源がオフの場合に、デバイスに物理的にアクセス可能な他人に対"
+"してのみ有効です。"
+
+#: src/Views/EncryptView.vala:64
+msgid ""
+"The encryption password will be required each time this device is turned on. "
+"If you forget it, <b>you will not be able to recover data.</b>"
+msgstr ""
+"このデバイスを起動する度に、暗号化パスワードが要求されます。パスワードを忘れ"
+"ると、<b>データを復旧できなくなります。</b>"
+
+#: src/Views/EncryptView.vala:70
+msgid ""
+"A built-in or USB keyboard will be required to type the encryption password "
+"each time this device is turned on."
+msgstr ""
+"このデバイスを起動する度に、暗号化パスワードを入力するための内蔵または USB "
+"キーボードが必要になります。"
+
+#: src/Views/EncryptView.vala:89
+msgid "Encryption Password"
+msgstr "暗号化パスワード"
+
+#: src/Views/EncryptView.vala:91
+msgid ""
+"A unique password for this device, not the password for your user account."
+msgstr ""
+"このデバイスで一意のパスワードです。ユーザーアカウント用のパスワードではあり"
+"ません。"
+
+#: src/Views/EncryptView.vala:106
+msgid "Confirm Password"
+msgstr "パスワードを確認"
+
+#: src/Views/EncryptView.vala:129
+msgid "Set Encryption Password"
+msgstr "暗号化パスワードを設定"
+
+#: src/Views/EncryptView.vala:204
+msgid "Acceptable password"
+msgstr "悪くはないパスワード"
+
+#: src/Views/EncryptView.vala:206
+msgid "Good password"
+msgstr "よいパスワード"
+
+#: src/Views/EncryptView.vala:208
+msgid "Great password"
+msgstr "強力なパスワード"
+
+#: src/Views/EncryptView.vala:229
+msgid "Passwords do not match"
+msgstr "パスワードが一致しません"
+
+#: src/Views/EncryptView.vala:235
+msgid "Passwords match"
+msgstr "パスワードが一致します"
+
+#: src/Views/ErrorView.vala:31
+msgid "Could Not Install"
+msgstr "インストールできませんでした"
+
+#: src/Views/ErrorView.vala:35
+#, c-format
+msgid ""
+"Installing %s failed, possibly due to a hardware error. The device may not "
+"restart properly. You can try the following:"
+msgstr ""
+"%s のインストールに失敗しました。ハードウェアのエラーが原因と思われます。デバ"
+"イスが正しく再起動しない可能性があります。以下をお試しください。"
+
+#: src/Views/ErrorView.vala:45
+msgid "Try the installation again"
+msgstr "インストールを再度試す"
+
+#: src/Views/ErrorView.vala:55
+msgid "Use Demo Mode and try to manually recover"
+msgstr "デモモードを使用して手動で回復してみる"
+
+#: src/Views/ErrorView.vala:64
+msgid "Restart the device and boot from another drive"
+msgstr "デバイスを再起動して別のドライブから起動"
+
+#: src/Views/ErrorView.vala:69
+msgid "Details"
+msgstr "詳細"
+
+#: src/Views/ErrorView.vala:114 src/Views/SuccessView.vala:61
+msgid "Restart Device"
+msgstr "デバイスを再起動"
+
+#: src/Views/ErrorView.vala:116 src/Views/TryInstallView.vala:36
+msgid "Try Demo Mode"
+msgstr "デモモードを試す"
+
+#: src/Views/ErrorView.vala:118
+msgid "Try Installing Again"
+msgstr "もう一度インストールしてみる"
+
+#: src/Views/KeyboardLayoutView.vala:30
+msgid "Input Language"
+msgstr "入力言語"
+
+#: src/Views/KeyboardLayoutView.vala:32
+msgid "Select Keyboard Layout"
+msgstr "キーボードレイアウトを選択"
+
+#: src/Views/KeyboardLayoutView.vala:39
+msgid "Type to test your layout"
+msgstr "入力してレイアウトを確認"
+
+#: src/Views/KeyboardLayoutView.vala:42
+msgid "Show keyboard layout"
+msgstr "キーボードレイアウトを表示"
+
+#: src/Views/KeyboardLayoutView.vala:58 src/Views/LanguageView.vala:104
+msgid "Select"
+msgstr "選択"
+
+#: src/Views/LanguageView.vala:67
+msgid "Languages"
+msgstr "言語"
+
+#: src/Views/LanguageView.vala:272
+msgid "Select a Language"
+msgstr "言語を選択"
+
+#: src/Views/LanguageView.vala:295 src/Views/LanguageView.vala:355
+msgid "Currently active language"
+msgstr "現在の選択言語"
+
+#: src/Views/PartitioningView.vala:51
+msgid "Select Partitions"
+msgstr "パーティションを選択"
+
+#: src/Views/PartitioningView.vala:56
+msgid ""
+"Selecting “Format” will erase <i>all</i> data on the selected partition."
+msgstr ""
+"“フォーマット”を選択すると、選択されたパーティション上の<i>すべての</i>データ"
+"を削除します。"
+
+#. Device is in BIOS mode, so we just require a root partition
+#: src/Views/PartitioningView.vala:65
+msgid "You must at least select a <b>Root (/)</b> partition."
+msgstr "少なくとも<b>ルート (/)</b>パーティションを選択する必要があります。"
+
+#. Device is in EFI mode, so we also require a boot partition
+#: src/Views/PartitioningView.vala:69
+msgid ""
+"You must at least select a <b>Root (/)</b> partition and an optional <b>Boot "
+"(/boot/efi)</b> partition."
+msgstr ""
+"少なくとも<b>ルート (/)</b>パーティションを選択する必要があります。<b>ブート "
+"(/boot/efi)</b>パーティションは任意です。"
+
+#: src/Views/PartitioningView.vala:80
+msgid "It is also recommended to select a <b>Swap</b> partition."
+msgstr "<b>スワップ</b>パーティションも選択することを推奨します。"
+
+#: src/Views/PartitioningView.vala:138
+msgid "Modify Partitions…"
+msgstr "パーティションを修正…"
+
+#: src/Views/PartitioningView.vala:283
+msgid "EFI partition has the wrong file system"
+msgstr "EFI パーティションのファイルシステムが間違っています"
+
+#: src/Views/PartitioningView.vala:285
+msgid "EFI partition is too small"
+msgstr "EFI パーティションが小さすぎます"
+
+#: src/Views/PartitioningView.vala:288
+msgid "Invalid file system for root"
+msgstr "ルートディレクトリのファイルシステムが無効です"
+
+#: src/Views/PartitioningView.vala:290
+msgid "Invalid file system for home"
+msgstr "ホームディレクトリのファイルシステムが無効です"
+
+#: src/Views/ProgressView.vala:64 src/Views/ProgressView.vala:99
+msgid "Show log"
+msgstr "ログを表示"
+
+#: src/Views/ProgressView.vala:90
+msgid "Installing"
+msgstr "インストールしています"
+
+#: src/Views/ProgressView.vala:95
+msgid "Hide log"
+msgstr "ログを非表示"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:224
+msgid "Partitioning Drive"
+msgstr "ドライブのパーティションを作成しています"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:229
+msgid "Extracting Files"
+msgstr "ファイルを展開しています"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:234
+msgid "Configuring the System"
+msgstr "システムを設定しています"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:239
+msgid "Finishing the Installation"
+msgstr "インストールを終了しています"
+
+#: src/Views/TryInstallView.vala:26
+msgid "Try or Install"
+msgstr "試用またはインストール"
+
+#: src/Views/TryInstallView.vala:38
+msgid ""
+"Changes will not be saved, and data from your previous OS will be unchanged. "
+"Performance and features may not reflect the installed experience."
+msgstr ""
+"変更は保存されず、インストール済みの OS のデータは変更されません。お使いのシ"
+"ステムのパフォーマンスと機能を十分に活用できない可能性があります。"
+
+#: src/Views/TryInstallView.vala:44
+msgid "Erase Disk and Install"
+msgstr "ディスクを削除してインストール"
+
+#: src/Views/TryInstallView.vala:46
+#, c-format
+msgid "Erase everything and install a fresh copy of %s."
+msgstr "すべてを消去して %s をクリーンインストールします。"
+
+#: src/Views/TryInstallView.vala:52
+msgid "Custom Install (Advanced)"
+msgstr "カスタムインストール (高度)"
+
+#: src/Views/TryInstallView.vala:54
+msgid ""
+"Create, resize, or otherwise manage partitions manually. This method may "
+"lead to data loss."
+msgstr ""
+"手動でパーティションの作成やサイズ変更、管理を行います。この方法はデータの損"
+"失につながることがあります。"
+
+#: src/Views/TryInstallView.vala:107
+msgid "Custom Install"
+msgstr "カスタムインストール"
+
+#: src/Views/SuccessView.vala:28
+msgid "Continue Setting Up"
+msgstr "セットアップを続行"
+
+#: src/Views/SuccessView.vala:32
+#, c-format
+msgid "%s has been installed"
+msgstr "%s のインストールが完了しました"
+
+#: src/Views/SuccessView.vala:58
+msgid "Shut Down"
+msgstr "シャットダウン"
+
+#: src/Views/SuccessView.vala:89
+#, c-format
+msgid "Your device will automatically restart in %i second."
+msgid_plural "Your device will automatically restart in %i seconds."
+msgstr[0] "お使いのデバイスは %i 秒後に自動的に再起動します。"
+
+#: src/Views/SuccessView.vala:93
+msgid ""
+"After restarting you can set up a new user, or you can shut down now and set "
+"up a new user later."
+msgstr ""
+"再起動後は新しいユーザーをセットアップすることができます。あるいは、今は"
+"シャットダウンして、後でユーザーをセットアップすることもできます。"
+
+#: src/Widgets/DecryptMenu.vala:66
+msgid "Decrypt This Partition"
+msgstr "このパーティションを復号"
+
+#: src/Widgets/DecryptMenu.vala:70
+msgid ""
+"Enter the partition's encryption password and set a device name for the "
+"decrypted partition."
+msgstr ""
+"パーティションの暗号化パスワードを入力し、復号するパーティションのデバイス名"
+"を選択してください。"
+
+#: src/Widgets/DecryptMenu.vala:82
+msgid "Password:"
+msgstr "パスワード:"
+
+#: src/Widgets/DecryptMenu.vala:95
+msgid "Device name:"
+msgstr "デバイス名:"
+
+#: src/Widgets/DecryptMenu.vala:108
+msgid "Decrypt"
+msgstr "復号"
+
+#: src/Widgets/DecryptMenu.vala:182
+msgid "LUKS volume was decrypted"
+msgstr "LUKS ボリュームが復号されました"
+
+#: src/Widgets/DiskBar.vala:259
+#, c-format
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: src/Widgets/DiskBar.vala:260
+#, c-format
+msgid "%s (%s: <b>%s</b>)"
+msgstr "%s (%s: <b>%s</b>)"
+
+#: src/Widgets/PartitionMenu.vala:56
+msgid "Use Partition"
+msgstr "パーティションを使う"
+
+#: src/Widgets/PartitionMenu.vala:60
+msgid "Format"
+msgstr "フォーマット"
+
+#: src/Widgets/PartitionMenu.vala:61
+msgid "Delete all data and set up a new file system"
+msgstr "すべてのデータを削除し、ファイルシステムを新しくセットアップします"
+
+#: src/Widgets/PartitionMenu.vala:64
+msgid "Use as:"
+msgstr "使用方法:"
+
+#: src/Widgets/PartitionMenu.vala:71
+msgid "Root (/)"
+msgstr "ルート (/)"
+
+#: src/Widgets/PartitionMenu.vala:72
+msgid "Home (/home)"
+msgstr "ホーム (/home)"
+
+#: src/Widgets/PartitionMenu.vala:73
+#, c-format
+msgid "Boot (%s)"
+msgstr "ブート (%s)"
+
+#: src/Widgets/PartitionMenu.vala:74
+msgid "Swap"
+msgstr "スワップ"
+
+#: src/Widgets/PartitionMenu.vala:75
+msgid "Custom"
+msgstr "カスタム"
+
+#: src/Widgets/PartitionMenu.vala:79
+msgid "Custom:"
+msgstr "カスタム:"
+
+#: src/Widgets/PartitionMenu.vala:86
+msgid "Filesystem:"
+msgstr "ファイルシステム:"
+
+#: src/Widgets/PartitionMenu.vala:98
+msgid "Default (ext4)"
+msgstr "デフォルト (ext4)"
+
+#: src/Widgets/PartitionMenu.vala:261
+msgid "Custom value must begin with /"
+msgstr "カスタム値は / で始める必要があります"
+
+#~ msgid ""
+#~ "Encrypt this device's drive if required for added protection, but be sure "
+#~ "you understand:"
+#~ msgstr ""
+#~ "必要であれば、ドライブを暗号化してデバイスの保護を強化できます。ただし、以"
+#~ "下の点に注意してください。"
+
+#~ msgid "Choose Encryption Password"
+#~ msgstr "暗号化パスワードを選択"
+
+#~ msgid ""
+#~ "Your device is running on battery power. It's recommended to be plugged "
+#~ "in while installing."
+#~ msgstr ""
+#~ "お使いのデバイスはバッテリーの電力で動作しています。インストール中は電源に"
+#~ "接続することを推奨します。"
+
+#~ msgid ""
+#~ "Proprietary drivers are subject to their own license terms. By "
+#~ "installing, you agree to their terms of use."
+#~ msgstr ""
+#~ "プロプライエタリードライバーのライセンス規約は、変更される可能性がありま"
+#~ "す。インストールすることで、利用規約に同意したとみなされます。"
+
+#~ msgid "System Requirements"
+#~ msgstr "システム要件"
+
+#~ msgid "Ignore"
+#~ msgstr "無視"
+
+#~ msgid "Not Enough Space"
+#~ msgstr "空き容量が不足しています"
+
+#, c-format
+#~ msgid "%s of storage or more is required to install %s."
+#~ msgstr "%2$s をインストールするには、%1$s 以上の容量が必要です。"
+
+#~ msgid ""
+#~ "There is not enough room on your device to install %s. We recommend a "
+#~ "minimum of %s of storage."
+#~ msgstr ""
+#~ "お使いのデバイスには %s をインストールするための十分な空き容量がありませ"
+#~ "ん。最低でも %s のストレージを推奨します。"
+
+#~ msgid ""
+#~ "Your device doesn't meet the recommended hardware requirements. This may "
+#~ "cause it to run slowly or freeze."
+#~ msgstr ""
+#~ "お使いのデバイスはハードウェアの推奨要件を満たしていないため、動作が遅く"
+#~ "なったりフリーズしたりすることがあります。"
+
+#~ msgid ""
+#~ "You appear to be installing in a virtual machine. Some parts of %s may "
+#~ "run slowly, freeze, or not function properly in a virtual machine. It's "
+#~ "recommended to install on real hardware."
+#~ msgstr ""
+#~ "仮想マシンにインストールしようとしているようです。仮想マシンでは、%s の一"
+#~ "部の機能の動作が遅くなったり、フリーズしたり、適切に動作しなかったりする恐"
+#~ "れがあります。実機へのインストールを推奨します。"
+
+#~ msgid ""
+#~ "You can install %s on this device now, or try Demo Mode without "
+#~ "installing."
+#~ msgstr ""
+#~ "%s をお使いのデバイスに今すぐインストールすることも、インストールせずにデ"
+#~ "モモードを試すこともできます。"
+
+#~ msgid "Clean Install"
+#~ msgstr "クリーンインストール"
+
+#~ msgid ""
+#~ "Read and write speeds may be minimally impacted during intense tasks."
+#~ msgstr ""
+#~ "負荷のかかるタスクを実行する際に、わずかに読み書き速度に影響が出る可能性が"
+#~ "あります。"
+
+#~ msgid "Unable to set the Distinst log callback"
+#~ msgstr "Distinst ログコールバックを設定できません"
+
+#~ msgid "Starting installation"
+#~ msgstr "インストールを開始しています"
+
+#~ msgid "Are you sure you want to Shut Down?"
+#~ msgstr "シャットダウンしてもよろしいですか？"
+
+#~ msgid "This will cancel installation and turn off this device."
+#~ msgstr ""
+#~ "続行すると、インストールをキャンセルしてこのデバイスの電源を切ります。"
+
+#~ msgid "Restart"
+#~ msgstr "再起動"
+
+#~ msgid "Cancel"
+#~ msgstr "キャンセル"
+
+#~ msgid "Operating System"
+#~ msgstr "オペレーティングシステム"
+
+#~ msgid "Customize Partitions…"
+#~ msgstr "パーティションをカスタマイズ…"
+
+#~ msgid "Install or Try Demo Mode"
+#~ msgstr "インストールするかデモモードを試す"
+
+#~ msgid ""
+#~ "You can always return to the installer from Demo Mode by selecting the "
+#~ "Install icon."
+#~ msgstr ""
+#~ "インストールアイコンを選択することで、いつでもデモモードからインストーラー"
+#~ "に戻ることができます。"
+
+#~ msgid "Select a drive to use for installation"
+#~ msgstr "インストールに使用するドライブを選択してください"
+
+#~ msgid "Restart your device to continue setting up"
+#~ msgstr "セットアップを続行するにはお使いのデバイスを再起動してください"
+
+#~ msgid "Formating Drive"
+#~ msgstr "ドライブをフォーマットしています"
+
+#~ msgid "Data from your previous operating system is unchanged in Demo Mode."
+#~ msgstr ""
+#~ "デモモードでは以前のオペレーティングシステムのデータは変更されません。"
+
+#~ msgid "Any changes you make in Demo Mode will not be saved."
+#~ msgstr "デモモードで行った変更は保存されません。"
+
+#~ msgid "Installer"
+#~ msgstr "インストーラー"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Launchpad Contributions:\n"
+#~ "  BALLOON a.k.a. Fu-sen. (Keiichi SHIGA) https://launchpad.net/~balloon\n"
+#~ "  J.S.Sebastian https://launchpad.net/~j-s-sebastian-x\n"
+#~ "  Jun Takeda https://launchpad.net/~takeda-jun\n"
+#~ "  Maxwell Barvian https://launchpad.net/~mbarvian-deactivatedaccount\n"
+#~ "  Ryota Goto https://launchpad.net/~sarcaphx510"
+
+#~ msgid "Use English"
+#~ msgstr "英語を使う"
+
+#~ msgid "Calculator"
+#~ msgstr "計算機"
+
+#~ msgid "History"
+#~ msgstr "履歴"
+
+#~ msgid "Value to add:"
+#~ msgstr "追加する値："
+
+#~ msgid "Result"
+#~ msgstr "結果"
+
+#~ msgid "Expression"
+#~ msgstr "式"
+
+#~ msgid "Close"
+#~ msgstr "閉じる"
+
+#~ msgid "Add"
+#~ msgstr "足し算"
+
+#~ msgid "Show extended functionality"
+#~ msgstr "追加機能を表示する"
+
+#~ msgid "Calculate Result"
+#~ msgstr "計算結果"
+
+#~ msgid "Add last result"
+#~ msgstr "最後の結果を追加"
+
+#~ msgid "Clear entry"
+#~ msgstr "エントリーのクリア"
+
+#~ msgid "Subtract"
+#~ msgstr "引き算"
+
+#~ msgid "Multiply"
+#~ msgstr "掛け算"
+
+#~ msgid "Divide"
+#~ msgstr "割り算"
+
+#~ msgid "Percentage"
+#~ msgstr "パーセント"
+
+#~ msgid "Start Group"
+#~ msgstr "括弧"
+
+#~ msgid "End Group"
+#~ msgstr "括弧閉じる"
+
+#~ msgid "Exponent"
+#~ msgstr "指数"
+
+#~ msgid "Sine"
+#~ msgstr "サイン"
+
+#~ msgid "Hyperbolic Sine"
+#~ msgstr "ハイパボリックサイン"
+
+#~ msgid "Cosine"
+#~ msgstr "コサイン"
+
+#~ msgid "Hyperbolic Cosine"
+#~ msgstr "ハイパボリックコサイン"
+
+#~ msgid "Tangent"
+#~ msgstr "タンジェント"
+
+#~ msgid "Hyperbolic Tangent"
+#~ msgstr "ハイパボリックタンジェント"
+
+#~ msgid "Pi"
+#~ msgstr "円周率"
+
+#~ msgid "Euler's Number"
+#~ msgstr "自然対数の底"
+
+#~ msgid "Hide extended functionality"
+#~ msgstr "追加機能を隠す"
+
+#~ msgid "'%s' is invalid."
+#~ msgstr "'%s' は不正です。"
+
+#~ msgid "'%s' is unknown."
+#~ msgstr "'%s' は不明です。"

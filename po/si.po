@@ -1,0 +1,700 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2021-03-04 15:31+0000\n"
+"Last-Translator: HelaBasa <R45XvezA@pm.me>\n"
+"Language-Team: Sinhala <https://l10n.elementary.io/projects/installer/"
+"installer/si/>\n"
+"Language: si\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.4.2\n"
+"X-Launchpad-Export-Date: 2016-09-27 06:41+0000\n"
+
+#: src/Application.vala:54
+msgid "Connect to a Power Source"
+msgstr "බලශක්ති ප්රභවයකට සම්බන්ධ කරන්න"
+
+#: src/Application.vala:55
+msgid "Installation will not succeed if this device loses power."
+msgstr ""
+
+#: src/Application.vala:68
+#, c-format
+msgid "Install %s"
+msgstr "%s ස්ථාපනය කරන්න"
+
+#: src/Application.vala:76
+msgid "operating system is being installed"
+msgstr ""
+
+#: src/Utils.vala:34
+msgid "Test mode shutdown"
+msgstr ""
+
+#: src/Utils.vala:48
+msgid "Test mode reboot"
+msgstr "පරීක්ශා මාදිලිය නැවත ආරම්භ කිරීම"
+
+#: src/Utils.vala:74
+msgid "Test mode switch user"
+msgstr "පරීක්ශා මාදිලි පරිශීලක මාරු කරන්න"
+
+#: src/Helpers/LocaleHelper.vala:126 src/Views/KeyboardLayoutView.vala:200
+#, c-format
+msgid "%s…"
+msgstr "%s…"
+
+#: src/Objects/KeyboardVariant.vala:27
+msgid "Default"
+msgstr "පෙරනිමි"
+
+#: src/Views/AbstractInstallerView.vala:55
+msgid "Test Mode"
+msgstr "පරීක්ෂණ මාදිලිය"
+
+#: src/Views/AbstractInstallerView.vala:64
+msgid "Cancel Installation"
+msgstr "ස්ථාපනය අවලංගු කරන්න"
+
+#: src/Views/CheckView.vala:48
+#, fuzzy
+#| msgid "Try Installing Again"
+msgid "Before Installing"
+msgstr "නැවත ස්ථාපනය කිරීමට උතසහ කරන්න"
+
+#: src/Views/CheckView.vala:55
+msgid "Pre-Release Version"
+msgstr ""
+
+#: src/Views/CheckView.vala:56
+msgid ""
+"Only install on devices dedicated for development. <b>You will not be able "
+"to upgrade to a stable release</b>."
+msgstr ""
+
+#: src/Views/CheckView.vala:61
+msgid "Virtual Machine"
+msgstr ""
+
+#: src/Views/CheckView.vala:62
+#, c-format
+msgid "Some parts of %s may run slowly, freeze, or not function properly."
+msgstr ""
+
+#: src/Views/CheckView.vala:67
+msgid "Your Device May Be Too Slow"
+msgstr "ඔබගේ උපාංගය සමහරවිට මන්දගාමීයි"
+
+#: src/Views/CheckView.vala:68
+msgid "This may cause it to run slowly or freeze."
+msgstr ""
+
+#: src/Views/CheckView.vala:86
+#, fuzzy
+#| msgid "Install %s"
+msgid "Install Anyway"
+msgstr "%s ස්ථාපනය කරන්න"
+
+#: src/Views/CheckView.vala:230
+msgid "Recommended:"
+msgstr "නිර්දේශිත:"
+
+#: src/Views/CheckView.vala:236
+msgid "Your Device:"
+msgstr "ඔබගේ උපාංගය:"
+
+#: src/Views/CheckView.vala:242 src/Views/CheckView.vala:246
+msgid "Processor:"
+msgstr "සකසනය:"
+
+#: src/Views/CheckView.vala:258 src/Views/CheckView.vala:262
+msgid "Memory:"
+msgstr "මතකය:"
+
+#: src/Views/DiskView.vala:46
+msgid "Select a Drive"
+msgstr "ධාවකයක් තෝරන්න"
+
+#: src/Views/DiskView.vala:51
+msgid ""
+"This will erase all data on the selected drive. If you have not backed your "
+"data up, you can cancel the installation and use Demo Mode."
+msgstr ""
+"තෝරාගත් ධාවකයේ සියලු දත්ත මැකෙනු ඇත. ඔබගේ දත්ත උපස්ථකර නොමැති නම්, ඔබට ස්ථාපනය අවලංගු "
+"කළ හැකි අතර Demo Mode භාවිතා කරන්න."
+
+#: src/Views/DiskView.vala:71 src/Views/PartitioningView.vala:112
+msgid "Getting the current configuration…"
+msgstr "වත්මන් සැකසුම ලබා ගැනීම…"
+
+#: src/Views/DiskView.vala:96 src/Views/PartitioningView.vala:145
+#: src/Views/TryInstallView.vala:83
+msgid "Next"
+msgstr ""
+
+#: src/Views/DriversView.vala:24
+#, fuzzy
+#| msgid "Partitioning Drive"
+msgid "Additional Drivers"
+msgstr "ධාවකය බෙදීම"
+
+#: src/Views/DriversView.vala:28
+msgid ""
+"Broadcom® Wi-Fi adapters, NVIDIA® graphics, and some virtual machines may "
+"not function properly without additional drivers. Most devices do not "
+"require additional drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:35
+msgid ""
+"Proprietary drivers contain private code that can't be reviewed. Security "
+"and other updates are dependent on the driver vendor."
+msgstr ""
+
+#: src/Views/DriversView.vala:41
+msgid "An Internet connection is required to install NVIDIA® graphics drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:47
+msgid ""
+"Proprietary drivers can be installed later through System Settings → System, "
+"but an Internet connection will be required for all drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:52
+msgid ""
+"Include third-party proprietary drivers when installing. I agree to their "
+"respective licenses and terms of use."
+msgstr ""
+
+#: src/Views/DriversView.vala:75 src/Views/KeyboardLayoutView.vala:54
+#: src/Views/PartitioningView.vala:141 src/Views/TryInstallView.vala:79
+msgid "Back"
+msgstr "ආපසු"
+
+#: src/Views/DriversView.vala:79
+msgid "Erase and Install"
+msgstr "මකා ස්ථාපනය කරන්න"
+
+#: src/Views/EncryptView.vala:27
+#, fuzzy
+#| msgid "Don't Encrypt"
+msgid "Don’t Encrypt"
+msgstr "ගුප්තකේතනය නොකරන්න"
+
+#: src/Views/EncryptView.vala:53
+#, fuzzy
+#| msgid "Drive Encryption"
+msgid "Enable Drive Encryption"
+msgstr "ධාවක ගුප්තකේතනය"
+
+#: src/Views/EncryptView.vala:58
+#, fuzzy
+#| msgid ""
+#| "Encrypting this drive protects data from being read by others with "
+#| "physical access to this device."
+msgid ""
+"Data will only be protected from others with physical access to this device "
+"when it is shut down."
+msgstr ""
+"දාවකය ගුප්තකේතනය කිරීමෙන් මෙම උපාංගයට භෞතික ප්රවේශයකින් දත්ත කියවීමට ලබානොදී ආරක්ෂා කරයි."
+
+#: src/Views/EncryptView.vala:64
+#, fuzzy
+#| msgid ""
+#| "The encryption password will be required each time you turn on this "
+#| "device or restart."
+msgid ""
+"The encryption password will be required each time this device is turned on. "
+"If you forget it, <b>you will not be able to recover data.</b>"
+msgstr ""
+"මෙම උපකරණය නැවත ආරම්භ වන විට හෝ නැවත ආරම්භ කිරීම සඳහා සෑම විටම ගුප්තකේතන මුරපදයක් අවශ්ය "
+"වේ."
+
+#: src/Views/EncryptView.vala:70
+msgid ""
+"A built-in or USB keyboard will be required to type the encryption password "
+"each time this device is turned on."
+msgstr ""
+
+#: src/Views/EncryptView.vala:89
+#, fuzzy
+#| msgid "Choose Encryption Password"
+msgid "Encryption Password"
+msgstr "ගුප්තකේතන මුරපදය තෝරන්න"
+
+#: src/Views/EncryptView.vala:91
+#, fuzzy
+#| msgid ""
+#| "If you forget the encryption password, <b>you will not be able to recover "
+#| "data.</b> This is a unique password for this device, not the password for "
+#| "your user account."
+msgid ""
+"A unique password for this device, not the password for your user account."
+msgstr ""
+"ඔබ ගුප්තකේතන මුරපදය අමතක නම්, <b> ඔබට දත්ත ආපසු ලබාගැනීමට නොහැකි වනු ඇත. </b> මෙම "
+"උපාංගය සඳහා මෙම සුවිශේෂී මුරපදය වන අතර, ඔබගේ පරිශීලක ගිණුම සඳහා රහස් පදය නොවේ."
+
+#: src/Views/EncryptView.vala:106
+msgid "Confirm Password"
+msgstr "මුරපදය තහවුරු කරන්න"
+
+#: src/Views/EncryptView.vala:129
+#, fuzzy
+#| msgid "Choose Encryption Password"
+msgid "Set Encryption Password"
+msgstr "ගුප්තකේතන මුරපදය තෝරන්න"
+
+#: src/Views/EncryptView.vala:204
+#, fuzzy
+#| msgid "Set Password"
+msgid "Acceptable password"
+msgstr "මුරපදය සකසන්න"
+
+#: src/Views/EncryptView.vala:206
+#, fuzzy
+#| msgid "Choose Password"
+msgid "Good password"
+msgstr "මුර පදයක් තෝරන්න"
+
+#: src/Views/EncryptView.vala:208
+#, fuzzy
+#| msgid "Set Password"
+msgid "Great password"
+msgstr "මුරපදය සකසන්න"
+
+#: src/Views/EncryptView.vala:229
+msgid "Passwords do not match"
+msgstr "මුර පද ගැලපෙන්නේ නැත"
+
+#: src/Views/EncryptView.vala:235
+#, fuzzy
+#| msgid "Passwords do not match"
+msgid "Passwords match"
+msgstr "මුර පද ගැලපෙන්නේ නැත"
+
+#: src/Views/ErrorView.vala:31
+msgid "Could Not Install"
+msgstr "ස්ථාපනය කල නොහැක"
+
+#: src/Views/ErrorView.vala:35
+#, fuzzy, c-format
+#| msgid ""
+#| "Installing %s failed, possibly due to a hardware error. Your device may "
+#| "not restart properly. You can try the following:"
+msgid ""
+"Installing %s failed, possibly due to a hardware error. The device may not "
+"restart properly. You can try the following:"
+msgstr ""
+"%s ස්ථාපනය අසාර්ථකයි, සමහරවිට දෘඪාංග දෝෂයක් නිසා විය හැක. ඔබගේ උපාංගය නිසියාකාරව නැවත "
+"ආරම්භ කිරීමට නොහැකි වනු ඇත. ඔබට පහත සඳහන් දෑ උත්සාහ කළ හැකිය:"
+
+#: src/Views/ErrorView.vala:45
+#, fuzzy
+#| msgid "• Try the installation again"
+msgid "Try the installation again"
+msgstr "• නැවත ස්ථාපනය කිරීමට උත්සාහ කරන්න"
+
+#: src/Views/ErrorView.vala:55
+#, fuzzy
+#| msgid "• Use Demo Mode and try to manually recover"
+msgid "Use Demo Mode and try to manually recover"
+msgstr "• Demo මාදිලිය භාවිතා කර අතින් ආපසු ලබාගත හැක"
+
+#: src/Views/ErrorView.vala:64
+#, fuzzy
+#| msgid "• Restart your device to boot from another drive"
+msgid "Restart the device and boot from another drive"
+msgstr "• ඔබගේ උපාංගය වෙනත් ධාවකයකින් ආරම්භ කිරීමට නැවත ආරම්භ කරන්න"
+
+#: src/Views/ErrorView.vala:69
+msgid "Details"
+msgstr "විස්තර"
+
+#: src/Views/ErrorView.vala:114 src/Views/SuccessView.vala:61
+msgid "Restart Device"
+msgstr "නැවත ආරම්භ කරන්න"
+
+#: src/Views/ErrorView.vala:116 src/Views/TryInstallView.vala:36
+msgid "Try Demo Mode"
+msgstr ""
+
+#: src/Views/ErrorView.vala:118
+msgid "Try Installing Again"
+msgstr "නැවත ස්ථාපනය කිරීමට උතසහ කරන්න"
+
+#: src/Views/KeyboardLayoutView.vala:30
+msgid "Input Language"
+msgstr "ආදාන භාෂාව"
+
+#: src/Views/KeyboardLayoutView.vala:32
+#, fuzzy
+#| msgid "Keyboard Layout"
+msgid "Select Keyboard Layout"
+msgstr "යතුරු පුවරුවේ සැකැස්ම"
+
+#: src/Views/KeyboardLayoutView.vala:39
+msgid "Type to test your layout"
+msgstr "ඔබේ පිරිසැලසුම පරීක්ෂා කිරීමට ටයිප් කරන්න"
+
+#: src/Views/KeyboardLayoutView.vala:42
+msgid "Show keyboard layout"
+msgstr "යතුරුපුවරු ආකෘතිය පෙන්වන්න"
+
+#: src/Views/KeyboardLayoutView.vala:58 src/Views/LanguageView.vala:104
+msgid "Select"
+msgstr "තෝරන්න"
+
+#: src/Views/LanguageView.vala:67
+msgid "Languages"
+msgstr "භාෂා"
+
+#: src/Views/LanguageView.vala:272
+msgid "Select a Language"
+msgstr "භාෂාව තෝරන්න"
+
+#: src/Views/LanguageView.vala:295 src/Views/LanguageView.vala:355
+msgid "Currently active language"
+msgstr "දැනට ක්රියාකාරී භාෂාව"
+
+#: src/Views/PartitioningView.vala:51
+#, fuzzy
+#| msgid "Customize Partitions…"
+msgid "Select Partitions"
+msgstr "අභිමත බෙදීම්කරණය…"
+
+#: src/Views/PartitioningView.vala:56
+#, fuzzy
+#| msgid ""
+#| "Select which partitions to use across all drives. <b>Selecting \"Format\" "
+#| "will erase ALL data on the selected partition.</b>"
+msgid ""
+"Selecting “Format” will erase <i>all</i> data on the selected partition."
+msgstr ""
+"සියළු ධාවකයන් හරහා භාවිතා කිරීමට අවශ්‍ය බෙදුම් තෝරන්න. <b> \"ආකෘතිය\" තේරීමෙන් තෝරා ඇත "
+"බෙදුම මත සියලු දත්ත මැකෙනු ඇත. </b>"
+
+#. Device is in BIOS mode, so we just require a root partition
+#: src/Views/PartitioningView.vala:65
+msgid "You must at least select a <b>Root (/)</b> partition."
+msgstr "ඔබ අවම වශයෙන්  <b> මුල (/) </b> බෙදුම තෝරන්න."
+
+#. Device is in EFI mode, so we also require a boot partition
+#: src/Views/PartitioningView.vala:69
+#, fuzzy
+#| msgid ""
+#| "You must at least select a <b>Root (/)</b> partition and a <b>Boot (/boot/"
+#| "efi)</b> partition."
+msgid ""
+"You must at least select a <b>Root (/)</b> partition and an optional <b>Boot "
+"(/boot/efi)</b> partition."
+msgstr ""
+"ඔබ අවම වශයෙන් <b> මුල (/)</b> බෙදුමක් සහ <b>ඇරඹුම් (/boot/efi)</b> බෙදුමක් තේරිය යුතුයි"
+
+#: src/Views/PartitioningView.vala:80
+msgid "It is also recommended to select a <b>Swap</b> partition."
+msgstr "<b> Swap </b> කොටසක් තෝරාගැනීම නිර්දේශ කෙරේ කරනු ලැබේ."
+
+#: src/Views/PartitioningView.vala:138
+msgid "Modify Partitions…"
+msgstr "බෙදුම් වෙනස් කරන්න …"
+
+#: src/Views/PartitioningView.vala:283
+msgid "EFI partition has the wrong file system"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:285
+msgid "EFI partition is too small"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:288
+msgid "Invalid file system for root"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:290
+msgid "Invalid file system for home"
+msgstr ""
+
+#: src/Views/ProgressView.vala:64 src/Views/ProgressView.vala:99
+msgid "Show log"
+msgstr ""
+
+#: src/Views/ProgressView.vala:90
+#, fuzzy
+#| msgid "Try Installing Again"
+msgid "Installing"
+msgstr "නැවත ස්ථාපනය කිරීමට උතසහ කරන්න"
+
+#: src/Views/ProgressView.vala:95
+msgid "Hide log"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:224
+msgid "Partitioning Drive"
+msgstr "ධාවකය බෙදීම"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:229
+msgid "Extracting Files"
+msgstr "ගොනු නිස්සාරණය"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:234
+msgid "Configuring the System"
+msgstr "පද්ධතිය වින්‍යාස කිරීම"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:239
+msgid "Finishing the Installation"
+msgstr "ස්ථාපනය අවසන් කිරීම"
+
+#: src/Views/TryInstallView.vala:26
+#, fuzzy
+msgid "Try or Install"
+msgstr "නැවත ස්ථාපනය කිරීමට උතසහ කරන්න"
+
+#: src/Views/TryInstallView.vala:38
+msgid ""
+"Changes will not be saved, and data from your previous OS will be unchanged. "
+"Performance and features may not reflect the installed experience."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:44
+#, fuzzy
+#| msgid "Erase and Install"
+msgid "Erase Disk and Install"
+msgstr "මකා ස්ථාපනය කරන්න"
+
+#: src/Views/TryInstallView.vala:46
+#, c-format
+msgid "Erase everything and install a fresh copy of %s."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:52
+msgid "Custom Install (Advanced)"
+msgstr ""
+
+#: src/Views/TryInstallView.vala:54
+msgid ""
+"Create, resize, or otherwise manage partitions manually. This method may "
+"lead to data loss."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:107
+#, fuzzy
+#| msgid "Could Not Install"
+msgid "Custom Install"
+msgstr "ස්ථාපනය කල නොහැක"
+
+#: src/Views/SuccessView.vala:28
+msgid "Continue Setting Up"
+msgstr ""
+
+#: src/Views/SuccessView.vala:32
+#, c-format
+msgid "%s has been installed"
+msgstr ""
+
+#: src/Views/SuccessView.vala:58
+msgid "Shut Down"
+msgstr "වසා දමන්න"
+
+#: src/Views/SuccessView.vala:89
+#, c-format
+msgid "Your device will automatically restart in %i second."
+msgid_plural "Your device will automatically restart in %i seconds."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Views/SuccessView.vala:93
+msgid ""
+"After restarting you can set up a new user, or you can shut down now and set "
+"up a new user later."
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:66
+msgid "Decrypt This Partition"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:70
+msgid ""
+"Enter the partition's encryption password and set a device name for the "
+"decrypted partition."
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:82
+msgid "Password:"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:95
+msgid "Device name:"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:108
+msgid "Decrypt"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:182
+msgid "LUKS volume was decrypted"
+msgstr ""
+
+#: src/Widgets/DiskBar.vala:259
+#, c-format
+msgid "%s (%s)"
+msgstr ""
+
+#: src/Widgets/DiskBar.vala:260
+#, c-format
+msgid "%s (%s: <b>%s</b>)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:56
+#, fuzzy
+#| msgid "Customize Partitions…"
+msgid "Use Partition"
+msgstr "අභිමත බෙදීම්කරණය…"
+
+#: src/Widgets/PartitionMenu.vala:60
+msgid "Format"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:61
+msgid "Delete all data and set up a new file system"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:64
+msgid "Use as:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:71
+msgid "Root (/)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:72
+msgid "Home (/home)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:73
+#, c-format
+msgid "Boot (%s)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:74
+msgid "Swap"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:75
+msgid "Custom"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:79
+msgid "Custom:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:86
+msgid "Filesystem:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:98
+msgid "Default (ext4)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:261
+msgid "Custom value must begin with /"
+msgstr ""
+
+#~ msgid "Choose Encryption Password"
+#~ msgstr "ගුප්තකේතන මුරපදය තෝරන්න"
+
+#~ msgid ""
+#~ "Your device is running on battery power. It's recommended to be plugged "
+#~ "in while installing."
+#~ msgstr ""
+#~ "ඔබගේ උපාංගය බැටරි බලය මත ක්රියාත්මක වේ. ස්ථාපනය කරන අතරතුර සම්බන්ධ කර ලෙස නිර්දේශ "
+#~ "කරනු ලැබේ."
+
+#~ msgid "Ignore"
+#~ msgstr "නොසලකාහරින්න"
+
+#~ msgid "Not Enough Space"
+#~ msgstr "ප්රමාණවත් ඉඩකඩක් නැත"
+
+#~ msgid ""
+#~ "There is not enough room on your device to install %s. We recommend a "
+#~ "minimum of %s of storage."
+#~ msgstr ""
+#~ "%s ස්ථාපනය කිරීමට ඔබේ උපාංගයේ ප්රමාණවත් ඉඩක් නොමැත. අපි අවම වශයෙන් %s ඉඩක් ගබඩා "
+#~ "කිරීම සදහා නිර්දේශ කරනවා."
+
+#~ msgid ""
+#~ "Your device doesn't meet the recommended hardware requirements. This may "
+#~ "cause it to run slowly or freeze."
+#~ msgstr ""
+#~ "ඔබගේ උපාංගය නිර්දේශිත දෘඪාංග අවශ්යතා සපුරන්නේ නැත. මෙය සෙමින් ධාවනය වීමට හෝ "
+#~ "අත්හිටුවීමට ඉඩ ඇත."
+
+#, fuzzy
+#~ msgid "Clean Install"
+#~ msgstr "මකා ස්ථාපනය කරන්න"
+
+#, fuzzy
+#~| msgid ""
+#~| "Drive encryption may minimally impact read and write speed when "
+#~| "performing intense tasks."
+#~ msgid ""
+#~ "Read and write speeds may be minimally impacted during intense tasks."
+#~ msgstr ""
+#~ "ධාවක ගුප්තකේතනය අවම වශයෙන් කාර්යක්ෂම කාර්යයන් සිදු කරන විට කියවීමේ සහ ලිවීමේ වේගයට "
+#~ "බලපායි."
+
+#~ msgid "Unable to set the Distinst log callback"
+#~ msgstr "වෙනස් ලොග් බැඳුම්කරය පිහිටුවීමට නොහැකිය"
+
+#~ msgid "Starting installation"
+#~ msgstr "ස්ථාපනය ආරම්භ කිරීම"
+
+#~ msgid "Are you sure you want to Shut Down?"
+#~ msgstr "ඔබට වසා දැමීමට අවශ්ය බව ඔබට විශ්වාසද?"
+
+#~ msgid "This will cancel installation and turn off this device."
+#~ msgstr "මෙය ස්ථාපනය අවලංගු කර මෙම උපාංගය වසා දමනු ඇත."
+
+#~ msgid "Restart"
+#~ msgstr "නැවත ආරම්භ"
+
+#~ msgid "Cancel"
+#~ msgstr "අවලංගු කරන්න"
+
+#~ msgid "Operating System"
+#~ msgstr "මෙහෙයුම් පද්ධතිය"
+
+#~ msgid "Install or Try Demo Mode"
+#~ msgstr "Demo  මාතය හෝ ස්ථාපනය උත්සාහ කරන්න"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Launchpad Contributions:\n"
+#~ "  H4CK3R# https://launchpad.net/~hackingcyberspace\n"
+#~ "  Maxwell Barvian https://launchpad.net/~mbarvian-deactivatedaccount\n"
+#~ "  Nipun https://launchpad.net/~nipun5perera"
+
+#~ msgid "Calculator"
+#~ msgstr "ගණක යන්ත්‍රය"
+
+#~ msgid "History"
+#~ msgstr "අතීතය"
+
+#~ msgid "Result"
+#~ msgstr "ප්‍රතිඑලය"
+
+#~ msgid "Close"
+#~ msgstr "වසා දමන්න"
+
+#~ msgid "Add"
+#~ msgstr "එකතු කරන්න"

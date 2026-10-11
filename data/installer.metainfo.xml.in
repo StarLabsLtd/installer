@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2021 elementary, Inc. <contact@elementary.io> -->
+<component type="desktop-application">
+  <id>io.elementary.installer</id>
+  <translation type="gettext">io.elementary.installer</translation>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
+
+  <name>Installer</name>
+  <summary>Install elementary OS</summary>
+  <description>
+    <p>Step by step installer for elementary OS itself.</p>
+  </description>
+
+  <screenshots>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-language.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-keyboard.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-try-install.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-custom.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-encrypt.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-progress.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/elementary/installer/8.1.2/data/screenshot-success.png</image>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1" />
+
+  <provides>
+    <binary>io.elementary.installer</binary>
+    <binary>io.elementary.installer-daemon</binary>
+  </provides>
+
+  <url type="bugtracker">https://github.com/elementary/installer/issues</url>
+  <url type="donation">https://elementary.io/get-involved#funding</url>
+  <url type="help">https://github.com/elementary/installer/discussions</url>
+  <url type="homepage">https://elementary.io/</url>
+  <url type="translate">https://l10n.elementary.io/projects/installer</url>
+
+  <developer id="org.elementaryos">
+    <name>elementary, Inc.</name>
+  </developer>
+  <project_group>elementary</project_group>
+  <update_contact>contact_at_elementary.io</update_contact>
+
+  <releases>
+    <release version="8.1.3" date="2025-11-20" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/pull/909">Fix a crash reported in our Discord chat</issue>
+      </issues>
+    </release>
+
+    <release version="8.1.2" date="2025-09-01" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Improve screen reader support</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/879">installer crashes / blanks when detecting partitioning scheme</issue>
+        <issue url="https://github.com/elementary/installer/issues/881">Installer UI is not centered</issue>
+        <issue url="https://github.com/elementary/installer/issues/898">Installer crashes when navigating to the custom installation view</issue>
+      </issues>
+    </release>
+
+    <release version="8.1.1" date="2024-12-12" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/272">Inconsistent navigation</issue>
+        <issue url="https://github.com/elementary/installer/issues/758">Installer UI is not centered</issue>
+        <issue url="https://github.com/elementary/installer/issues/848">Installer crashes when navigating to the custom installation view with a system storage with custom partition setup</issue>
+      </issues>
+    </release>
+
+    <release version="8.1.0" date="2024-10-21" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Sort language variants alphabetically and automatically select main variant by default</li>
+          <li>Provide more feedback for invalid values when doing a custom install</li>
+          <li>Battery warning is sent as a notification instead of an infobar</li>
+          <li>Update post-install driver installation instructions</li>
+          <li>Improve screen reader support</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/538">Screen Reader ignores each view’s title text</issue>
+        <issue url="https://github.com/elementary/installer/issues/539">Second step of VariantWidget not focused</issue>
+        <issue url="https://github.com/elementary/installer/issues/628">Port Installer to GTK4</issue>
+        <issue url="https://github.com/elementary/installer/issues/652">Use libxkbregistry</issue>
+        <issue url="https://github.com/elementary/installer/issues/692">No partitions visible when running without daemon</issue>
+        <issue url="https://github.com/elementary/installer/issues/745">Double clicking the language in first step leads to empty select list in next step</issue>
+        <issue url="https://github.com/elementary/installer/issues/775">Installer is not localized</issue>
+        <issue url="https://github.com/elementary/installer/issues/793">Clicking a partition in the custom install glitches the installer window</issue>
+        <issue url="https://github.com/elementary/installer/issues/806">Installer doesn't launch from Applications menu in Circe daily</issue>
+      </issues>
+    </release>
+
+    <release version="8.0.0" date="2024-07-25" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Keyboard layout preview is now in a resizable window</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/662">Make EFI ESP optional during custom install</issue>
+        <issue url="https://github.com/elementary/installer/issues/691">Partitions legend seems clipped</issue>
+      </issues>
+    </release>
+
+    <release version="1.2.0" date="2023-08-24" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Swipe to navigate back</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/418">No option to install proprietary drivers</issue>
+        <issue url="https://github.com/elementary/installer/issues/718">"Enable Drive Encription" icon is smaller than the others</issue>
+      </issues>
+    </release>
+
+    <release version="1.1.0" date="2023-07-21" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/471">Automatically prompt for screen reader after a timeout</issue>
+        <issue url="https://github.com/elementary/installer/issues/590">Laptop goes to standby during installation process</issue>
+        <issue url="https://github.com/elementary/installer/issues/617">Installer not showing disk or partitions, can't install</issue>
+      </issues>
+    </release>
+
+    <release version="1.0.7" date="2023-01-11" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Use large icons in views</li>
+          <li>Add a custom icon for Before Installing view</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+
+    <release version="1.0.6" date="2022-12-05" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Show an infobar on battery instead of switching to a different page</li>
+          <li>Show all system requirements warnings on a single page</li>
+          <li>Warn about installing developer builds</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/installer/issues/491">Installer too big in VirtualBox</issue>
+      </issues>
+    </release>
+
+    <release version="1.0.5" date="2021-12-17" />
+    <release version="1.0.4" date="2021-12-13" />
+    <release version="1.0.3" date="2021-08-25" />
+  </releases>
+</component>

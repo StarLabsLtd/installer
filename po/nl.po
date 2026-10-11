@@ -1,0 +1,802 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2025-12-23 08:55+0000\n"
+"Last-Translator: Bas Ernst <50556177+ErnstBas@users.noreply.github.com>\n"
+"Language-Team: Dutch <https://l10n.elementaryos.org/projects/installer/"
+"installer/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.11.4\n"
+"X-Launchpad-Export-Date: 2016-09-27 06:40+0000\n"
+
+#: src/Application.vala:54
+msgid "Connect to a Power Source"
+msgstr "Verbinding met een voedingsbron maken"
+
+#: src/Application.vala:55
+msgid "Installation will not succeed if this device loses power."
+msgstr ""
+"De installatie zal niet afgerond kunnen worden als dit apparaat toegang tot "
+"stroom verliest."
+
+#: src/Application.vala:68
+#, c-format
+msgid "Install %s"
+msgstr "Installeer %s"
+
+#: src/Application.vala:76
+msgid "operating system is being installed"
+msgstr "besturingssysteem wordt geïnstalleerd"
+
+#: src/Utils.vala:34
+msgid "Test mode shutdown"
+msgstr "Testmodus afsluiten"
+
+#: src/Utils.vala:48
+msgid "Test mode reboot"
+msgstr "Opnieuw opstarten in testmodus"
+
+#: src/Utils.vala:74
+msgid "Test mode switch user"
+msgstr "Testmodus wissel gebruiker"
+
+#: src/Helpers/LocaleHelper.vala:126 src/Views/KeyboardLayoutView.vala:200
+#, c-format
+msgid "%s…"
+msgstr "%s…"
+
+#: src/Objects/KeyboardVariant.vala:27
+msgid "Default"
+msgstr "Standaard"
+
+#: src/Views/AbstractInstallerView.vala:55
+msgid "Test Mode"
+msgstr "Testmodus"
+
+#: src/Views/AbstractInstallerView.vala:64
+msgid "Cancel Installation"
+msgstr "Installatie annuleren"
+
+#: src/Views/CheckView.vala:48
+msgid "Before Installing"
+msgstr "Voordat u installeert"
+
+#: src/Views/CheckView.vala:55
+msgid "Pre-Release Version"
+msgstr "Pre-release versie"
+
+#: src/Views/CheckView.vala:56
+msgid ""
+"Only install on devices dedicated for development. <b>You will not be able "
+"to upgrade to a stable release</b>."
+msgstr ""
+"Installeer alleen op apparaten die zijn bedoeld voor ontwikkeling. <b>U kunt "
+"niet upgraden naar een stabiele uitgave</b>."
+
+#: src/Views/CheckView.vala:61
+msgid "Virtual Machine"
+msgstr "Virtuele machine"
+
+#: src/Views/CheckView.vala:62
+#, c-format
+msgid "Some parts of %s may run slowly, freeze, or not function properly."
+msgstr ""
+"Sommige onderdelen van %s kunnen vertraagd reageren, vastlopen of niet naar "
+"behoren werken."
+
+#: src/Views/CheckView.vala:67
+msgid "Your Device May Be Too Slow"
+msgstr "Uw apparaat is mogelijk te traag"
+
+#: src/Views/CheckView.vala:68
+msgid "This may cause it to run slowly or freeze."
+msgstr "Dit kan ervoor zorgen dat het vertraagd reageert of vastloopt."
+
+#: src/Views/CheckView.vala:86
+msgid "Install Anyway"
+msgstr "Toch installeren"
+
+#: src/Views/CheckView.vala:230
+msgid "Recommended:"
+msgstr "Aanbevolen:"
+
+#: src/Views/CheckView.vala:236
+msgid "Your Device:"
+msgstr "Uw apparaat:"
+
+#: src/Views/CheckView.vala:242 src/Views/CheckView.vala:246
+msgid "Processor:"
+msgstr "Processor:"
+
+#: src/Views/CheckView.vala:258 src/Views/CheckView.vala:262
+msgid "Memory:"
+msgstr "Geheugen:"
+
+#: src/Views/DiskView.vala:46
+msgid "Select a Drive"
+msgstr "Een schijf selecteren"
+
+#: src/Views/DiskView.vala:51
+msgid ""
+"This will erase all data on the selected drive. If you have not backed your "
+"data up, you can cancel the installation and use Demo Mode."
+msgstr ""
+"Dit zal alle data op de geselecteerde schijf wissen. Als u geen back-up "
+"heeft van uw data, dan kunt u de installatie annuleren en de demomodus "
+"gebruiken."
+
+#: src/Views/DiskView.vala:71 src/Views/PartitioningView.vala:112
+msgid "Getting the current configuration…"
+msgstr "Huidige configuratie aan het ophalen…"
+
+#: src/Views/DiskView.vala:96 src/Views/PartitioningView.vala:145
+#: src/Views/TryInstallView.vala:83
+msgid "Next"
+msgstr "Volgende"
+
+#: src/Views/DriversView.vala:24
+msgid "Additional Drivers"
+msgstr "Aanvullende drivers"
+
+#: src/Views/DriversView.vala:28
+msgid ""
+"Broadcom® Wi-Fi adapters, NVIDIA® graphics, and some virtual machines may "
+"not function properly without additional drivers. Most devices do not "
+"require additional drivers."
+msgstr ""
+"Broadcom® Wi-Fi adapters, NVIDIA® grafische kaarten en sommige virtuele "
+"machines functioneren mogelijk niet naar behoren zonder aanvullende drivers. "
+"De meeste apparaten hebben geen aanvullende drivers nodig."
+
+#: src/Views/DriversView.vala:35
+msgid ""
+"Proprietary drivers contain private code that can't be reviewed. Security "
+"and other updates are dependent on the driver vendor."
+msgstr ""
+"Propriëtaire drivers bevatten private code die niet beoordeeld kan worden. "
+"Veiligheid en andere updates zijn afhankelijk van de driverleverancier."
+
+#: src/Views/DriversView.vala:41
+msgid "An Internet connection is required to install NVIDIA® graphics drivers."
+msgstr ""
+"Een internetverbinding is vereist om NVIDIA® grafische drivers te "
+"installeren."
+
+#: src/Views/DriversView.vala:47
+msgid ""
+"Proprietary drivers can be installed later through System Settings → System, "
+"but an Internet connection will be required for all drivers."
+msgstr ""
+"Propriëtaire drivers kunnen later geïnstalleerd worden in "
+"Systeeminstellingen → Systeem, maar een internetverbinding is vereist voor "
+"alle drivers."
+
+#: src/Views/DriversView.vala:52
+msgid ""
+"Include third-party proprietary drivers when installing. I agree to their "
+"respective licenses and terms of use."
+msgstr ""
+"Installeer propriëtaire drivers van derde partijen tijdens installatie van "
+"het systeem. Ik ga akkoord met hun respectieve licenties en "
+"gebruikersvoorwaarden."
+
+#: src/Views/DriversView.vala:75 src/Views/KeyboardLayoutView.vala:54
+#: src/Views/PartitioningView.vala:141 src/Views/TryInstallView.vala:79
+msgid "Back"
+msgstr "Terug"
+
+#: src/Views/DriversView.vala:79
+msgid "Erase and Install"
+msgstr "Installeren en wissen"
+
+#: src/Views/EncryptView.vala:27
+msgid "Don’t Encrypt"
+msgstr "Niet versleutelen"
+
+#: src/Views/EncryptView.vala:53
+msgid "Enable Drive Encryption"
+msgstr "Schijfversleuteling inschakelen"
+
+#: src/Views/EncryptView.vala:58
+msgid ""
+"Data will only be protected from others with physical access to this device "
+"when it is shut down."
+msgstr ""
+"Gegevens worden alleen beschermd tegen anderen met fysieke toegang tot dit "
+"apparaat wanneer het is uitgeschakeld."
+
+#: src/Views/EncryptView.vala:64
+msgid ""
+"The encryption password will be required each time this device is turned on. "
+"If you forget it, <b>you will not be able to recover data.</b>"
+msgstr ""
+"Het encryptie-wachtwoord is elke keer tijdens het opstarten vereist. Als je "
+"dit wachtwoord vergeet <b>is het niet mogelijk data te herstellen.</b>"
+
+#: src/Views/EncryptView.vala:70
+msgid ""
+"A built-in or USB keyboard will be required to type the encryption password "
+"each time this device is turned on."
+msgstr ""
+"Een ingebouwd toetsenbord of USB-toetsenbord is benodigd om het "
+"sleutelwachtwoord in te kunnen voeren wanneer u de computer opstart."
+
+#: src/Views/EncryptView.vala:89
+msgid "Encryption Password"
+msgstr "Stel encryptie-wachtwoord in"
+
+#: src/Views/EncryptView.vala:91
+msgid ""
+"A unique password for this device, not the password for your user account."
+msgstr ""
+"Een uniek wachtwoord voor dit apparaat; niet het wachtwoord voor je "
+"gebruikersaccount."
+
+#: src/Views/EncryptView.vala:106
+msgid "Confirm Password"
+msgstr "Wachtwoord bevestigen"
+
+#: src/Views/EncryptView.vala:129
+msgid "Set Encryption Password"
+msgstr "Stel sleutelwachtwoord in"
+
+#: src/Views/EncryptView.vala:204
+msgid "Acceptable password"
+msgstr "Acceptabel wachtwoord"
+
+#: src/Views/EncryptView.vala:206
+msgid "Good password"
+msgstr "Goed wachtwoord"
+
+#: src/Views/EncryptView.vala:208
+msgid "Great password"
+msgstr "Geweldig wachtwoord"
+
+#: src/Views/EncryptView.vala:229
+msgid "Passwords do not match"
+msgstr "Wachtwoorden komen niet overeen"
+
+#: src/Views/EncryptView.vala:235
+msgid "Passwords match"
+msgstr "Wachtwoorden komen overeen"
+
+#: src/Views/ErrorView.vala:31
+msgid "Could Not Install"
+msgstr "Kon niet installeren"
+
+#: src/Views/ErrorView.vala:35
+#, c-format
+msgid ""
+"Installing %s failed, possibly due to a hardware error. The device may not "
+"restart properly. You can try the following:"
+msgstr ""
+"Installeren van %s mislukt, mogelijk door een hardwarefout. De kans bestaat "
+"dat uw apparaat niet correct kan herstarten. U kunt een van de volgende "
+"opties proberen:"
+
+#: src/Views/ErrorView.vala:45
+msgid "Try the installation again"
+msgstr "Probeer de installatie opnieuw"
+
+#: src/Views/ErrorView.vala:55
+msgid "Use Demo Mode and try to manually recover"
+msgstr "Gebruik de demomodus en probeer het systeem handmatig te herstellen"
+
+#: src/Views/ErrorView.vala:64
+msgid "Restart the device and boot from another drive"
+msgstr "Herstart de computer om vervolgens van een andere schijf op te starten"
+
+#: src/Views/ErrorView.vala:69
+msgid "Details"
+msgstr "Details"
+
+#: src/Views/ErrorView.vala:114 src/Views/SuccessView.vala:61
+msgid "Restart Device"
+msgstr "Herstart apparaat"
+
+#: src/Views/ErrorView.vala:116 src/Views/TryInstallView.vala:36
+msgid "Try Demo Mode"
+msgstr "Probeer de demonstratiemodus"
+
+#: src/Views/ErrorView.vala:118
+msgid "Try Installing Again"
+msgstr "Probeer de installatie opnieuw"
+
+#: src/Views/KeyboardLayoutView.vala:30
+msgid "Input Language"
+msgstr "Invoertaal"
+
+#: src/Views/KeyboardLayoutView.vala:32
+msgid "Select Keyboard Layout"
+msgstr "Selecteer toetsenbordindeling"
+
+#: src/Views/KeyboardLayoutView.vala:39
+msgid "Type to test your layout"
+msgstr "Typ om uw indeling uit te proberen"
+
+#: src/Views/KeyboardLayoutView.vala:42
+msgid "Show keyboard layout"
+msgstr "Toon toetsenbordindeling"
+
+#: src/Views/KeyboardLayoutView.vala:58 src/Views/LanguageView.vala:104
+msgid "Select"
+msgstr "Selecteer"
+
+#: src/Views/LanguageView.vala:67
+msgid "Languages"
+msgstr "Talen"
+
+#: src/Views/LanguageView.vala:272
+msgid "Select a Language"
+msgstr "Selecteer een taal"
+
+#: src/Views/LanguageView.vala:295 src/Views/LanguageView.vala:355
+msgid "Currently active language"
+msgstr "Momenteel actieve taal"
+
+#: src/Views/PartitioningView.vala:51
+msgid "Select Partitions"
+msgstr "Selecteer partities"
+
+#: src/Views/PartitioningView.vala:56
+msgid ""
+"Selecting “Format” will erase <i>all</i> data on the selected partition."
+msgstr ""
+"\"Formatteren\" selecteren wist <i>alle</i> data op de geselecteerde "
+"partitie."
+
+#. Device is in BIOS mode, so we just require a root partition
+#: src/Views/PartitioningView.vala:65
+msgid "You must at least select a <b>Root (/)</b> partition."
+msgstr "U zult in ieder geval een <b>Root-partitie (/)</b> moeten kiezen."
+
+#. Device is in EFI mode, so we also require a boot partition
+#: src/Views/PartitioningView.vala:69
+msgid ""
+"You must at least select a <b>Root (/)</b> partition and an optional <b>Boot "
+"(/boot/efi)</b> partition."
+msgstr ""
+"U zult in ieder geval een <b>Root-partitie (/)</b> en optioneel een <b>Boot-"
+"partitie (/boot/efi)</b> moeten selecteren."
+
+#: src/Views/PartitioningView.vala:80
+msgid "It is also recommended to select a <b>Swap</b> partition."
+msgstr ""
+"Het wordt eveneens aangeraden om een <b>Swap-partitie</b> te selecteren."
+
+#: src/Views/PartitioningView.vala:138
+msgid "Modify Partitions…"
+msgstr "Partities aanpassen…"
+
+#: src/Views/PartitioningView.vala:283
+msgid "EFI partition has the wrong file system"
+msgstr "EFI partitie heeft het verkeerde bestandssysteem"
+
+#: src/Views/PartitioningView.vala:285
+msgid "EFI partition is too small"
+msgstr "EFI partitie is te klein"
+
+#: src/Views/PartitioningView.vala:288
+msgid "Invalid file system for root"
+msgstr "Ongeldig bestandssysteem voor root"
+
+#: src/Views/PartitioningView.vala:290
+msgid "Invalid file system for home"
+msgstr "Ongeldig bestandssysteem voor home"
+
+#: src/Views/ProgressView.vala:64 src/Views/ProgressView.vala:99
+msgid "Show log"
+msgstr "Toon logboek"
+
+#: src/Views/ProgressView.vala:90
+msgid "Installing"
+msgstr "Installeren"
+
+#: src/Views/ProgressView.vala:95
+msgid "Hide log"
+msgstr "Verberg logboek"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:224
+msgid "Partitioning Drive"
+msgstr "Schijf partitioneren"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:229
+msgid "Extracting Files"
+msgstr "Bestanden uitpakken"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:234
+msgid "Configuring the System"
+msgstr "Systeem configureren"
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:239
+msgid "Finishing the Installation"
+msgstr "Installatie afronden"
+
+#: src/Views/TryInstallView.vala:26
+msgid "Try or Install"
+msgstr "Probeer of installeer"
+
+#: src/Views/TryInstallView.vala:38
+msgid ""
+"Changes will not be saved, and data from your previous OS will be unchanged. "
+"Performance and features may not reflect the installed experience."
+msgstr ""
+"In de demomodus zullen veranderingen die u gemaakt heeft niet worden "
+"opgeslagen, en data van uw eerdere besturingssysteem niet worden gewijzigd. "
+"Prestaties en functionaliteit zullen mogelijkerwijs geen waarheidsgetrouw "
+"beeld geven tegenover een daadwerkelijke installatie van het "
+"besturingssysteem."
+
+#: src/Views/TryInstallView.vala:44
+msgid "Erase Disk and Install"
+msgstr "Schijf wissen en installeren"
+
+#: src/Views/TryInstallView.vala:46
+#, c-format
+msgid "Erase everything and install a fresh copy of %s."
+msgstr "Wis alles en installeer een nieuwe kopie van %s."
+
+#: src/Views/TryInstallView.vala:52
+msgid "Custom Install (Advanced)"
+msgstr "Aangepaste installatie (Geavanceerd)"
+
+#: src/Views/TryInstallView.vala:54
+msgid ""
+"Create, resize, or otherwise manage partitions manually. This method may "
+"lead to data loss."
+msgstr ""
+"Maak partities, pas de grootte aan, of bewerk partities handmatig. Deze "
+"methode kan tot het verlies van gegevens leiden."
+
+#: src/Views/TryInstallView.vala:107
+msgid "Custom Install"
+msgstr "Aangepaste installatie"
+
+#: src/Views/SuccessView.vala:28
+msgid "Continue Setting Up"
+msgstr "Vervolg instellen"
+
+#: src/Views/SuccessView.vala:32
+#, c-format
+msgid "%s has been installed"
+msgstr "%s is geïnstalleerd"
+
+#: src/Views/SuccessView.vala:58
+msgid "Shut Down"
+msgstr "Afsluiten"
+
+#: src/Views/SuccessView.vala:89
+#, c-format
+msgid "Your device will automatically restart in %i second."
+msgid_plural "Your device will automatically restart in %i seconds."
+msgstr[0] "Uw computer zal automatisch herstarten over %i seconde."
+msgstr[1] "Uw computer zal automatisch herstarten over %i seconden."
+
+#: src/Views/SuccessView.vala:93
+msgid ""
+"After restarting you can set up a new user, or you can shut down now and set "
+"up a new user later."
+msgstr ""
+"Na het opnieuw opstarten kunt u een nieuwe gebruiker aanmaken, of u kunt uw "
+"apparaat afsluiten om later een gebruiker aan te maken."
+
+#: src/Widgets/DecryptMenu.vala:66
+msgid "Decrypt This Partition"
+msgstr "Ontsleutel deze partitie"
+
+#: src/Widgets/DecryptMenu.vala:70
+msgid ""
+"Enter the partition's encryption password and set a device name for the "
+"decrypted partition."
+msgstr ""
+"Voer het sleutelwachtwoord van de partitie in en stel een apparaatnaam in "
+"voor de ontsleutelde partitie."
+
+#: src/Widgets/DecryptMenu.vala:82
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+#: src/Widgets/DecryptMenu.vala:95
+msgid "Device name:"
+msgstr "Apparaatnaam:"
+
+#: src/Widgets/DecryptMenu.vala:108
+msgid "Decrypt"
+msgstr "Ontsleutel"
+
+#: src/Widgets/DecryptMenu.vala:182
+msgid "LUKS volume was decrypted"
+msgstr "LUKS-volume is ontsleuteld"
+
+#: src/Widgets/DiskBar.vala:259
+#, c-format
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: src/Widgets/DiskBar.vala:260
+#, c-format
+msgid "%s (%s: <b>%s</b>)"
+msgstr "%s (%s: <b>%s</b>)"
+
+#: src/Widgets/PartitionMenu.vala:56
+msgid "Use Partition"
+msgstr "Gebruik partitie"
+
+#: src/Widgets/PartitionMenu.vala:60
+msgid "Format"
+msgstr "Formatteren"
+
+#: src/Widgets/PartitionMenu.vala:61
+msgid "Delete all data and set up a new file system"
+msgstr "Alle data verwijderen en een nieuw bestandssysteem opzetten"
+
+#: src/Widgets/PartitionMenu.vala:64
+msgid "Use as:"
+msgstr "Gebruik als:"
+
+#: src/Widgets/PartitionMenu.vala:71
+msgid "Root (/)"
+msgstr "Root (/)"
+
+#: src/Widgets/PartitionMenu.vala:72
+msgid "Home (/home)"
+msgstr "Home (/home)"
+
+#: src/Widgets/PartitionMenu.vala:73
+#, c-format
+msgid "Boot (%s)"
+msgstr "Boot (%s)"
+
+#: src/Widgets/PartitionMenu.vala:74
+msgid "Swap"
+msgstr "Swap"
+
+#: src/Widgets/PartitionMenu.vala:75
+msgid "Custom"
+msgstr "Aangepast"
+
+#: src/Widgets/PartitionMenu.vala:79
+msgid "Custom:"
+msgstr "Aangepast:"
+
+#: src/Widgets/PartitionMenu.vala:86
+msgid "Filesystem:"
+msgstr "Bestandsysteem:"
+
+#: src/Widgets/PartitionMenu.vala:98
+msgid "Default (ext4)"
+msgstr "Standaard (ext4)"
+
+#: src/Widgets/PartitionMenu.vala:261
+msgid "Custom value must begin with /"
+msgstr "Aangepaste waarde moet beginnen met /"
+
+#~ msgid ""
+#~ "Encrypt this device's drive if required for added protection, but be sure "
+#~ "you understand:"
+#~ msgstr ""
+#~ "Versleutel de opslag van dit apparaat voor extra beveiliging, maar wees "
+#~ "je bewust van het volgende:"
+
+#~ msgid "Choose Encryption Password"
+#~ msgstr "Kies een sleutelwachtwoord"
+
+#~ msgid ""
+#~ "Your device is running on battery power. It's recommended to be plugged "
+#~ "in while installing."
+#~ msgstr ""
+#~ "Uw apparaat loopt op batterijvoeding. Tijdens de installatie wordt "
+#~ "netvoeding aanbevolen."
+
+#~ msgid ""
+#~ "Proprietary drivers are subject to their own license terms. By "
+#~ "installing, you agree to their terms of use."
+#~ msgstr ""
+#~ "Propriëtaire drivers zijn onderworpen aan hun eigen licentievoorwaarden. "
+#~ "Door de drivers te installeren ga je akkoord met deze licentievoorwaarden."
+
+#~ msgid "Ignore"
+#~ msgstr "Negeren"
+
+#~ msgid "Not Enough Space"
+#~ msgstr "Onvoldoende ruimte"
+
+#~ msgid ""
+#~ "There is not enough room on your device to install %s. We recommend a "
+#~ "minimum of %s of storage."
+#~ msgstr ""
+#~ "Er is onvoldoende ruimte op uw apparaat om %s te installeren. We bevelen "
+#~ "een minimum opslagruimte aan van %s."
+
+#~ msgid ""
+#~ "Your device doesn't meet the recommended hardware requirements. This may "
+#~ "cause it to run slowly or freeze."
+#~ msgstr ""
+#~ "Uw apparaat voldoet niet aan de hardwarevereisten. Hierdoor kan het traag "
+#~ "werken of vastlopen."
+
+#~ msgid ""
+#~ "You appear to be installing in a virtual machine. Some parts of %s may "
+#~ "run slowly, freeze, or not function properly in a virtual machine. It's "
+#~ "recommended to install on real hardware."
+#~ msgstr ""
+#~ "Het lijkt er op dat u aan het installeren bent in virtuele machine. "
+#~ "Sommige elementen van %s kunnen langzaam, haperend, of mogelijk niet goed "
+#~ "functioneren binnen een virtuele machine. Het wordt aangeraden om te "
+#~ "installeren op echte hardware."
+
+#~ msgid ""
+#~ "You can install %s on this device now, or try Demo Mode without "
+#~ "installing."
+#~ msgstr ""
+#~ "U kunt nu %s installeren op uw toestel, of probeer de demonstratiemodus "
+#~ "uit zonder installatie."
+
+#~ msgid "Clean Install"
+#~ msgstr "Schone installatie"
+
+#~ msgid ""
+#~ "Read and write speeds may be minimally impacted during intense tasks."
+#~ msgstr ""
+#~ "De lees- en schrijfsnelheid worden mogelijk minimaal beïnvloed wanneer u "
+#~ "zware taken uitvoert."
+
+#~ msgid "Unable to set the Distinst log callback"
+#~ msgstr "Kan de Distinst log callback niet instellen"
+
+#~ msgid "Starting installation"
+#~ msgstr "Installatie starten"
+
+#~ msgid "Are you sure you want to Shut Down?"
+#~ msgstr "Bent u zeker dat u het systeem wilt afsluiten?"
+
+#~ msgid "This will cancel installation and turn off this device."
+#~ msgstr "Dit zal de installatie annuleren en dit apparaat afsluiten."
+
+#~ msgid "Restart"
+#~ msgstr "Herstarten"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
+
+#~ msgid "Operating System"
+#~ msgstr "Besturingssysteem"
+
+#~ msgid "Customize Partitions…"
+#~ msgstr "Partities aanpassen…"
+
+#~ msgid "Install or Try Demo Mode"
+#~ msgstr "Installeer of probeer de demomodus"
+
+#~ msgid ""
+#~ "You can always return to the installer from Demo Mode by selecting the "
+#~ "Install icon."
+#~ msgstr ""
+#~ "U kunt altijd terug van de demonstratiemodus naar het "
+#~ "installatieprogramma door het installatie-icoon te selecteren."
+
+#~ msgid "Select a drive to use for installation"
+#~ msgstr "Selecteer een schijf voor installatie"
+
+#~ msgid "Restart your device to continue setting up"
+#~ msgstr "Herstart uw toestel om verder te gaan met de installatie"
+
+#~ msgid "Formating Drive"
+#~ msgstr "Schijf formatteren"
+
+#~ msgid "Data from your previous operating system is unchanged in Demo Mode."
+#~ msgstr ""
+#~ "Gegevens van uw vorige besturingssysteem blijven onveranderd in de "
+#~ "demonstratiemodus."
+
+#~ msgid "Any changes you make in Demo Mode will not be saved."
+#~ msgstr ""
+#~ "Elke verandering die u maakt tijdens de demonstratiemodus worden niet "
+#~ "opgeslagen."
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Launchpad Contributions:\n"
+#~ "  Leo https://launchpad.net/~thebrain2807\n"
+#~ "  Maxwell Barvian https://launchpad.net/~mbarvian-deactivatedaccount\n"
+#~ "  Perry Peeters https://launchpad.net/~perry-a\n"
+#~ "  Peter https://launchpad.net/~5-peter-r\n"
+#~ "  Stefan Cloudt https://launchpad.net/~stefan-cloudt\n"
+#~ "  Thomas Berends https://launchpad.net/~thomasberends"
+
+#~ msgid "Calculator"
+#~ msgstr "Rekenmachine"
+
+#~ msgid "History"
+#~ msgstr "Geschiedenis"
+
+#~ msgid "Value to add:"
+#~ msgstr "Waarde om op te tellen:"
+
+#~ msgid "Result"
+#~ msgstr "Resultaat"
+
+#~ msgid "Expression"
+#~ msgstr "Uitdrukking"
+
+#~ msgid "Close"
+#~ msgstr "Sluiten"
+
+#~ msgid "Add"
+#~ msgstr "Optellen"
+
+#~ msgid "Show extended functionality"
+#~ msgstr "Toon uitgebreide functionaliteit"
+
+#~ msgid "Calculate Result"
+#~ msgstr "Bereken resultaat"
+
+#~ msgid "Add last result"
+#~ msgstr "Voeg laatste resultaat toe"
+
+#~ msgid "Clear entry"
+#~ msgstr "Invoer wissen"
+
+#~ msgid "Subtract"
+#~ msgstr "Aftrekken"
+
+#~ msgid "Multiply"
+#~ msgstr "Vermenigvuldigen"
+
+#~ msgid "Divide"
+#~ msgstr "Delen"
+
+#~ msgid "Percentage"
+#~ msgstr "Percentage"
+
+#~ msgid "Start Group"
+#~ msgstr "Startgroep"
+
+#~ msgid "End Group"
+#~ msgstr "Eindgroep"
+
+#~ msgid "Exponent"
+#~ msgstr "Exponent"
+
+#~ msgid "Sine"
+#~ msgstr "Sinus"
+
+#~ msgid "Hyperbolic Sine"
+#~ msgstr "Sinus hyperbolicus"
+
+#~ msgid "Cosine"
+#~ msgstr "Cosinus"
+
+#~ msgid "Hyperbolic Cosine"
+#~ msgstr "Cosinus hyperbolicus"
+
+#~ msgid "Tangent"
+#~ msgstr "Tangens"
+
+#~ msgid "Hyperbolic Tangent"
+#~ msgstr "Tangens hyperbolicus"
+
+#~ msgid "Pi"
+#~ msgstr "Pi"
+
+#~ msgid "Euler's Number"
+#~ msgstr "Getal van Euler"
+
+#~ msgid "Hide extended functionality"
+#~ msgstr "Verberg uitgebreide functionaliteit"
+
+#~ msgid "'%s' is invalid."
+#~ msgstr "'%s' is ongeldig."
+
+#~ msgid "'%s' is unknown."
+#~ msgstr "'%s' is onbekend."

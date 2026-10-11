@@ -1,0 +1,624 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 19:03+0000\n"
+"PO-Revision-Date: 2018-02-04 22:34+0000\n"
+"Last-Translator: Yasir Rehman <HazardDroidOfficial@gmail.com>\n"
+"Language-Team: Urdu <https://weblate.elementary.io/projects/installer/"
+"installer/ur/>\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.18\n"
+"X-Launchpad-Export-Date: 2016-09-27 06:41+0000\n"
+
+#: src/Application.vala:54
+msgid "Connect to a Power Source"
+msgstr "کسی پاور سورس سےکونیکٹ کریں"
+
+#: src/Application.vala:55
+msgid "Installation will not succeed if this device loses power."
+msgstr ""
+
+#: src/Application.vala:68
+#, c-format
+msgid "Install %s"
+msgstr "انسٹال %s 1"
+
+#: src/Application.vala:76
+msgid "operating system is being installed"
+msgstr ""
+
+#: src/Utils.vala:34
+msgid "Test mode shutdown"
+msgstr ""
+
+#: src/Utils.vala:48
+msgid "Test mode reboot"
+msgstr ""
+
+#: src/Utils.vala:74
+msgid "Test mode switch user"
+msgstr ""
+
+#: src/Helpers/LocaleHelper.vala:126 src/Views/KeyboardLayoutView.vala:200
+#, c-format
+msgid "%s…"
+msgstr "%s 1…"
+
+#: src/Objects/KeyboardVariant.vala:27
+msgid "Default"
+msgstr ""
+
+#: src/Views/AbstractInstallerView.vala:55
+msgid "Test Mode"
+msgstr ""
+
+#: src/Views/AbstractInstallerView.vala:64
+msgid "Cancel Installation"
+msgstr "کینسل انسٹالیشن"
+
+#: src/Views/CheckView.vala:48
+#, fuzzy
+msgid "Before Installing"
+msgstr "حذف کریں اور انسٹال کریں"
+
+#: src/Views/CheckView.vala:55
+msgid "Pre-Release Version"
+msgstr ""
+
+#: src/Views/CheckView.vala:56
+msgid ""
+"Only install on devices dedicated for development. <b>You will not be able "
+"to upgrade to a stable release</b>."
+msgstr ""
+
+#: src/Views/CheckView.vala:61
+msgid "Virtual Machine"
+msgstr ""
+
+#: src/Views/CheckView.vala:62
+#, c-format
+msgid "Some parts of %s may run slowly, freeze, or not function properly."
+msgstr ""
+
+#: src/Views/CheckView.vala:67
+msgid "Your Device May Be Too Slow"
+msgstr "آپ کاڈیواءیس بہت سست ہو سکتا ہے"
+
+#: src/Views/CheckView.vala:68
+msgid "This may cause it to run slowly or freeze."
+msgstr ""
+
+#: src/Views/CheckView.vala:86
+#, fuzzy
+#| msgid "Install %s"
+msgid "Install Anyway"
+msgstr "انسٹال %s 1"
+
+#: src/Views/CheckView.vala:230
+msgid "Recommended:"
+msgstr "تجویز کردہ:"
+
+#: src/Views/CheckView.vala:236
+msgid "Your Device:"
+msgstr "آپ کا ڈیواءیس:"
+
+#: src/Views/CheckView.vala:242 src/Views/CheckView.vala:246
+msgid "Processor:"
+msgstr "پروسیسر:"
+
+#: src/Views/CheckView.vala:258 src/Views/CheckView.vala:262
+msgid "Memory:"
+msgstr "میموری:"
+
+#: src/Views/DiskView.vala:46
+msgid "Select a Drive"
+msgstr ""
+
+#: src/Views/DiskView.vala:51
+msgid ""
+"This will erase all data on the selected drive. If you have not backed your "
+"data up, you can cancel the installation and use Demo Mode."
+msgstr ""
+"یہ منتخب کردہ ڈرائیو کے تمام ڈیٹا کو ختم کردے گا. اگر آپ نے اپنے ڈیٹا کو بیک "
+"اپ نہیں کیا ہے، تو آپ انسٹال کو منسوخ کرسکتے ہیں اور ڈیمو موڈ استعمال کرسکتے "
+"ہیں."
+
+#: src/Views/DiskView.vala:71 src/Views/PartitioningView.vala:112
+msgid "Getting the current configuration…"
+msgstr "موجودہ کونفیگریشن حاصل کیا جا رہا ہے …"
+
+#: src/Views/DiskView.vala:96 src/Views/PartitioningView.vala:145
+#: src/Views/TryInstallView.vala:83
+msgid "Next"
+msgstr ""
+
+#: src/Views/DriversView.vala:24
+msgid "Additional Drivers"
+msgstr ""
+
+#: src/Views/DriversView.vala:28
+msgid ""
+"Broadcom® Wi-Fi adapters, NVIDIA® graphics, and some virtual machines may "
+"not function properly without additional drivers. Most devices do not "
+"require additional drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:35
+msgid ""
+"Proprietary drivers contain private code that can't be reviewed. Security "
+"and other updates are dependent on the driver vendor."
+msgstr ""
+
+#: src/Views/DriversView.vala:41
+msgid "An Internet connection is required to install NVIDIA® graphics drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:47
+msgid ""
+"Proprietary drivers can be installed later through System Settings → System, "
+"but an Internet connection will be required for all drivers."
+msgstr ""
+
+#: src/Views/DriversView.vala:52
+msgid ""
+"Include third-party proprietary drivers when installing. I agree to their "
+"respective licenses and terms of use."
+msgstr ""
+
+#: src/Views/DriversView.vala:75 src/Views/KeyboardLayoutView.vala:54
+#: src/Views/PartitioningView.vala:141 src/Views/TryInstallView.vala:79
+msgid "Back"
+msgstr ""
+
+#: src/Views/DriversView.vala:79
+msgid "Erase and Install"
+msgstr "حذف کریں اور انسٹال کریں"
+
+#: src/Views/EncryptView.vala:27
+msgid "Don’t Encrypt"
+msgstr ""
+
+#: src/Views/EncryptView.vala:53
+msgid "Enable Drive Encryption"
+msgstr ""
+
+#: src/Views/EncryptView.vala:58
+msgid ""
+"Data will only be protected from others with physical access to this device "
+"when it is shut down."
+msgstr ""
+
+#: src/Views/EncryptView.vala:64
+msgid ""
+"The encryption password will be required each time this device is turned on. "
+"If you forget it, <b>you will not be able to recover data.</b>"
+msgstr ""
+
+#: src/Views/EncryptView.vala:70
+msgid ""
+"A built-in or USB keyboard will be required to type the encryption password "
+"each time this device is turned on."
+msgstr ""
+
+#: src/Views/EncryptView.vala:89
+msgid "Encryption Password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:91
+msgid ""
+"A unique password for this device, not the password for your user account."
+msgstr ""
+
+#: src/Views/EncryptView.vala:106
+msgid "Confirm Password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:129
+msgid "Set Encryption Password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:204
+msgid "Acceptable password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:206
+msgid "Good password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:208
+msgid "Great password"
+msgstr ""
+
+#: src/Views/EncryptView.vala:229
+msgid "Passwords do not match"
+msgstr ""
+
+#: src/Views/EncryptView.vala:235
+msgid "Passwords match"
+msgstr ""
+
+#: src/Views/ErrorView.vala:31
+#, fuzzy
+msgid "Could Not Install"
+msgstr "انسٹال نہیں کیا جا سکا %s 1"
+
+#: src/Views/ErrorView.vala:35
+#, fuzzy, c-format
+msgid ""
+"Installing %s failed, possibly due to a hardware error. The device may not "
+"restart properly. You can try the following:"
+msgstr ""
+"انسٹالیشن ناکام ہوگئی ہے، لہذا آپ کا ڈیواءیس مناسب طریقے سے دوبارہ شروع نہیں "
+"کرسکتا. آپ مندرجہ ذیل میں سے ایک کوشش کر سکتے ہیں:"
+
+#: src/Views/ErrorView.vala:45
+#, fuzzy
+msgid "Try the installation again"
+msgstr "انسٹالیشن شروع کی جا رہی ہے\n"
+
+#: src/Views/ErrorView.vala:55
+msgid "Use Demo Mode and try to manually recover"
+msgstr ""
+
+#: src/Views/ErrorView.vala:64
+msgid "Restart the device and boot from another drive"
+msgstr ""
+
+#: src/Views/ErrorView.vala:69
+msgid "Details"
+msgstr ""
+
+#: src/Views/ErrorView.vala:114 src/Views/SuccessView.vala:61
+msgid "Restart Device"
+msgstr ""
+
+#: src/Views/ErrorView.vala:116 src/Views/TryInstallView.vala:36
+msgid "Try Demo Mode"
+msgstr ""
+
+#: src/Views/ErrorView.vala:118
+msgid "Try Installing Again"
+msgstr ""
+
+#: src/Views/KeyboardLayoutView.vala:30
+msgid "Input Language"
+msgstr ""
+
+#: src/Views/KeyboardLayoutView.vala:32
+msgid "Select Keyboard Layout"
+msgstr ""
+
+#: src/Views/KeyboardLayoutView.vala:39
+msgid "Type to test your layout"
+msgstr ""
+
+#: src/Views/KeyboardLayoutView.vala:42
+msgid "Show keyboard layout"
+msgstr ""
+
+#: src/Views/KeyboardLayoutView.vala:58 src/Views/LanguageView.vala:104
+msgid "Select"
+msgstr ""
+
+#: src/Views/LanguageView.vala:67
+msgid "Languages"
+msgstr ""
+
+#: src/Views/LanguageView.vala:272
+msgid "Select a Language"
+msgstr ""
+
+#: src/Views/LanguageView.vala:295 src/Views/LanguageView.vala:355
+msgid "Currently active language"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:51
+msgid "Select Partitions"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:56
+msgid ""
+"Selecting “Format” will erase <i>all</i> data on the selected partition."
+msgstr ""
+
+#. Device is in BIOS mode, so we just require a root partition
+#: src/Views/PartitioningView.vala:65
+msgid "You must at least select a <b>Root (/)</b> partition."
+msgstr ""
+
+#. Device is in EFI mode, so we also require a boot partition
+#: src/Views/PartitioningView.vala:69
+msgid ""
+"You must at least select a <b>Root (/)</b> partition and an optional <b>Boot "
+"(/boot/efi)</b> partition."
+msgstr ""
+
+#: src/Views/PartitioningView.vala:80
+msgid "It is also recommended to select a <b>Swap</b> partition."
+msgstr ""
+
+#: src/Views/PartitioningView.vala:138
+msgid "Modify Partitions…"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:283
+msgid "EFI partition has the wrong file system"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:285
+msgid "EFI partition is too small"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:288
+msgid "Invalid file system for root"
+msgstr ""
+
+#: src/Views/PartitioningView.vala:290
+msgid "Invalid file system for home"
+msgstr ""
+
+#: src/Views/ProgressView.vala:64 src/Views/ProgressView.vala:99
+msgid "Show log"
+msgstr ""
+
+#: src/Views/ProgressView.vala:90
+#, fuzzy
+msgid "Installing"
+msgstr "حذف کریں اور انسٹال کریں"
+
+#: src/Views/ProgressView.vala:95
+msgid "Hide log"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:224
+msgid "Partitioning Drive"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:229
+msgid "Extracting Files"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:234
+msgid "Configuring the System"
+msgstr ""
+
+#. /TRANSLATORS: The current step of the installer back-end
+#: src/Views/ProgressView.vala:239
+msgid "Finishing the Installation"
+msgstr ""
+
+#: src/Views/TryInstallView.vala:26
+#, fuzzy
+msgid "Try or Install"
+msgstr "حذف کریں اور انسٹال کریں"
+
+#: src/Views/TryInstallView.vala:38
+msgid ""
+"Changes will not be saved, and data from your previous OS will be unchanged. "
+"Performance and features may not reflect the installed experience."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:44
+#, fuzzy
+#| msgid "Erase and Install"
+msgid "Erase Disk and Install"
+msgstr "حذف کریں اور انسٹال کریں"
+
+#: src/Views/TryInstallView.vala:46
+#, c-format
+msgid "Erase everything and install a fresh copy of %s."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:52
+msgid "Custom Install (Advanced)"
+msgstr ""
+
+#: src/Views/TryInstallView.vala:54
+msgid ""
+"Create, resize, or otherwise manage partitions manually. This method may "
+"lead to data loss."
+msgstr ""
+
+#: src/Views/TryInstallView.vala:107
+#, fuzzy
+msgid "Custom Install"
+msgstr "انسٹال نہیں کیا جا سکا %s 1"
+
+#: src/Views/SuccessView.vala:28
+msgid "Continue Setting Up"
+msgstr ""
+
+#: src/Views/SuccessView.vala:32
+#, c-format
+msgid "%s has been installed"
+msgstr ""
+
+#: src/Views/SuccessView.vala:58
+msgid "Shut Down"
+msgstr "شٹ ڈاءون"
+
+#: src/Views/SuccessView.vala:89
+#, c-format
+msgid "Your device will automatically restart in %i second."
+msgid_plural "Your device will automatically restart in %i seconds."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Views/SuccessView.vala:93
+msgid ""
+"After restarting you can set up a new user, or you can shut down now and set "
+"up a new user later."
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:66
+msgid "Decrypt This Partition"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:70
+msgid ""
+"Enter the partition's encryption password and set a device name for the "
+"decrypted partition."
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:82
+msgid "Password:"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:95
+msgid "Device name:"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:108
+msgid "Decrypt"
+msgstr ""
+
+#: src/Widgets/DecryptMenu.vala:182
+msgid "LUKS volume was decrypted"
+msgstr ""
+
+#: src/Widgets/DiskBar.vala:259
+#, c-format
+msgid "%s (%s)"
+msgstr ""
+
+#: src/Widgets/DiskBar.vala:260
+#, c-format
+msgid "%s (%s: <b>%s</b>)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:56
+msgid "Use Partition"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:60
+msgid "Format"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:61
+msgid "Delete all data and set up a new file system"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:64
+msgid "Use as:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:71
+msgid "Root (/)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:72
+msgid "Home (/home)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:73
+#, c-format
+msgid "Boot (%s)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:74
+msgid "Swap"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:75
+msgid "Custom"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:79
+msgid "Custom:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:86
+msgid "Filesystem:"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:98
+msgid "Default (ext4)"
+msgstr ""
+
+#: src/Widgets/PartitionMenu.vala:261
+msgid "Custom value must begin with /"
+msgstr ""
+
+#~ msgid ""
+#~ "Your device is running on battery power. It's recommended to be plugged "
+#~ "in while installing."
+#~ msgstr ""
+#~ "آپ کا ڈیواءیس بیٹری پر چل رہا ہے. انسٹالیشن کرنے کے دوران پلگ ان کرنے کی "
+#~ "سفارش کی جاتی ہے."
+
+#~ msgid "Ignore"
+#~ msgstr "ایگنور"
+
+#~ msgid "Not Enough Space"
+#~ msgstr "جگہ کافی نہیں ہے"
+
+#~ msgid ""
+#~ "There is not enough room on your device to install %s. We recommend a "
+#~ "minimum of %s of storage."
+#~ msgstr ""
+#~ "آپ کے ڈیواءیس میں  %s 1 انسٹال کرنے کے لئے  جگہ کافی نہیں ہے . ہم کم سے "
+#~ "کم %s 2 اسٹوریج کی سفارش کرتے ہیں."
+
+#~ msgid ""
+#~ "Your device doesn't meet the recommended hardware requirements. This may "
+#~ "cause it to run slowly or freeze."
+#~ msgstr ""
+#~ "آپ کا ڈیواءیس ہماری سفارش کردہ ہارڈ ویئر کی ضروریات کو پورا نہیں کرتا. جس "
+#~ "کی وجہ سے یہ آہستہ آہستہ چلے گا  یا پھر یہ منجمد بھی ہوسکتا ہے."
+
+#, fuzzy
+#~ msgid "Clean Install"
+#~ msgstr "حذف کریں اور انسٹال کریں"
+
+#, fuzzy
+#~ msgid "Unable to set the Distinst log callback"
+#~ msgstr "Distinst لاگ ڈومین نام کو تبدیل کرنے میں ناکام"
+
+#~ msgid "Are you sure you want to Shut Down?"
+#~ msgstr "کیا آپ واقعی شٹ ڈاءون کرنا چاہتے ہیں؟"
+
+#~ msgid "This will cancel installation and turn off this device."
+#~ msgstr "یہ انسٹالیشن کو منسوخ کردے گا اور اس ڈیواءیس کو بند کردے گا."
+
+#~ msgid "Restart"
+#~ msgstr "ریسٹارٹ"
+
+#~ msgid "Cancel"
+#~ msgstr "کینسل"
+
+#~ msgid "Operating System"
+#~ msgstr "آپریٹینگ سسٹم"
+
+#~ msgid "Select a drive to use for installation"
+#~ msgstr "انسٹایشن کرنے کیلئے ایک ڈرائیو کا انتخاب کریں"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Launchpad Contributions:\n"
+#~ "  Waqar Ahmed https://launchpad.net/~waqar-17a"
+
+#~ msgid "Use English"
+#~ msgstr "اردو کا استعمال"
+
+#~ msgid "Calculator"
+#~ msgstr "کیلکولیٹر"
+
+#~ msgid "History"
+#~ msgstr "تاریخ"
+
+#~ msgid "Result"
+#~ msgstr "نتیجہ"
+
+#~ msgid "Close"
+#~ msgstr "بند کریں"
+
+#~ msgid "Add"
+#~ msgstr "جمع"
