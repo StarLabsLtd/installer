@@ -137,18 +137,35 @@ namespace LocaleHelper {
 
     public static async bool language2locale (string language, out string? locale) {
         locale = null;
+        var parts = language.split ("@", 2);
+        var requested = parts[0];
+        var modifier = parts.length > 1 ? "@" + parts[1] : "";
+        var country = get_main_country (requested);
+        var preferred = requested.contains ("_") || country == null ? requested : requested + "_" + country;
 
         try {
-            var command = new GLib.Subprocess (
-                SubprocessFlags.STDOUT_PIPE,
-                "/usr/share/language-tools/language2locale",
-                language
-            );
-
-            yield command.communicate_utf8_async (null, null, out locale, null);
-            locale = locale.strip ();
-
-            return command.get_exit_status () == 0;
+            var command = new GLib.Subprocess (SubprocessFlags.STDOUT_PIPE, "/usr/bin/locale", "-a");
+            string output;
+            yield command.communicate_utf8_async (null, null, out output, null);
+            if (!command.get_successful ()) {
+                return false;
+            }
+            foreach (var installed in output.split ("\n")) {
+                var candidate = installed.replace (".utf8", ".UTF-8");
+                if (!candidate.contains (".UTF-8")) {
+                    continue;
+                }
+                var name = candidate.replace (".UTF-8", "");
+                if (name == preferred + modifier) {
+                    locale = candidate;
+                    return true;
+                }
+                if (locale == null && name.has_prefix (requested + "_") &&
+                    (name.contains ("@") ? "@" + name.split ("@", 2)[1] : "") == modifier) {
+                    locale = candidate;
+                }
+            }
+            return locale != null;
         } catch (Error e) {
             warning ("Error running language2locale, demo session language may be incorrect: %s", e.message);
         }
