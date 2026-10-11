@@ -2264,8 +2264,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
 
                 uint64.try_parse (get_contents (sys_block.get_child (name).get_child ("size")).strip (), out size);
                 uint64.try_parse (get_contents (sys_block.get_child (name).get_child ("queue").get_child ("logical_block_size")).strip (), out sector_size);
-                bool.try_parse (get_contents (sys_block.get_child (name).get_child ("queue").get_child ("rotational")).strip (), out rotational);
-                bool.try_parse (get_contents (sys_block.get_child (name).get_child ("removable")).strip (), out removable);
+                rotational = get_contents (sys_block.get_child (name).get_child ("queue").get_child ("rotational")).strip () == "1";
+                removable = get_contents (sys_block.get_child (name).get_child ("removable")).strip () == "1";
 
                 physical_disks += Disk () {
                     name = name,
