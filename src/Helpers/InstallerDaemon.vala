@@ -132,7 +132,14 @@ public class Installer.Daemon {
             throw new GLib.IOError.FAILED ("Not connected to installer daemon");
         }
 
-        yield daemon.install_with_default_disk_layout (config, disk, encrypt, encryption_password);
+        // A timeout does not stop the daemon's destructive operation.
+        int previous_timeout = daemon.g_default_timeout;
+        daemon.g_default_timeout = int.MAX;
+        try {
+            yield daemon.install_with_default_disk_layout (config, disk, encrypt, encryption_password);
+        } finally {
+            daemon.g_default_timeout = previous_timeout;
+        }
     }
 
     public async void install_with_custom_disk_layout (InstallerDaemon.InstallConfig config, InstallerDaemon.Mount[] disk_config, InstallerDaemon.LuksCredentials[] luks) throws GLib.Error {
@@ -140,7 +147,14 @@ public class Installer.Daemon {
             throw new GLib.IOError.FAILED ("Not connected to installer daemon");
         }
 
-        yield daemon.install_with_custom_disk_layout (config, disk_config, luks);
+        // A timeout does not stop the daemon's destructive operation.
+        int previous_timeout = daemon.g_default_timeout;
+        daemon.g_default_timeout = int.MAX;
+        try {
+            yield daemon.install_with_custom_disk_layout (config, disk_config, luks);
+        } finally {
+            daemon.g_default_timeout = previous_timeout;
+        }
     }
 
     public async void set_demo_mode_locale (string locale) throws GLib.Error {
