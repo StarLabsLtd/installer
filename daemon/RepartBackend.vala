@@ -13,6 +13,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         public string backing;
         public Posix.Stat backing_identity;
         public string backing_sequence;
+        public bool dave;
     }
 
     private class PreparedRoot : Object {
@@ -148,7 +149,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         GLib.Error? error = null;
         try {
             // Inspect the selected UKIs, not the recovery kernel. Their kernel
-            // bytes must match a config from the authenticated lower image.
+            // bytes must match a config from the verity-checked lower image.
             run_capture ({"mtools", "-c", "mcopy", "-i", raw + "@@1048576",
                           dave ? "::/EFI/Linux/elementary-dave_*.efi" : "::/EFI/Linux/elementary_*.efi", directory});
             var files = File.new_for_path (directory).enumerate_children (
@@ -190,7 +191,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                         Posix.Stat metadata;
                         if (Posix.lstat (file.get_path (), out metadata) != 0 ||
                             !Posix.S_ISREG (metadata.st_mode) || metadata.st_dev != media.identities[5].st_dev) {
-                            throw new IOError.FAILED ("Invalid authenticated target kernel input");
+                            throw new IOError.FAILED ("Invalid verity-checked target kernel input");
                         }
                     }
                     if (run_capture ({"sha256sum", binary.get_path ()}).split (" ")[0] != expected) continue;
@@ -200,7 +201,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 }
                 versions.close ();
                 File.new_for_path (kernel_image).delete ();
-                if (!matched) throw new IOError.NOT_SUPPORTED ("Target UKI has no matching authenticated kernel configuration");
+                if (!matched) throw new IOError.NOT_SUPPORTED ("Target UKI has no matching verity-checked kernel configuration");
             }
             if (names.length == 0) throw new IOError.NOT_SUPPORTED ("No target kernel qualified for hibernation");
         } catch (GLib.Error e) {
@@ -1101,26 +1102,38 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         return "/proc/%d/fd/%d".printf (Posix.getpid (), fd);
     }
 
-    private void require_secure_boot () throws GLib.Error {
-        // This is a guard, not runtime attestation of a UKI. The deployment must
-        // boot the approved signed UKI/stub/initrd; its embedded cmdline is authority.
+    private bool secure_boot_enabled () throws GLib.Error {
         var variables = File.new_for_path ("/sys/firmware/efi/efivars");
+        bool enabled = true;
         foreach (var name in new string[] {"SecureBoot", "SetupMode"}) {
             uint8[] value;
             variables.get_child (name + "-8be4df61-93ca-11d2-aa0d-00e098032b8c").load_contents (null, out value, null);
-            if (value.length != 5 || value[4] != (name == "SecureBoot" ? 1 : 0)) {
-                throw new IOError.PERMISSION_DENIED ("Authenticated Normal recovery boot required");
+            if (value.length != 5 || value[4] > 1) {
+                throw new IOError.INVALID_DATA ("Invalid %s firmware state", name);
+            }
+            if (value[4] != (name == "SecureBoot" ? 1 : 0)) {
+                enabled = false;
             }
         }
         var mok = variables.get_child ("MokSBStateRT-605dab50-e046-4300-abb6-3dd810dd8b23");
         try {
             uint8[] value;
             mok.load_contents (null, out value, null);
-            if (value.length != 5 || value[4] != 0) {
-                throw new IOError.PERMISSION_DENIED ("Shim validation must be enabled");
+            if (value.length != 5 || value[4] > 1) {
+                throw new IOError.INVALID_DATA ("Invalid Shim validation state");
+            }
+            if (value[4] != 0) {
+                enabled = false;
             }
         } catch (IOError.NOT_FOUND e) {
             // A direct firmware boot need not expose a Shim variable.
+        }
+        return enabled;
+    }
+
+    private void require_secure_boot () throws GLib.Error {
+        if (!secure_boot_enabled ()) {
+            throw new IOError.PERMISSION_DENIED ("DAVE installation requires Secure Boot with validation enabled");
         }
     }
 
@@ -1196,7 +1209,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             }
             retain_source (media, slot, parent, Path.get_basename (selected));
             if (media.identities[slot].st_dev != media.identities[0].st_rdev) {
-                throw new IOError.FAILED ("Installation image is outside authenticated media");
+                throw new IOError.FAILED ("Installation image is outside verity-checked media");
             }
         } catch (GLib.Error e) {
             error = e;
@@ -1214,14 +1227,17 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     }
 
     private void admit_media (MediaSource media, bool dave = false) throws GLib.Error {
-        require_secure_boot ();
+        media.dave = dave;
+        if (media.dave) {
+            require_secure_boot ();
+        }
         var command_line = get_contents (File.new_for_path ("/proc/cmdline"));
         var mode = media_parameter (command_line, "vale.mode");
         if ((dave ? mode != "dave-recovery" : (mode != "normal-recovery" && mode != "dave-recovery")) ||
             media_parameter (command_line, "boot") != "vale-live" ||
             media_parameter (command_line, "live-media") != "/dev/mapper/vale-install-media") {
             throw new IOError.PERMISSION_DENIED (dave ? "Only authenticated DAVE recovery may provision" :
-                                                 "Only authenticated recovery may run Normal installation");
+                                                 "Normal installation requires recovery media");
         }
         var blocks = media_parameter (command_line, "vale.media_data_blocks");
         var offset = media_parameter (command_line, "vale.media_hash_start_block");
@@ -1260,7 +1276,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         }
         media.fds[0] = Posix.open (path, Posix.O_RDONLY | Posix.O_NOFOLLOW | Posix.O_CLOEXEC | Posix.O_NONBLOCK);
         if (media.fds[0] < 0 || Posix.fstat (media.fds[0], out media.identities[0]) != 0 || !Posix.S_ISBLK (media.identities[0].st_mode)) {
-            throw new IOError.FAILED ("Could not retain authenticated media mapper");
+            throw new IOError.FAILED ("Could not retain verity media mapper");
         }
         media.table = "0 %s verity 1 %s %s 2048 2048 %s %s sha256 %s %s".printf (
             (count * 4).to_string (), backing_number, backing_number, blocks, offset, root, salt
@@ -1271,7 +1287,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         }
         retain_source (media, 1, Posix.AT_FDCWD, "/cdrom", true);
         if (media.identities[1].st_dev != media.identities[0].st_rdev) {
-            throw new IOError.FAILED ("Fixed media directory is not on the authenticated mapper");
+            throw new IOError.FAILED ("Fixed media directory is not on the verity mapper");
         }
         check_media (media);
         retain_media_file (media, 2, "extra", null);
@@ -1280,7 +1296,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     }
 
     private void check_media (MediaSource media) throws GLib.Error {
-        require_secure_boot ();
+        if (media.dave) {
+            require_secure_boot ();
+        }
         Posix.Stat current = Posix.Stat ();
         if (Posix.stat ("/dev/mapper/vale-install-media", out current) != 0 ||
             current.st_rdev != media.identities[0].st_rdev || current.st_ino != media.identities[0].st_ino ||
@@ -1289,7 +1307,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             get_contents (File.new_for_path ("/sys/dev/block/" + device_number (current.st_rdev) + "/dm/name")).strip () != "vale-install-media" ||
             mapper_command (media, "table") != media.table ||
             mapper_command (media, "info", {"-c", "--noheadings", "--separator", ":", "-o", "attr,events"}).strip () != media.state) {
-            throw new IOError.FAILED ("Authenticated media mapping changed or differs from signed facts");
+            throw new IOError.FAILED ("Media mapping changed or differs from declared parameters");
         }
         var status = mapper_command (media, "status");
         var prefix = "0 " + media.table.split (" ")[1] + " verity V";
@@ -1865,6 +1883,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         uint64 swap_size = 0;
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
+        bool enroll_hibernation = false;
         uint64 sector_size = 0;
 
         try {
@@ -1938,7 +1957,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 throw new IOError.INVALID_ARGUMENT ("Normal encryption requires a passphrase; DAVE is unavailable");
             }
             if (dave == null) {
-                // Normal uses the authenticated producer's encrypted userspace backend.
+                enroll_hibernation = secure_boot_enabled ();
+                // Normal uses the verity-checked producer's encrypted userspace backend.
                 foreach (var path in new string[] {
                     "usr/libexec/vale-normal-hibernate",
                     "usr/lib/systemd/system/systemd-hibernate.service.d/vale.conf",
@@ -1947,14 +1967,16 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                     Posix.Stat backend;
                     if (Posix.lstat (live_mount + "/" + path, out backend) != 0 ||
                         !Posix.S_ISREG (backend.st_mode) || backend.st_dev != media.identities[5].st_dev) {
-                        throw new IOError.NOT_SUPPORTED ("Missing authenticated Normal encrypted hibernation backend");
+                        throw new IOError.NOT_SUPPORTED ("Missing verity-checked Normal encrypted hibernation backend");
                     }
                 }
                 require_sleep_kernel (media, fd_path (media.fds[4]), work, false);
                 normal_boot = new NormalBoot (fd_path (media.fds[4]) + "@@1048576", definitions,
                     (argv) => { return run_capture (argv); },
                     () => {
-                        require_secure_boot ();
+                        if (secure_boot_enabled () != enroll_hibernation) {
+                            throw new IOError.BUSY ("Firmware validation state changed during installation");
+                        }
                         validate_target (dest_dev, fd, selected, sequence);
                     });
                 if (!uint64.try_parse (get_contents (File.new_for_path ("/sys/dev/block/" +
@@ -1965,7 +1987,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 Posix.Stat contexts;
                 if (Posix.lstat (live_mount + "/usr/share/factory/etc/selinux/targeted/contexts/files/file_contexts", out contexts) != 0 ||
                     !Posix.S_ISREG (contexts.st_mode) || contexts.st_dev != media.identities[5].st_dev) {
-                    throw new IOError.FAILED ("Missing authenticated target SELinux file contexts");
+                    throw new IOError.FAILED ("Missing verity-checked target SELinux file contexts");
                 }
                 configure_encryption (work, definitions, encrypt, encryption_password, ref keyfile);
                 swap_size = normal_swap_size ();
@@ -1979,7 +2001,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 repart_args = {"--json=short"};
             } else {
                 require_dave_boot_selection ();
-                // The authenticated producer's ESP is first, at 1 MiB. Reject
+                // The verity-checked producer's ESP is first, at 1 MiB. Reject
                 // older Normal-only sources before destructive repart starts.
                 run_capture ({"mtools", "-c", "mdir", "-i", fd_path (media.fds[4]) + "@@1048576",
                               "::/EFI/Linux/elementary-dave_*.efi"});
@@ -1995,7 +2017,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                     Posix.Stat account_file;
                     if (Posix.lstat (accounts, out account_file) != 0 ||
                         !Posix.S_ISREG (account_file.st_mode) || account_file.st_dev != media.identities[5].st_dev) {
-                        throw new IOError.FAILED ("Missing authenticated factory account database");
+                        throw new IOError.FAILED ("Missing verity-checked factory account database");
                     }
                     foreach (var account in get_contents (File.new_for_path (accounts)).split ("\n")) {
                         if (account.has_prefix (dave.username + ":")) {
@@ -2151,7 +2173,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         if (normal_boot != null) {
             normal_boot.publish (dest_dev, (uint32) json_integer (normal_plan.esp, "partno") + 1,
                 json_string (normal_plan.esp, "uuid"), json_integer (normal_plan.esp, "offset") / sector_size,
-                json_integer (normal_plan.esp, "raw_size") / sector_size);
+                json_integer (normal_plan.esp, "raw_size") / sector_size, enroll_hibernation);
         } else if (dave != null) {
             require_dave_boot_selection ();
         }

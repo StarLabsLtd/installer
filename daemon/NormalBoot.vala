@@ -31,7 +31,7 @@ internal class InstallerDaemon.NormalBoot {
         this.command = (owned) command;
         this.guard = (owned) guard;
         this.guard ();
-        // The caller retained this image from the signed recovery's verity media.
+        // The caller retained this image from the recovery's verity-checked media.
         // Bind the producer's installed chain, not the live recovery dispatcher.
         var listing = this.command ({"mtools", "-c", "mdir", "-b", "-i", source,
                                      "::/EFI/Linux/elementary_*.efi"}).strip ().split ("\n");
@@ -53,7 +53,7 @@ internal class InstallerDaemon.NormalBoot {
             files.insert (path, image_hash (source, path, work));
         }
         if (files.lookup ("/EFI/BOOT/BOOTX64.EFI") != files.lookup ("/EFI/systemd/systemd-bootx64.efi")) {
-            throw new IOError.NOT_SUPPORTED ("Normal requires the authenticated direct systemd-boot fallback");
+            throw new IOError.NOT_SUPPORTED ("Normal requires matching direct systemd-boot loaders");
         }
         var config = this.command ({"mtools", "-c", "mtype", "-i", source, "::/loader/loader.conf"});
         bool default_found = false;
@@ -100,7 +100,7 @@ internal class InstallerDaemon.NormalBoot {
         guard ();
         foreach (var path in files.get_keys ()) {
             if (image_hash (image, path, work) != files.lookup (path)) {
-                throw new IOError.FAILED ("Installed boot input differs from authenticated media: %s", path);
+                throw new IOError.FAILED ("Installed boot input differs from verity-checked media: %s", path);
             }
         }
         require_selection (order, default_entry);
@@ -186,7 +186,7 @@ internal class InstallerDaemon.NormalBoot {
     }
 
     internal void publish (string disk, uint32 partition, string uuid, uint64 start,
-                           uint64 sectors) throws GLib.Error {
+                           uint64 sectors, bool enroll_hibernation) throws GLib.Error {
         const string qualified_loader = "\\EFI\\BOOT\\BOOTX64.EFI";
         require_selection (order, default_entry);
         command ({"efibootmgr", "--create-only", "--disk", disk, "--part", partition.to_string (),
@@ -238,19 +238,21 @@ internal class InstallerDaemon.NormalBoot {
             }
             installed_default = written_default;
             require_selection (installed_order_value, installed_default);
-            attempted = Publication.ONESHOT;
-            command ({"bootctl", "--variables=yes", "set-oneshot", commission});
-            var written_oneshot = read_variable ("LoaderEntryOneShot", LOADER);
-            if (written_oneshot == null || loader_string (written_oneshot) != commission) {
-                throw new IOError.FAILED ("Could not verify commissioning boot selection");
+            if (enroll_hibernation) {
+                attempted = Publication.ONESHOT;
+                command ({"bootctl", "--variables=yes", "set-oneshot", commission});
+                var written_oneshot = read_variable ("LoaderEntryOneShot", LOADER);
+                if (written_oneshot == null || loader_string (written_oneshot) != commission) {
+                    throw new IOError.FAILED ("Could not verify commissioning boot selection");
+                }
+                installed_oneshot = written_oneshot;
+                require_selection (installed_order_value, installed_default, installed_oneshot);
             }
-            installed_oneshot = written_oneshot;
-            require_selection (installed_order_value, installed_default, installed_oneshot);
             attempted = Publication.NEXT;
             command ({"efibootmgr", "--bootnext", number});
             var written_next = read_variable ("BootNext", EFI);
             if (written_next == null || order_string (written_next) != number) {
-                throw new IOError.FAILED ("Could not verify commissioning firmware route");
+                throw new IOError.FAILED ("Could not verify Normal firmware route");
             }
             installed_next = written_next;
             require_selection (installed_order_value, installed_default, installed_oneshot, installed_next);
@@ -263,7 +265,8 @@ internal class InstallerDaemon.NormalBoot {
                     command ({"efibootmgr", "--delete-bootnext"});
                 }
                 var current_oneshot = read_variable ("LoaderEntryOneShot", LOADER);
-                if (attempted >= Publication.ONESHOT && current_oneshot != null && loader_string (current_oneshot) == commission) {
+                if (enroll_hibernation && attempted >= Publication.ONESHOT &&
+                    current_oneshot != null && loader_string (current_oneshot) == commission) {
                     command ({"bootctl", "--variables=yes", "set-oneshot", ""});
                 }
                 var current_default = read_variable ("LoaderEntryDefault", LOADER);
