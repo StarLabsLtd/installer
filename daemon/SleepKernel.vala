@@ -64,12 +64,12 @@ internal class InstallerDaemon.SleepKernel {
             keys.insert (key, value);
         }
         if (keys.lookup ("CONFIG_SUSPEND") != "y" ||
-            keys.lookup ("CONFIG_PM_SLEEP_S2IDLE") != "n" ||
+            keys.lookup ("CONFIG_PM_SLEEP_S2IDLE") != "y" ||
             keys.lookup ("CONFIG_HIBERNATION") != "y" ||
             keys.lookup ("CONFIG_HIBERNATION_SNAPSHOT_DEV") != "y" ||
             keys.lookup ("CONFIG_ENCRYPTED_HIBERNATION") != "y") {
             throw new IOError.NOT_SUPPORTED (
-                "Installation requires the shared target kernel with encrypted snapshots and no suspend-to-idle"
+                "Installation requires the shared target kernel with encrypted snapshots"
             );
         }
     }

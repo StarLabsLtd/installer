@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 private const string HIBERNATION = "CONFIG_HIBERNATION=y\nCONFIG_HIBERNATION_SNAPSHOT_DEV=y\nCONFIG_ENCRYPTED_HIBERNATION=y\n";
 
-private const string SHARED = "CONFIG_SUSPEND=y\n# CONFIG_PM_SLEEP_S2IDLE is not set\nCONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY=y\n" + HIBERNATION;
+private const string SHARED = "CONFIG_SUSPEND=y\nCONFIG_PM_SLEEP_S2IDLE=y\nCONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY=y\n" + HIBERNATION;
 private const string DAVE = "root=dissect vale.mode=dave suspend=off";
 
 private void main (string[] args) {
@@ -14,7 +14,7 @@ private void main (string[] args) {
     Test.add_func ("/sleep/reject-incomplete-kernels", () => {
         foreach (var config in new string[] {
             "CONFIG_SUSPEND=y\n" + HIBERNATION,
-            "CONFIG_SUSPEND=y\nCONFIG_PM_SLEEP_S2IDLE=y\n" + HIBERNATION,
+            "CONFIG_SUSPEND=y\n# CONFIG_PM_SLEEP_S2IDLE is not set\n" + HIBERNATION,
             HIBERNATION,
             "CONFIG_SUSPEND=y\n# CONFIG_PM_SLEEP_S2IDLE is not set\nCONFIG_HIBERNATION=y\n"
         }) {
@@ -71,7 +71,7 @@ private void main (string[] args) {
             "CONFIG_HIBERNATION=y\nCONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT=y\n",
             "# CONFIG_HIBERNATION is not set\n",
             "CONFIG_SUSPEND=y\n# CONFIG_PM_SLEEP_S2IDLE is not set\nCONFIG_HIBERNATION=y\n",
-            "CONFIG_SUSPEND=y\nCONFIG_PM_SLEEP_S2IDLE=y\n" + HIBERNATION,
+            "CONFIG_SUSPEND=y\n# CONFIG_PM_SLEEP_S2IDLE is not set\n" + HIBERNATION,
             HIBERNATION
         }) {
             try {
