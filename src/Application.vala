@@ -29,6 +29,7 @@ public class Installer.App : Gtk.Application {
 
         Granite.init ();
 
+        Adw.init ();
         try {
             UPower upower = Bus.get_proxy_sync (BusType.SYSTEM, "org.freedesktop.UPower", "/org/freedesktop/UPower", GLib.DBusProxyFlags.GET_INVALIDATED_PROPERTIES);
 
