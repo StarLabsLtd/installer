@@ -5,6 +5,19 @@
 
 public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     private const string REPART_SRC = "/opt/repart-target";
+    private RepartExecutor executor;
+    private string repart_source = REPART_SRC;
+    private string work_template = "/run/elementary-installer-XXXXXX";
+
+    public RepartBackend () {
+        executor = new RepartExecutor ();
+    }
+
+    internal RepartBackend.for_test (RepartExecutor executor, string repart_source, string work_template) {
+        this.executor = executor;
+        this.repart_source = repart_source;
+        this.work_template = work_template;
+    }
 
     private void log_message (InstallerDaemon.LogLevel level, string format, ...) {
         var msg= format.vprintf (va_list ());
@@ -88,7 +101,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
 
     private string run_capture (string[] argv) throws GLib.Error {
         try {
-            return RepartCommand.capture (argv);
+            return executor.capture (argv);
         } catch (GLib.Error e) {
             log_message (InstallerDaemon.LogLevel.ERROR, "Run command failed: %s: %s", string.joinv (" ", argv), e.message);
             throw new GLib.IOError.FAILED ("Run command failed: %s: %s", string.joinv (" ", argv), e.message);
@@ -97,9 +110,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
 
     private void run (string[] argv) throws GLib.Error {
         try {
-            var launcher = new SubprocessLauncher (NONE);
-            var process = launcher.spawnv (argv);
-            process.wait_check ();
+            executor.run (argv);
         } catch (GLib.Error e) {
             log_message (InstallerDaemon.LogLevel.ERROR, "Run command failed: %s: %s", string.joinv (" ", argv), e.message);
             throw new GLib.IOError.FAILED ("Run command failed: %s: %s", string.joinv (" ", argv), e.message);
@@ -261,7 +272,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         log_message (InstallerDaemon.LogLevel.INFO, "Starting installation");
 
         var keyfile = "";
-        var work = DirUtils.mkdtemp ("/run/elementary-installer-XXXXXX");
+        var work = DirUtils.mkdtemp (work_template);
         if (work == null) {
             throw new GLib.IOError.FAILED ("Could not create private installation directory");
         }
@@ -275,7 +286,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             File.new_for_path (squash_mount).make_directory ();
             File.new_for_path (definitions).make_directory ();
             // Repart definitions are a flat directory of files (including masks).
-            var source_definitions = File.new_for_path (REPART_SRC);
+            var source_definitions = File.new_for_path (repart_source);
             var enumerator = source_definitions.enumerate_children (
                 FileAttribute.STANDARD_NAME + "," + FileAttribute.STANDARD_TYPE,
                 FileQueryInfoFlags.NOFOLLOW_SYMLINKS

@@ -1,6 +1,7 @@
 vala_files = [
     'Daemon.vala',
     'DistinstBackend.vala',
+    'InstallerInterface.vala',
     'RepartCommand.vala',
     'RepartBackend.vala',
     common_files

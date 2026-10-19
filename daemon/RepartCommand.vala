@@ -26,3 +26,14 @@ namespace InstallerDaemon.RepartCommand {
         );
     }
 }
+
+internal class InstallerDaemon.RepartExecutor : GLib.Object {
+    internal virtual string capture (string[] argv) throws GLib.Error {
+        return RepartCommand.capture (argv);
+    }
+
+    internal virtual void run (string[] argv) throws GLib.Error {
+        var process = new GLib.Subprocess.newv (argv, GLib.SubprocessFlags.NONE);
+        process.wait_check ();
+    }
+}
