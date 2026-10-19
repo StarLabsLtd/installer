@@ -1,5 +1,6 @@
 vala_files = [
     'Daemon.vala',
+    'RepartCommand.vala',
     common_files
 ]
 

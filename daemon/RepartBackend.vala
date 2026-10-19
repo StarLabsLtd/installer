@@ -1428,22 +1428,12 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     }
 
     private string run_capture (string[] argv) throws GLib.Error {
-        var process = new Subprocess.newv (argv, STDOUT_PIPE | STDERR_PIPE);
-        string stdout_buf = "";
-        string stderr_buf = "";
-
-        process.communicate_utf8 (null, null, out stdout_buf, out stderr_buf);
-
-        if (!process.get_successful ()) {
-            throw new GLib.IOError.FAILED (
-                "Run command failed: %s: %s: %s",
-                string.joinv (" ", argv),
-                stdout_buf.strip (),
-                stderr_buf.strip ()
-            );
+        try {
+            return RepartCommand.capture (argv);
+        } catch (GLib.Error e) {
+            log_message (InstallerDaemon.LogLevel.ERROR, "Run command failed: %s: %s", string.joinv (" ", argv), e.message);
+            throw new GLib.IOError.FAILED ("Run command failed: %s: %s", string.joinv (" ", argv), e.message);
         }
-
-        return stdout_buf.strip ();
     }
 
     private void run (string[] argv) throws GLib.Error {

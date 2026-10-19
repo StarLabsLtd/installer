@@ -91,3 +91,12 @@ if installer_backend == 'repart'
     )
     test('Loop backing identity', loop_backing_test)
 endif
+repart_command_test = executable(
+    'RepartCommandTest',
+    'RepartCommandTest.vala',
+    meson.project_source_root() / 'daemon' / 'RepartCommand.vala',
+    dependencies: gio_dep,
+    install: false
+)
+
+test('Repart command exit status', repart_command_test)
