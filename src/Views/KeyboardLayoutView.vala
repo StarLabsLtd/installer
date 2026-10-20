@@ -76,7 +76,7 @@ public class KeyboardLayoutView : AbstractInstallerView {
                 GLib.Variant? layout_variant = null;
 
                 unowned Gtk.ListBoxRow vrow = input_variant_widget.variant_listbox.get_selected_row ();
-                if (vrow != null) {
+                if (vrow != null && ((VariantRow) vrow).variant.layout == layout) {
                     unowned var variant = ((VariantRow) vrow).variant;
                     configuration.keyboard_variant = variant.name;
                 } else if (!layout.has_variants ()) {
@@ -118,7 +118,7 @@ public class KeyboardLayoutView : AbstractInstallerView {
                 GLib.Variant? layout_variant = null;
 
                 unowned var vrow = input_variant_widget.variant_listbox.get_selected_row ();
-                if (vrow != null) {
+                if (vrow != null && ((VariantRow) vrow).variant.layout == layout) {
                     unowned var variant = ((VariantRow) vrow).variant;
                     configuration.keyboard_variant = variant.name;
                     if (variant != null) {
@@ -140,7 +140,9 @@ public class KeyboardLayoutView : AbstractInstallerView {
         });
 
         input_variant_widget.main_listbox.row_selected.connect ((row) => {
-            next_button.sensitive = true;
+            input_variant_widget.variant_listbox.unselect_all ();
+            Configuration.get_default ().keyboard_variant = null;
+            next_button.sensitive = row != null;
         });
 
         keyboard_test_entry.icon_release.connect (() => {
