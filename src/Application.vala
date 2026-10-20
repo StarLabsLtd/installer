@@ -60,6 +60,11 @@ public class Installer.App : Gtk.Application {
     }
 
     public override void activate () {
+        foreach (var window in get_windows ()) {
+            window.present ();
+            return;
+        }
+
         var window = new MainWindow () {
             deletable = false,
             default_height = 600,
