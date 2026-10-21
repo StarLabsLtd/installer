@@ -32,6 +32,7 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
     private LanguageView language_view;
     private TryInstallView try_install_view;
     private KeyboardLayoutView keyboard_layout_view;
+    private bool dave_mode = false;
     private bool check_ignored = false;
     private uint orca_timeout_id = 0;
 
@@ -46,7 +47,9 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
 
         var back_action = new SimpleAction ("back", null);
         back_action.activate.connect (() => {
-            navigation_view.pop ();
+            if (navigation_view.visible_page != null && navigation_view.visible_page.can_pop) {
+                navigation_view.pop ();
+            }
         });
 
         add_action (back_action);
@@ -156,7 +159,24 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
         navigation_view.push (disk_view);
 
         disk_view.load.begin (MINIMUM_SPACE);
-        disk_view.next_step.connect (() => load_encrypt_view ());
+        disk_view.next_step.connect (() => {
+            var mode_view = new InstallModeView ();
+            mode_view.next_step.connect (() => {
+                dave_mode = mode_view.dave_selected;
+                // Whole-disk choices must not inherit a previous custom layout
+                // or password when navigating back to choose another mode.
+                unowned var config = Configuration.get_default ();
+                config.encryption_password = null;
+                config.mounts = null;
+                config.luks = null;
+                if (dave_mode) {
+                    load_drivers_view ();
+                } else {
+                    load_encrypt_view ();
+                }
+            });
+            navigation_view.push (mode_view);
+        });
     }
 
     private Installer.CheckView? load_check_view () {
@@ -186,6 +206,7 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
     }
 
     private void load_partitioning_view () {
+        dave_mode = false;
         var partitioning_view = new PartitioningView (MINIMUM_SPACE);
         navigation_view.push (partitioning_view);
 
@@ -199,22 +220,41 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
 
     private void load_drivers_view () {
         var drivers_view = new DriversView ();
-        drivers_view.next_step.connect (() => load_progress_view ());
+        drivers_view.next_step.connect (() => {
+            if (dave_mode) {
+                load_owner_view.begin (drivers_view);
+            } else {
+                load_progress_view ();
+            }
+        });
 
         navigation_view.push (drivers_view);
+    }
+
+    private async void load_owner_view (DriversView confirmation_view) {
+        if (!confirmation_view.can_pop) return;
+        confirmation_view.can_pop = false;
+        try {
+            InstallerDaemon.DaveReadiness.require_no_swap ();
+            if (!yield Installer.Daemon.get_default ().dave_is_ready ()) {
+                throw new IOError.NOT_SUPPORTED ("Dave mode is not ready");
+            }
+            // Recheck locally before constructing any credential widgets.
+            InstallerDaemon.DaveReadiness.require_no_swap ();
+            var owner_view = new OwnerView ();
+            owner_view.installation_finished.connect (load_success_view);
+            navigation_view.push (owner_view);
+        } catch (GLib.Error e) {
+            load_error_view (_("Dave mode is unavailable. An installation has not been started."));
+        } finally {
+            confirmation_view.can_pop = true;
+        }
     }
 
     private void load_progress_view () {
         var progress_view = new ProgressView ();
 
-        progress_view.on_success.connect (() => {
-            var success_view = new SuccessView ();
-            navigation_view.push (success_view);
-
-            success_view.shown.connect (() => {
-                 navigation_view.replace ({ success_view });
-            });
-        });
+        progress_view.on_success.connect (load_success_view);
 
         progress_view.on_error.connect (() => {
             load_error_view (progress_view.get_log ());
@@ -226,6 +266,14 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
 
         navigation_view.push (progress_view);
         progress_view.start_installation ();
+    }
+
+    private void load_success_view () {
+        var success_view = new SuccessView (dave_mode);
+        success_view.shown.connect (() => {
+            navigation_view.replace ({ success_view });
+        });
+        navigation_view.push (success_view);
     }
 
     private void load_error_view (string log) {

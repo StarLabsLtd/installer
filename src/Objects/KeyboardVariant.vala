@@ -35,21 +35,7 @@ public class Installer.KeyboardVariant : GLib.Object {
     }
 
     public GLib.Variant to_gsd_variant () {
-        if (name == null) {
-            return layout.to_gsd_variant ();
-        } else {
-            string xkb_layout_name = "%s(%s)".printf (layout.name, name);
-            if (!(xkb_layout_name in KeyboardLayout.NON_LATIN_LAYOUTS)) {
-                // Layout can type latin characters, return a single layout
-                var primary_layout = new GLib.Variant ("(ss)", "xkb", "%s+%s".printf (layout.name, name));
-                return new GLib.Variant.array (new VariantType ("(ss)"), { primary_layout });
-            } else {
-                // User's layout doesn't use latin characters, also add US layout so they can type a username and password
-                var en_us = new GLib.Variant ("(ss)", "xkb", "us");
-                var primary_layout = new GLib.Variant ("(ss)", "xkb", "%s+%s".printf (layout.name, name));
-                return new GLib.Variant.array (new VariantType ("(ss)"), { en_us, primary_layout });
-            }
-        }
+        return KeyboardSources.from_layout (layout.name, name);
     }
 
     public static int compare (KeyboardVariant a, KeyboardVariant b) {

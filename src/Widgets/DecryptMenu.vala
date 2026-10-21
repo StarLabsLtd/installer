@@ -130,7 +130,7 @@ public class Installer.DecryptMenu: Gtk.Popover {
     }
 
     private async void decrypt (string pv) {
-        unowned string password = pass_entry.get_text ();
+        string password = pass_entry.get_text ();
 
         int result;
         try {

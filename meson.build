@@ -9,6 +9,10 @@ add_global_arguments('-DGETTEXT_PACKAGE="' + meson.project_name() + '"', languag
 add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
                       language: 'vala')
 
+if get_option('test_dave_visibility')
+    add_project_arguments('--define=TEST_DAVE_VISIBILITY', language: 'vala')
+endif
+
 gnome = import('gnome')
 i18n = import('i18n')
 
@@ -19,6 +23,7 @@ gtk_wayland_dep = dependency('gtk4-wayland')
 gtk_x11_dep = dependency('gtk4-x11')
 gee_dep = dependency('gee-0.8')
 gio_dep = dependency('gio-2.0')
+gio_unix_dep = dependency('gio-unix-2.0')
 granite_dep = dependency('granite-7', version: '>=7.7.0')
 adw_dep = dependency('libadwaita-1', version: '>=1.4.0')
 json_glib_dep = dependency('json-glib-1.0')
@@ -31,7 +36,7 @@ x11_dep = dependency('x11')
 installer_backend = get_option('installer_backend')
 if installer_backend == 'distinst'
     distinst_dep = dependency('distinst')
-else
+elif installer_backend != 'repart'
     error('No supported installer backend provided')
 endif
 

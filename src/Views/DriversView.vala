@@ -21,7 +21,7 @@
             pixel_size = 128
         };
 
-        title = _("Additional Drivers");
+        title = Build.DISTINST_BACKEND ? _("Additional Drivers") : _("Erase Disk and Install");
 
         var title_label = new Gtk.Label (title);
 
@@ -61,11 +61,18 @@
             valign = CENTER,
             vexpand = true
         };
-        message_box.append (description_label);
-        message_box.append (warning_row);
-        message_box.append (internet_row);
-        message_box.append (install_later_row);
-        message_box.append (drivers_check);
+        if (Build.DISTINST_BACKEND) {
+            message_box.append (description_label);
+            message_box.append (warning_row);
+            message_box.append (internet_row);
+            message_box.append (install_later_row);
+            message_box.append (drivers_check);
+        } else {
+            message_box.append (new Gtk.Label (_("This will erase all data on the selected drive. If you have not backed your data up, you can cancel the installation and use Demo Mode.")) {
+                wrap = true,
+                xalign = 0
+            });
+        }
 
         title_area.append (image);
         title_area.append (title_label);

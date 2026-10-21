@@ -20,16 +20,21 @@ public class SuccessView : AbstractInstallerView {
     private int seconds_remaining = RESTART_TIMEOUT;
     private Gtk.Label secondary_label;
 
-    construct {
+    private bool commissioning_pending;
+
+    public SuccessView (bool commissioning_pending = false) {
+        this.commissioning_pending = commissioning_pending;
         var image = new Gtk.Image.from_icon_name ("process-completed") {
             pixel_size = 128
         };
 
-        title = _("Continue Setting Up");
+        title = commissioning_pending ? _("Installation Pending Commissioning") : _("Continue Setting Up");
 
         var title_label = new Gtk.Label (title);
 
-        var primary_label = new Gtk.Label (_("%s has been installed").printf (Utils.get_pretty_name ())) {
+        var primary_label = new Gtk.Label (commissioning_pending ?
+            _("DAVE installation is staged. Commissioning must finish before hibernation is available.") :
+            _("%s has been installed").printf (Utils.get_pretty_name ())) {
             wrap = true,
             xalign = 0
         };
@@ -90,6 +95,7 @@ public class SuccessView : AbstractInstallerView {
             "Your device will automatically restart in %i seconds.",
             seconds_remaining
         ).printf (seconds_remaining) + " " +
-        _("After restarting you can set up a new user, or you can shut down now and set up a new user later.");
+        (commissioning_pending ? _("The installed system still requires commissioning.") :
+        _("After restarting you can set up a new user, or you can shut down now and set up a new user later."));
     }
 }

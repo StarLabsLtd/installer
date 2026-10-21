@@ -148,6 +148,7 @@ public class EncryptView : AbstractInstallerView {
         });
 
         next_button.clicked.connect (() => {
+            Configuration.get_default ().encryption_password = null;
             next_step ();
         });
 

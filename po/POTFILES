@@ -26,3 +26,6 @@ src/Widgets/InstallTypeGrid.vala
 src/Widgets/PartitionBlock.vala
 src/Widgets/PartitionMenu.vala
 src/Widgets/VariantWidget.vala
+
+src/Views/InstallModeView.vala
+src/Views/OwnerView.vala
