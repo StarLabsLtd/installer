@@ -280,12 +280,12 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                       "--key-file", keyfile, fd_path (loop_fd), name});
                 mapping = name;
                 filesystem = "/dev/mapper/" + mapping;
-                // The copied LUKS segment spans the partition; grow its small factory ext4 now.
-                run ({"resize2fs", filesystem});
             }
             if (run_capture ({"blkid", "-p", "-s", "TYPE", "-o", "value", filesystem}) != "ext4") {
                 throw new IOError.NOT_SUPPORTED ("Normal swap provisioning requires the admitted ext4 ROOT");
             }
+            // Grow the bounded factory filesystem before allocating swap.
+            run ({"resize2fs", filesystem});
             run ({"mount", "-t", "ext4", "-o", "nodev,nosuid,noexec", filesystem, path});
             mounted = true;
             swap_fd = Posix.open (path + "/swapfile", Posix.O_RDWR | Posix.O_CREAT | Posix.O_EXCL |
@@ -482,7 +482,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         root.path = work + "/root-image";
         File.new_for_path (root.path).make_directory ();
         // The current factory ROOT is small; /usr is copied separately. Bound
-        // both the encrypted image and native repart's temporary filesystem.
+        // both the factory image and native repart's temporary filesystem.
         run ({"mount", "-t", "tmpfs", "-o", "size=768M,mode=0700,noswap,nodev,nosuid,noexec", "tmpfs", root.path});
         root.mounted = true;
         var private_definitions = root.path + "/repart";
@@ -513,11 +513,11 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         root.fd = Posix.open (root.path + "/disk.prepared-root.raw", Posix.O_RDWR | Posix.O_NOFOLLOW | Posix.O_CLOEXEC);
         if (root.fd < 0 || Posix.fstat (root.fd, out root.identity) != 0 ||
             !Posix.S_ISREG (root.identity.st_mode) || root.identity.st_size != 256 * 1024 * 1024) {
-            throw new IOError.FAILED ("Could not retain bounded encrypted ROOT");
+            throw new IOError.FAILED ("Could not retain bounded ROOT");
         }
         if (dave != null) {
             add_dave_owner_key (dave, fd_path (root.fd));
-        } else {
+        } else if (keyfile != "") {
             run_capture ({"/usr/sbin/cryptsetup", "open", "--test-passphrase", "--disable-external-tokens",
                           "--key-file", keyfile, fd_path (root.fd)});
         }
@@ -529,7 +529,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         bool closed = Posix.close (writable) == 0;
         if (root.fd < 0 || !closed) throw new IOError.FAILED ("Could not retain prepared ROOT");
         run ({"mount", "-o", "remount,ro", root.path});
-        // Copy the smaller LUKS image directly into the full planned partition.
+        // Copy the bounded factory image into the full planned partition.
         // Normal grows ext4 before allocating swap; Dave retains firstboot growth.
         var formatting = new Regex ("^(Format|Encrypt|CopyFiles|KeyFile)=.*$", RegexCompileFlags.MULTILINE);
         var copy = formatting.replace (original, original.length, 0, "");
@@ -2022,11 +2022,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 repart_args = {"--defer-partitions=esp,xbootldr", "--factory-reset=no", "--json=short"};
             }
 
-            if (encrypt) {
-                prepare_root_image (root_image, work, definitions,
-                    fd_path (dave == null ? media.fds[5] : dave.copy_fd), keyfile, dave);
-                check_root_image (root_image);
-            }
+            prepare_root_image (root_image, work, definitions,
+                fd_path (dave == null ? media.fds[5] : dave.copy_fd), keyfile, dave);
+            check_root_image (root_image);
 
             string[] repart_command = {
                 "systemd-repart",
