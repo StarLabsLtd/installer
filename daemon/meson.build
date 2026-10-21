@@ -45,7 +45,7 @@ install_data('io.elementary.InstallerDaemon.conf', install_dir : get_option('dat
 install_data('io.elementary.installer.policy', install_dir: get_option('datadir') / 'polkit-1' / 'actions')
 install_data('io.elementary.installer.rules', install_dir: get_option('datadir') / 'polkit-1' / 'rules.d')
 
-executable(meson.project_name() + '-daemon', vala_files, backend_sources,
+installer_daemon = executable(meson.project_name() + '-daemon', vala_files, backend_sources,
            '../common/OwnerCredentials.c',
            include_directories: include_directories('.', '../common'),
            dependencies : daemon_dependencies,

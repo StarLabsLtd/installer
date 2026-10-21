@@ -101,31 +101,35 @@ namespace InstallerDaemon {
     }
 }
 
-public class InstallerDaemon.Application : GLib.Application {
-    public Application () {
-        Object (
-            application_id: "io.elementary.InstallerDaemon",
-            flags: ApplicationFlags.IS_SERVICE | ApplicationFlags.ALLOW_REPLACEMENT
-        );
+private static GLib.MainLoop loop;
+
+private void on_bus_acquired (GLib.DBusConnection connection, string name) {
+    try {
+#if DISTINST_BACKEND
+        connection.register_object<InstallerDaemon.InstallerInterface> ("/io/elementary/InstallerDaemon", new InstallerDaemon.DistinstBackend ());
+#elif REPART_BACKEND
+        connection.register_object<InstallerDaemon.InstallerInterface> ("/io/elementary/InstallerDaemon", new InstallerDaemon.RepartBackend ());
+#endif
+    } catch (GLib.Error e) {
+        critical ("Unable to register the object: %s", e.message);
     }
+}
 
-    protected override bool dbus_register (DBusConnection connection, string object_path) throws GLib.Error {
-        base.dbus_register (connection, object_path);
+public static int main (string[] args) {
+    loop = new GLib.MainLoop (null, false);
 
-        try {
-    #if DISTINST_BACKEND
-            connection.register_object<InstallerDaemon.InstallerInterface> ("/io/elementary/InstallerDaemon", new InstallerDaemon.DistinstBackend ());
-    #elif REPART_BACKEND
-            connection.register_object<InstallerDaemon.InstallerInterface> ("/io/elementary/InstallerDaemon", new InstallerDaemon.RepartBackend ());
-    #endif
-        } catch (GLib.Error e) {
-            critical ("Unable to register the object: %s", e.message);
-        }
+    var owner_id = GLib.Bus.own_name (
+        GLib.BusType.SYSTEM,
+        "io.elementary.InstallerDaemon",
+        GLib.BusNameOwnerFlags.NONE,
+        on_bus_acquired,
+        () => { },
+        () => { loop.quit (); }
+    );
 
-        return true;
-    }
+    loop.run ();
 
-    public static int main (string[] args) {
-        return new InstallerDaemon.Application ().run (args);
-    }
+    GLib.Bus.unown_name (owner_id);
+
+    return 0;
 }

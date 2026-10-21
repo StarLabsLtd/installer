@@ -100,3 +100,11 @@ repart_command_test = executable(
 )
 
 test('Repart command exit status', repart_command_test)
+
+if installer_backend == 'repart'
+    test('Privileged daemon bus and lifetime',
+        find_program('dbus-run-session'),
+        args: ['--', 'sh', files('DaemonBusTest.sh'), installer_daemon],
+        timeout: 30
+    )
+endif
