@@ -6,13 +6,19 @@
 namespace InstallerDaemon.RepartCommand {
     internal string capture (string[] argv) throws GLib.Error {
         var process = new GLib.Subprocess.newv (
-            argv, GLib.SubprocessFlags.STDOUT_PIPE | GLib.SubprocessFlags.STDERR_MERGE
+            argv, GLib.SubprocessFlags.STDOUT_PIPE | GLib.SubprocessFlags.STDERR_PIPE
         );
         string? stdout_buf;
-        process.communicate_utf8 (null, null, out stdout_buf, null);
-        var diagnostic = stdout_buf.strip ();
+        string? stderr_buf;
+        process.communicate_utf8 (null, null, out stdout_buf, out stderr_buf);
         if (process.get_successful ()) {
-            return diagnostic;
+            return stdout_buf.strip ();
+        }
+
+        var diagnostic = stdout_buf.strip ();
+        var stderr_text = stderr_buf.strip ();
+        if (stderr_text != "") {
+            diagnostic = diagnostic == "" ? stderr_text : "%s\n%s".printf (diagnostic, stderr_text);
         }
 
         string status;
