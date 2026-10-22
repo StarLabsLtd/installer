@@ -27,7 +27,7 @@ dave_readiness_test = executable(
     install: false
 )
 
-test('Dave firmware vendor', dave_readiness_test)
+test('Dave swap admission', dave_readiness_test)
 
 keyboard_sources_test = executable(
     'KeyboardSourcesTest',

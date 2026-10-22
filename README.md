@@ -41,11 +41,8 @@ You can also use `--test` mode for development to disable destructive behaviors 
 
     io.elementary.installer --test
 
-Test images can bypass the DAVE BIOS vendor requirement in both the interface
-and daemon with `meson configure build -Dtest_dave_visibility=true` (default:
-false). Authenticated Dave recovery, verified firmware launch, TPM, storage and
-owner admission checks still apply. Unlike `--test`, this build option does not
-disable installation operations.
+Dave mode is always shown. Authenticated recovery, verified launch, TPM,
+storage, no-swap and owner admission checks still apply before installation.
 
 For debug messages, set the `G_MESSAGES_DEBUG` environment variable, e.g. to `all`:
 

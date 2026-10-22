@@ -236,11 +236,6 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
         confirmation_view.can_pop = false;
         try {
             InstallerDaemon.DaveReadiness.require_no_swap ();
-            if (!yield Installer.Daemon.get_default ().dave_is_ready ()) {
-                throw new IOError.NOT_SUPPORTED ("Dave mode is not ready");
-            }
-            // Recheck locally before constructing any credential widgets.
-            InstallerDaemon.DaveReadiness.require_no_swap ();
             var owner_view = new OwnerView ();
             owner_view.installation_finished.connect (load_success_view);
             navigation_view.push (owner_view);

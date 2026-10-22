@@ -1585,9 +1585,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                                    UnixInputStream recovery, UnixInputStream hibernate_recovery, GLib.BusName sender) throws GLib.Error {
         yield authorize_operation (sender);
         try {
-            if (!DaveReadiness.allows_dave_firmware ()) {
-                throw new IOError.NOT_SUPPORTED ("Dave mode requires DAVE firmware");
-            }
             DaveReadiness.require_no_swap ();
             if (run_capture ({"/usr/lib/vale/vale-hibernate-counter", "launch-kind"}) != "NORMAL") {
                 throw new IOError.NOT_SUPPORTED ("DAVE installation requires a verified normal firmware launch");

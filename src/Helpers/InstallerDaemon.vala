@@ -33,7 +33,6 @@ public class Installer.Daemon {
         public async abstract int decrypt_partition (string path, string pv, string password) throws GLib.Error;
         public async abstract InstallerDaemon.Disk get_logical_device (string pv) throws GLib.Error;
         public async abstract void install_dave (InstallerDaemon.InstallConfig config, string disk, GLib.UnixInputStream owner, GLib.UnixInputStream recovery, GLib.UnixInputStream hibernate_recovery) throws GLib.Error;
-        public async abstract bool dave_is_ready () throws GLib.Error;
         public async abstract void install_with_default_disk_layout (InstallerDaemon.InstallConfig config, string disk, bool encrypt, string encryption_password) throws GLib.Error;
         public async abstract void install_with_custom_disk_layout (InstallerDaemon.InstallConfig config, InstallerDaemon.Mount[] disk_config, InstallerDaemon.LuksCredentials[] luks) throws GLib.Error;
         public async abstract void set_demo_mode_locale (string locale) throws GLib.Error;
@@ -118,13 +117,6 @@ public class Installer.Daemon {
         } finally {
             daemon.g_default_timeout = previous_timeout;
         }
-    }
-
-    public async bool dave_is_ready () throws GLib.Error {
-        if (daemon == null) {
-            throw new GLib.IOError.FAILED ("Not connected to installer daemon");
-        }
-        return yield daemon.dave_is_ready ();
     }
 
     public async void install_with_default_disk_layout (InstallerDaemon.InstallConfig config, string disk, bool encrypt, string encryption_password) throws GLib.Error {

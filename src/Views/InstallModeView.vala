@@ -12,13 +12,10 @@ public class InstallModeView : AbstractInstallerView {
         var normal = new Gtk.CheckButton.with_label (_("Normal Install"));
         var dave = new Gtk.CheckButton.with_label (_("Dave mode"));
         dave.group = normal;
-        dave.visible = InstallerDaemon.DaveReadiness.allows_dave_firmware ();
         normal.active = true;
         content_area.append (normal);
         content_area.append (dave);
-        var description = dave.visible ?
-            _("Normal Install offers optional drive encryption. Dave mode uses one password for your account and drive encryption, and hibernates instead of suspending.") :
-            _("Normal Install offers optional drive encryption.");
+        var description = _("Normal Install offers optional drive encryption. Dave mode uses one password for your account and drive encryption, and hibernates instead of suspending.");
         content_area.append (new Gtk.Label (description) {
             wrap = true, xalign = 0
         });

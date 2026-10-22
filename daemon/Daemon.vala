@@ -18,17 +18,10 @@ protected interface InstallerDaemon.InstallerInterface : GLib.Object {
         yield InstallerDaemon.authorize_operation (sender);
         try {
             InstallerDaemon.DaveReadiness.require_no_swap ();
-            if (!yield dave_is_ready ()) {
-                throw new GLib.IOError.NOT_SUPPORTED ("Dave mode is not ready");
-            }
             throw new GLib.IOError.NOT_SUPPORTED ("Dave installation requires the repart backend");
         } finally {
             InstallerDaemon.end_operation ();
         }
-    }
-
-    public virtual async bool dave_is_ready () throws GLib.Error {
-        return InstallerDaemon.DaveReadiness.allows_dave_firmware ();
     }
 
     public abstract async void install_with_default_disk_layout (InstallerDaemon.InstallConfig config, string disk, bool encrypt, string encryption_password, GLib.BusName sender) throws GLib.Error;

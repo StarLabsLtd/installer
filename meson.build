@@ -9,10 +9,6 @@ add_global_arguments('-DGETTEXT_PACKAGE="' + meson.project_name() + '"', languag
 add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
                       language: 'vala')
 
-if get_option('test_dave_visibility')
-    add_project_arguments('--define=TEST_DAVE_VISIBILITY', language: 'vala')
-endif
-
 gnome = import('gnome')
 i18n = import('i18n')
 
