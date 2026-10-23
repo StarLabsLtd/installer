@@ -1233,11 +1233,10 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         }
         var command_line = get_contents (File.new_for_path ("/proc/cmdline"));
         var mode = media_parameter (command_line, "vale.mode");
-        if ((dave ? mode != "dave-recovery" : (mode != "normal-recovery" && mode != "dave-recovery")) ||
+        if ((mode != "normal-recovery" && mode != "dave-recovery") ||
             media_parameter (command_line, "boot") != "vale-live" ||
             media_parameter (command_line, "live-media") != "/dev/mapper/vale-install-media") {
-            throw new IOError.PERMISSION_DENIED (dave ? "Only authenticated DAVE recovery may provision" :
-                                                 "Normal installation requires recovery media");
+            throw new IOError.PERMISSION_DENIED ("Installation requires authenticated recovery media");
         }
         var blocks = media_parameter (command_line, "vale.media_data_blocks");
         var offset = media_parameter (command_line, "vale.media_hash_start_block");
@@ -1586,9 +1585,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         yield authorize_operation (sender);
         try {
             DaveReadiness.require_no_swap ();
-            if (run_capture ({"/usr/lib/vale/vale-hibernate-counter", "launch-kind"}) != "NORMAL") {
-                throw new IOError.NOT_SUPPORTED ("DAVE installation requires a verified normal firmware launch");
-            }
             if (owner == recovery || owner.get_fd () == recovery.get_fd ()) {
                 throw new IOError.INVALID_ARGUMENT ("Distinct owner and recovery streams required");
             }
