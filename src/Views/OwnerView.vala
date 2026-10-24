@@ -20,6 +20,7 @@ public class OwnerView : AbstractInstallerView {
     private Gtk.CheckButton acknowledged;
     private Gtk.Button submit;
     private Gtk.Label status;
+    private Gtk.Spinner spinner;
     private bool pending = false;
 
     public OwnerView () {
@@ -30,6 +31,8 @@ public class OwnerView : AbstractInstallerView {
         title = _("DAVE Owner and Recovery");
         title_area.append (new Gtk.Label (title) { wrap = true });
         title_area.append (new Gtk.Label (_("Your account password also unlocks the encrypted drive. Keep both recovery credentials separately.")) { wrap = true });
+        spinner = new Gtk.Spinner () { visible = false };
+        title_area.append (spinner);
         content_area.spacing = 6;
         username = entry (_("Username"));
         full_name = entry (_("Full Name"));
@@ -126,6 +129,11 @@ public class OwnerView : AbstractInstallerView {
         }
         pending = true;
         can_pop = false;
+        content_area.sensitive = false;
+        action_box_end.sensitive = false;
+        status.label = _("Installing…");
+        spinner.visible = true;
+        spinner.start ();
         update_submit ();
         GLib.UnixInputStream? owner = null;
         GLib.UnixInputStream? key = null;
@@ -164,6 +172,10 @@ public class OwnerView : AbstractInstallerView {
             clear_secrets ();
             pending = false;
             can_pop = true;
+            spinner.stop ();
+            spinner.visible = false;
+            content_area.sensitive = true;
+            action_box_end.sensitive = true;
             update_submit ();
         }
     }
