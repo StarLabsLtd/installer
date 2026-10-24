@@ -101,16 +101,20 @@ public class Installer.CheckView : AbstractInstallerView {
             minimum_specs = false;
         }
 
-        var apt_sources = File.new_for_path ("/etc/apt/sources.list.d/elementary.list");
-        try {
-            var @is = apt_sources.read ();
-            var dis = new DataInputStream (@is);
+        if (Installer.App.test_mode) {
+            message_box.append (beta_view);
+        } else if (Build.DISTINST_BACKEND) {
+            var apt_sources = File.new_for_path ("/etc/apt/sources.list.d/elementary.list");
+            try {
+                var @is = apt_sources.read ();
+                var dis = new DataInputStream (@is);
 
-            if ("daily" in dis.read_line () || Installer.App.test_mode) {
-                message_box.append (beta_view);
+                if ("daily" in dis.read_line ()) {
+                    message_box.append (beta_view);
+                }
+            } catch (Error e) {
+                critical ("Couldn't read apt sources: %s", e.message);
             }
-        } catch (Error e) {
-            critical ("Couldn't read apt sources: %s", e.message);
         }
 
         if (get_vm () || Installer.App.test_mode) {
