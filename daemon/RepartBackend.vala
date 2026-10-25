@@ -341,9 +341,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             var logind_policy = logind_directory + "/vale-normal.conf";
             FileUtils.set_contents (sleep_policy,
                 "[Sleep]\nAllowHibernation=yes\nAllowHybridSleep=yes\n" +
-                "AllowSuspendThenHibernate=no\nMemorySleepMode=deep\n");
+                "AllowSuspendThenHibernate=no\n");
             FileUtils.set_contents (logind_policy,
-                "[Login]\nSleepOperation=hybrid-sleep hibernate\nHandleLidSwitch=sleep\nHandleSuspendKey=sleep\n");
+                "[Login]\nSleepOperation=hybrid-sleep suspend hibernate\nHandleLidSwitch=sleep\nHandleSuspendKey=sleep\n");
             run ({"setfiles", "-F", "-r", path,
                 source + "/usr/share/factory/etc/selinux/targeted/contexts/files/file_contexts",
                 path + "/swapfile", path + "/etc/vale", fstab, sleep_directory, logind_directory});
@@ -1866,7 +1866,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         uint64 swap_size = 0;
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
-        bool enroll_hibernation = false;
+        bool initial_secure_boot = false;
         uint64 sector_size = 0;
 
         try {
@@ -1940,7 +1940,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 throw new IOError.INVALID_ARGUMENT ("Normal encryption requires a passphrase; DAVE is unavailable");
             }
             if (dave == null) {
-                enroll_hibernation = secure_boot_enabled ();
+                initial_secure_boot = secure_boot_enabled ();
                 // Normal uses the verity-checked producer's encrypted userspace backend.
                 foreach (var path in new string[] {
                     "usr/libexec/vale-normal-hibernate",
@@ -1957,7 +1957,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 normal_boot = new NormalBoot (fd_path (media.fds[4]) + "@@1048576", definitions,
                     (argv) => { return run_capture (argv); },
                     () => {
-                        if (secure_boot_enabled () != enroll_hibernation) {
+                        if (secure_boot_enabled () != initial_secure_boot) {
                             throw new IOError.BUSY ("Firmware validation state changed during installation");
                         }
                         validate_target (dest_dev, fd, selected, sequence);
@@ -2154,7 +2154,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         if (normal_boot != null) {
             normal_boot.publish (dest_dev, (uint32) json_integer (normal_plan.esp, "partno") + 1,
                 json_string (normal_plan.esp, "uuid"), json_integer (normal_plan.esp, "offset") / sector_size,
-                json_integer (normal_plan.esp, "raw_size") / sector_size, enroll_hibernation);
+                json_integer (normal_plan.esp, "raw_size") / sector_size, true);
         } else if (dave != null) {
             require_dave_boot_selection ();
         }
