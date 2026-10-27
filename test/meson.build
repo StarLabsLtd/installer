@@ -108,3 +108,15 @@ if installer_backend == 'repart'
         timeout: 30
     )
 endif
+
+success_view_test = executable(
+    'SuccessViewTest',
+    'SuccessViewTest.vala',
+    meson.project_source_root() / 'src' / 'Views' / 'AbstractInstallerView.vala',
+    meson.project_source_root() / 'src' / 'Views' / 'SuccessView.vala',
+    dependencies: [gtk_dep, granite_dep, adw_dep],
+    install: false
+)
+
+test('Success view restart policy', success_view_test, timeout: 45,
+    env: ['LC_ALL=C', 'GSETTINGS_BACKEND=memory'])

@@ -64,13 +64,17 @@ public class SuccessView : AbstractInstallerView {
         shutdown_button.clicked.connect (Utils.shutdown);
 
         var restart_button = new Gtk.Button.with_label (_("Restart Device"));
-        restart_button.add_css_class (Granite.CssClass.SUGGESTED);
+        var suggested_button = commissioning_pending ? shutdown_button : restart_button;
+        suggested_button.add_css_class (Granite.CssClass.SUGGESTED);
         restart_button.clicked.connect (Utils.restart);
 
         action_box_end.append (shutdown_button);
         action_box_end.append (restart_button);
 
         update_secondary_label ();
+        if (commissioning_pending) {
+            return;
+        }
 
         Timeout.add_seconds (RESTART_TIMEOUT, () => {
             Utils.restart ();
@@ -90,12 +94,15 @@ public class SuccessView : AbstractInstallerView {
     }
 
     private void update_secondary_label () {
+        if (commissioning_pending) {
+            secondary_label.label = _("Remove the installation media and select the installed drive in your firmware boot menu to finish commissioning.");
+            return;
+        }
         secondary_label.label = ngettext (
             "Your device will automatically restart in %i second.",
             "Your device will automatically restart in %i seconds.",
             seconds_remaining
         ).printf (seconds_remaining) + " " +
-        (commissioning_pending ? _("The installed system still requires commissioning.") :
-        _("After restarting you can set up a new user, or you can shut down now and set up a new user later."));
+        _("After restarting you can set up a new user, or you can shut down now and set up a new user later.");
     }
 }
