@@ -23,7 +23,7 @@ if installer_backend == 'distinst'
     daemon_dependencies += [distinst_dep]
     args += '--define=DISTINST_BACKEND'
 elif installer_backend == 'repart'
-    vala_files += ['RepartBackend.vala', 'SleepKernel.vala', 'NormalRoot.vala', 'NormalBoot.vala']
+    vala_files += ['RepartBackend.vala', 'SleepKernel.vala', 'NormalRoot.vala', 'NormalBoot.vala', 'NormalSeedCarrier.vala']
     backend_sources += ['LoopBacking.c', 'SwapFile.c']
     backend_libraries += static_library('installer-boot-entry', 'BootEntry.c',
         dependencies: [dependency('efiboot'), dependency('efivar')])

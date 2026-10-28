@@ -1866,6 +1866,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         uint64 swap_size = 0;
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
+        string? normal_seed_carrier = null;
+        var target = fd_path (fd);
         bool initial_secure_boot = false;
         uint64 sector_size = 0;
 
@@ -2034,7 +2036,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 repart_command += repart_arg;
             }
 
-            var target = "/proc/%d/fd/%d".printf (Posix.getpid (), fd);
             repart_command += target;
 
             log_message (InstallerDaemon.LogLevel.INFO, "Validating systemd-repart plan");
@@ -2055,6 +2056,18 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 dave.root_plan = dave_root_plan (plan);
                 dave.hibernate_plan = dave_hibernate_plan (plan, dave);
                 check_dave_stage (dave, media);
+            } else {
+                bool counter_present = NormalSeedCarrier.counter_is_present (
+                    run_capture ({"/usr/bin/tpm2_getcap", "-T", "device:/dev/tpmrm0", "handles-nv-index"}));
+                uint64[] existing_esps = {};
+                try {
+                    var table = run_capture ({"env", "LC_ALL=C", "/usr/sbin/sfdisk", "--json", target});
+                    existing_esps = NormalSeedCarrier.esp_offsets (table);
+                } catch (GLib.Error e) {
+                    if (!e.message.contains ("does not contain a recognized partition table")) throw e;
+                }
+                normal_seed_carrier = NormalSeedCarrier.stage_from_target (target, existing_esps, work);
+                NormalSeedCarrier.require_carrier (counter_present, normal_seed_carrier != null);
             }
 
             status.step = InstallerDaemon.Step.PARTITION;
@@ -2115,6 +2128,10 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 run_capture ({"mtools", "-c", "mcopy", "-n", "-i", esp, staged_config, "::/EFI/Vale/root-swap.conf"});
                 if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/EFI/Vale/root-swap.conf"}) != config.strip ()) {
                     throw new IOError.FAILED ("Normal ESP swap configuration differs from ROOT");
+                }
+                if (normal_seed_carrier != null) {
+                    NormalSeedCarrier.copy_to_new_esp (normal_seed_carrier, target,
+                        json_integer (written.esp, "offset"), work);
                 }
                 File.new_for_path (staged_config).delete ();
                 if (Posix.fsync (fd) != 0) throw new IOError.FAILED ("Could not sync Normal ESP");
