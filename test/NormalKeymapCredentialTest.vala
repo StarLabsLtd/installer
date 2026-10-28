@@ -22,6 +22,7 @@ private void test_mapping () {
         "ru ru,us pc105 - terminate:ctrl_alt_bksp\n" +
         "ua-utf ua,us pc105 - terminate:ctrl_alt_bksp\n" +
         "bg_pho-utf8 bg,us pc105 ,phonetic terminate:ctrl_alt_bksp\n" +
+        "bg_bds-utf8 bg,us pc105 - terminate:ctrl_alt_bksp\n" +
         "cz-qwerty cz,us pc105 qwerty, terminate:ctrl_alt_bksp\n" +
         "us us pc105 - terminate:ctrl_alt_bksp\n";
     try {
@@ -31,7 +32,7 @@ private void test_mapping () {
         assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "gb", "") == "uk");
         assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "ru", "") == "ru");
         assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "ua", "") == "ua-utf");
-        assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "bg", "") == "bg_pho-utf8");
+        assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "bg", "") == "bg_bds-utf8");
         assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "cz", "qwerty") == "cz-qwerty");
         assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (MAP, "us", "") == "us");
         try {
@@ -56,9 +57,9 @@ private void test_mapping () {
             assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (canonical, "gb", "") == "uk");
             assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (canonical, "us", "") == "us");
             assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (canonical, "ru", "") == "ru");
-        assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (canonical, "ua", "") == "ua-utf");
+            assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (canonical, "ua", "") == "ua-utf");
             assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (
-                canonical, "bg", "") == "bg_pho-utf8");
+                canonical, "bg", "") == "bg_bds-utf8");
             assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (
                 canonical, "cz", "qwerty") == "cz-qwerty");
             assert (InstallerDaemon.NormalKeymapCredential.map_xkb_layout (

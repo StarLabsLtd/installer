@@ -10,6 +10,11 @@ namespace InstallerDaemon.NormalKeymapCredential {
         return comma < 0 ? value : value.substring (0, comma);
     }
 
+    private bool has_no_secondary_variants (string value) {
+        var comma = value.index_of (",");
+        return comma < 0 || value.substring (comma + 1).replace (",", "") == "";
+    }
+
     internal string map_xkb_layout (string map, string layout, string variant) throws GLib.Error {
         foreach (var line in map.split ("\n")) {
             var text = line.strip ();
@@ -19,7 +24,8 @@ namespace InstallerDaemon.NormalKeymapCredential {
                 throw new GLib.IOError.INVALID_DATA ("Invalid systemd keyboard model map");
             }
             var mapped_variant = fields[3] == "-" ? "" : first_component (fields[3]);
-            if (first_component (fields[1]) == layout && mapped_variant == variant) return fields[0];
+            if (first_component (fields[1]) == layout && mapped_variant == variant &&
+                (fields[3] == "-" || has_no_secondary_variants (fields[3]))) return fields[0];
         }
         throw new GLib.IOError.NOT_SUPPORTED ("No console keymap matches the selected XKB layout and variant");
     }
