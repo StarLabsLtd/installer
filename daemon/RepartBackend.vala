@@ -2134,7 +2134,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                         json_integer (written.esp, "offset"), work);
                 }
                 File.new_for_path (staged_config).delete ();
-                if (Posix.fsync (fd) != 0) throw new IOError.FAILED ("Could not sync Normal ESP");
+                NormalSeedCarrier.sync_target_and_remove_staged (fd, normal_seed_carrier);
                 validate_target (dest_dev, fd, selected, sequence);
             }
 

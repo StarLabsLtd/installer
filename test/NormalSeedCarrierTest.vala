@@ -65,6 +65,8 @@ private void test_stage_and_copy () {
     string? work = null;
     try {
         work = DirUtils.make_tmp ("normal-seed-carrier-XXXXXX");
+        var carrier_work = Path.build_filename (work, "staging");
+        File.new_for_path (carrier_work).make_directory ();
         var source = make_image (work, "source.img");
         var destination = make_image (work, "destination.img");
         run ({"mmd", "-i", source, "::/EFI"});
@@ -78,9 +80,9 @@ private void test_stage_and_copy () {
         FileUtils.set_data (fixture, expected);
         run ({"mcopy", "-i", source, fixture, "::/EFI/Vale/normal-seed"});
 
-        var staged = InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, work);
+        var staged = InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, carrier_work);
         assert (staged != null);
-        InstallerDaemon.NormalSeedCarrier.copy_to_new_esp (staged, destination, 0, work);
+        InstallerDaemon.NormalSeedCarrier.copy_to_new_esp (staged, destination, 0, carrier_work);
         var actual_path = Path.build_filename (work, "actual");
         run ({"mcopy", "-o", "-i", destination, "::/EFI/Vale/normal-seed", actual_path});
         uint8[] actual;
@@ -92,16 +94,30 @@ private void test_stage_and_copy () {
         for (int i = 0; i < changed.length; i++) changed[i] = (uint8) (i ^ 0xa5);
         FileUtils.set_data (fixture, changed);
         run ({"mcopy", "-o", "-i", source, fixture, "::/EFI/Vale/normal-seed"});
-        var restaged = InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, work);
+        var restaged = InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, carrier_work);
         assert (restaged != null);
         uint8[] restaged_data;
         FileUtils.get_data (restaged, out restaged_data);
         assert (restaged_data.length == changed.length);
         for (int i = 0; i < changed.length; i++) assert (restaged_data[i] == changed[i]);
-        InstallerDaemon.NormalSeedCarrier.copy_to_new_esp (restaged, destination, 0, work);
+        InstallerDaemon.NormalSeedCarrier.copy_to_new_esp (restaged, destination, 0, carrier_work);
         run ({"mcopy", "-o", "-i", destination, "::/EFI/Vale/normal-seed", actual_path});
         FileUtils.get_data (actual_path, out actual);
         for (int i = 0; i < changed.length; i++) assert (actual[i] == changed[i]);
+
+        assert (File.new_for_path (restaged).query_exists ());
+        try {
+            InstallerDaemon.NormalSeedCarrier.sync_target_and_remove_staged (-1, restaged);
+            assert_not_reached ();
+        } catch (GLib.Error e) { }
+        assert (File.new_for_path (restaged).query_exists ());
+        var target_fd = Posix.open (destination, Posix.O_RDWR | Posix.O_CLOEXEC);
+        assert (target_fd >= 0);
+        InstallerDaemon.NormalSeedCarrier.sync_target_and_remove_staged (target_fd, restaged);
+        assert (!File.new_for_path (restaged).query_exists ());
+        assert (Posix.close (target_fd) == 0);
+        File.new_for_path (carrier_work).delete ();
+        assert (!File.new_for_path (carrier_work).query_exists ());
 
         try {
             InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0, 0}, work);

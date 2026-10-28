@@ -159,4 +159,11 @@ namespace InstallerDaemon.NormalSeedCarrier {
         }
         FileUtils.unlink (readback);
     }
+
+    internal void sync_target_and_remove_staged (int fd, string? staged) throws GLib.Error {
+        if (Posix.fsync (fd) != 0) {
+            throw new GLib.IOError.FAILED ("Could not sync Normal ESP");
+        }
+        if (staged != null) File.new_for_path (staged).delete ();
+    }
 }
