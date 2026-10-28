@@ -92,6 +92,18 @@ if installer_backend == 'repart'
     )
     test('Normal reinstall seed carrier', normal_seed_carrier_test)
 
+    normal_keymap_credential_test = executable(
+        'NormalKeymapCredentialTest',
+        'NormalKeymapCredentialTest.vala',
+        meson.project_source_root() / 'daemon' / 'NormalKeymapCredential.vala',
+        meson.project_source_root() / 'daemon' / 'NormalSeedCarrier.vala',
+        meson.project_source_root() / 'daemon' / 'RepartCommand.vala',
+        dependencies: [glib_dep, gio_dep, json_glib_dep,
+                       meson.get_compiler('vala').find_library('posix')],
+        install: false
+    )
+    test('Normal first-unlock keymap credential', normal_keymap_credential_test)
+
     loop_backing_test = executable(
         'LoopBackingTest',
         'LoopBackingTest.c',

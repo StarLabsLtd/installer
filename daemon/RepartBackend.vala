@@ -1877,6 +1877,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
         string? normal_seed_carrier = null;
+        string? normal_keymap_credential = null;
         var target = fd_path (fd);
         bool initial_secure_boot = false;
         uint64 sector_size = 0;
@@ -2078,6 +2079,19 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 }
                 normal_seed_carrier = NormalSeedCarrier.stage_from_target (target, existing_esps, work);
                 NormalSeedCarrier.require_carrier (counter_present, normal_seed_carrier != null);
+                if (encrypt) {
+                    var map_path = live_mount + "/usr/share/systemd/kbd-model-map";
+                    Posix.Stat map_stat;
+                    if (Posix.lstat (map_path, out map_stat) != 0 || !Posix.S_ISREG (map_stat.st_mode) ||
+                        map_stat.st_dev != media.identities[5].st_dev) {
+                        throw new IOError.FAILED ("Missing verity-checked systemd keyboard model map");
+                    }
+                    string map;
+                    FileUtils.get_contents (map_path, out map);
+                    var keymap = NormalKeymapCredential.map_xkb_layout (
+                        map, config.keyboard_layout, config.keyboard_variant);
+                    normal_keymap_credential = NormalKeymapCredential.encrypt (keymap, work);
+                }
             }
 
             status.step = InstallerDaemon.Step.PARTITION;
@@ -2144,8 +2158,13 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                     NormalSeedCarrier.copy_to_new_esp (normal_seed_carrier, target,
                         json_integer (written.esp, "offset"), work);
                 }
+                if (normal_keymap_credential != null) {
+                    NormalKeymapCredential.copy_to_new_esp (normal_keymap_credential, target,
+                        json_integer (written.esp, "offset"), work);
+                }
                 File.new_for_path (staged_config).delete ();
-                NormalSeedCarrier.sync_target_and_remove_staged (fd, normal_seed_carrier);
+                NormalSeedCarrier.sync_target_and_remove_staged (fd, normal_seed_carrier,
+                    normal_keymap_credential);
                 validate_target (dest_dev, fd, selected, sequence);
             }
 
