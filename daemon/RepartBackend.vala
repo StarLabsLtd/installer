@@ -645,9 +645,24 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         // The greeter and session daemon already consume this AccountsService extension.
         preferences.set_string ("io.elementary.SettingsDaemon.AccountsService", "KeyboardLayouts", layouts.print (false));
         write_dave_file (accounts + "/" + dave.username, preferences.to_data ().data);
+        NormalRoot.write_install_settings (copy, dave.lang, dave.keyboard_layout, dave.keyboard_variant);
+        foreach (var dir in new string[] {"etc/dconf", "etc/dconf/db", "etc/dconf/db/local.d"}) {
+            File.new_for_path (copy + "/" + dir).make_directory ();
+            if (Posix.chmod (copy + "/" + dir, 0755) != 0) {
+                throw new IOError.FAILED ("Could not set keyboard default directory permissions");
+            }
+        }
+        var keyboard_defaults = copy + "/etc/dconf/db/local.d/00-vale-installer-keyboard";
+        FileUtils.set_contents (keyboard_defaults,
+            "[org/gnome/desktop/input-sources]\nsources=" + layouts.print (false) + "\n");
+        if (Posix.chmod (keyboard_defaults, 0644) != 0) {
+            throw new IOError.FAILED ("Could not set keyboard default permissions");
+        }
+        fsync_path (keyboard_defaults);
         // Label private files before binding the read-only factory and Flatpak sources.
         run ({"setfiles", "-m", "-r", copy, "/etc/selinux/targeted/contexts/files/file_contexts", copy});
         foreach (var dir in new string[] {
+            "etc/dconf/db/local.d", "etc/dconf/db", "etc/dconf",
             "etc/vale", "etc", "var/lib/AccountsService/users", "var/lib/AccountsService",
             "var/lib/flatpak", "var/lib", "var", ""
         }) {
@@ -687,6 +702,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             "CopyFiles=/etc/vale/dave-owner:/etc/vale/dave-owner\n" +
             "CopyFiles=/etc/vale/root-key.conf:/etc/vale/root-key.conf\n" +
             "CopyFiles=/etc/crypttab:/etc/crypttab\n" +
+            "CopyFiles=/etc/locale.conf:/etc/locale.conf\n" +
+            "CopyFiles=/etc/X11/xorg.conf.d/00-keyboard.conf:/etc/X11/xorg.conf.d/00-keyboard.conf\n" +
+            "CopyFiles=/etc/dconf/db/local.d/00-vale-installer-keyboard:/etc/dconf/db/local.d/00-vale-installer-keyboard\n" +
             "CopyFiles=/etc/vale/hibernate-recovery:/etc/vale/hibernate-recovery\n" +
             "CopyFiles=/etc/vale/hibernate-bootstrap:/etc/vale/hibernate-bootstrap\n" +
             "CopyFiles=/var/lib/AccountsService/users:/var/lib/AccountsService/users\n");
@@ -985,7 +1003,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     }
 
     private void publish_dave_boot (DaveInstall dave, string[] first, string destination, string work,
-                                    int target_fd, Posix.Stat selected, string sequence) throws GLib.Error {
+                                    int target_fd, Posix.Stat selected, string sequence,
+                                    string keymap_credential) throws GLib.Error {
         require_dave_boot_selection ();
         string[] publish = {};
         foreach (var argument in first) {
@@ -1036,6 +1055,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         // Use the retained whole-disk descriptor; never mount the claimed target.
         var esp = fd_path (target_fd) + "@@" + esp_offset.to_string ();
         run_capture ({"mtools", "-c", "mdir", "-i", esp, "::/EFI/Linux/elementary-dave_*.efi"});
+        NormalKeymapCredential.copy_to_new_esp (keymap_credential, fd_path (target_fd),
+            esp_offset, work);
         var config = run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/loader/loader.conf"});
         var defaults = new Regex ("^default[\\t ]+.*$", MULTILINE);
         config = defaults.replace (config, config.length, 0, "") + "\ndefault elementary-dave_*\n";
@@ -1046,7 +1067,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/loader/loader.conf"}) != config.strip ()) {
             throw new IOError.FAILED ("Could not verify DAVE boot selection");
         }
-        if (Posix.fsync (target_fd) != 0) throw new IOError.FAILED ("Could not sync DAVE boot publication");
+        NormalSeedCarrier.sync_target_and_remove_staged (target_fd, null, keymap_credential);
         if (dave_crypto ({"luksUUID", fd_path (dave.root_fd)}) != dave.uuid ||
             !dave.metadata.equal (dave_metadata (fd_path (dave.root_fd), true))) {
             throw new IOError.FAILED ("Boot publication changed DAVE ROOT");
@@ -1877,7 +1898,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
         string? normal_seed_carrier = null;
-        string? normal_keymap_credential = null;
+        string? keymap_credential = null;
         var target = fd_path (fd);
         bool initial_secure_boot = false;
         uint64 sector_size = 0;
@@ -2079,19 +2100,19 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 }
                 normal_seed_carrier = NormalSeedCarrier.stage_from_target (target, existing_esps, work);
                 NormalSeedCarrier.require_carrier (counter_present, normal_seed_carrier != null);
-                if (encrypt) {
-                    var map_path = live_mount + "/usr/share/systemd/kbd-model-map";
-                    Posix.Stat map_stat;
-                    if (Posix.lstat (map_path, out map_stat) != 0 || !Posix.S_ISREG (map_stat.st_mode) ||
-                        map_stat.st_dev != media.identities[5].st_dev) {
-                        throw new IOError.FAILED ("Missing verity-checked systemd keyboard model map");
-                    }
-                    string map;
-                    FileUtils.get_contents (map_path, out map);
-                    var keymap = NormalKeymapCredential.map_xkb_layout (
-                        map, config.keyboard_layout, config.keyboard_variant);
-                    normal_keymap_credential = NormalKeymapCredential.encrypt (keymap, work);
+            }
+            if (dave != null || encrypt) {
+                var map_path = live_mount + "/usr/share/systemd/kbd-model-map";
+                Posix.Stat map_stat;
+                if (Posix.lstat (map_path, out map_stat) != 0 || !Posix.S_ISREG (map_stat.st_mode) ||
+                    map_stat.st_dev != media.identities[5].st_dev) {
+                    throw new IOError.FAILED ("Missing verity-checked systemd keyboard model map");
                 }
+                string map;
+                FileUtils.get_contents (map_path, out map);
+                var keymap = NormalKeymapCredential.map_xkb_layout (
+                    map, config.keyboard_layout, config.keyboard_variant);
+                keymap_credential = NormalKeymapCredential.encrypt (keymap, work);
             }
 
             status.step = InstallerDaemon.Step.PARTITION;
@@ -2127,7 +2148,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 prove_dave_hibernate (dave, dest_dev, fd, selected, sequence, result);
                 check_media (media);
                 check_dave_stage (dave, media);
-                publish_dave_boot (dave, repart_command, dest_dev, work, fd, selected, sequence);
+                publish_dave_boot (dave, repart_command, dest_dev, work, fd, selected, sequence,
+                    keymap_credential);
             }
 
             if (dave == null) {
@@ -2158,13 +2180,13 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                     NormalSeedCarrier.copy_to_new_esp (normal_seed_carrier, target,
                         json_integer (written.esp, "offset"), work);
                 }
-                if (normal_keymap_credential != null) {
-                    NormalKeymapCredential.copy_to_new_esp (normal_keymap_credential, target,
+                if (keymap_credential != null) {
+                    NormalKeymapCredential.copy_to_new_esp (keymap_credential, target,
                         json_integer (written.esp, "offset"), work);
                 }
                 File.new_for_path (staged_config).delete ();
                 NormalSeedCarrier.sync_target_and_remove_staged (fd, normal_seed_carrier,
-                    normal_keymap_credential);
+                    keymap_credential);
                 validate_target (dest_dev, fd, selected, sequence);
             }
 

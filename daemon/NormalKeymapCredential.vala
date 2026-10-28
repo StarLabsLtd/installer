@@ -40,15 +40,15 @@ namespace InstallerDaemon.NormalKeymapCredential {
         } catch (GLib.Error e) {
             process.force_exit ();
             try { process.wait (); } catch (GLib.Error wait_error) { }
-            throw new GLib.IOError.FAILED ("Could not encrypt the Normal console keymap: %s", e.message);
+            throw new GLib.IOError.FAILED ("Could not encrypt the console keymap: %s", e.message);
         }
         if (!process.get_successful ()) {
-            throw new GLib.IOError.FAILED ("Could not encrypt the Normal console keymap");
+            throw new GLib.IOError.FAILED ("Could not encrypt the console keymap");
         }
         Posix.Stat stat;
         if (Posix.lstat (path, out stat) != 0 || !Posix.S_ISREG (stat.st_mode) ||
             stat.st_size <= 0 || stat.st_size > MAX_CREDENTIAL_SIZE || Posix.chmod (path, 0600) != 0) {
-            throw new GLib.IOError.FAILED ("systemd-creds produced an invalid Normal keymap credential");
+            throw new GLib.IOError.FAILED ("systemd-creds produced an invalid keymap credential");
         }
         return path;
     }
@@ -76,7 +76,7 @@ namespace InstallerDaemon.NormalKeymapCredential {
         var readback = Path.build_filename (work, "vconsole.keymap-readback.cred");
         RepartCommand.capture ({"mtools", "-c", "mcopy", "-i", image, ESP_PATH, readback});
         if (!same_bytes (staged, readback)) {
-            throw new GLib.IOError.FAILED ("Normal console keymap credential differs after writing the ESP");
+            throw new GLib.IOError.FAILED ("Console keymap credential differs after writing the ESP");
         }
         File.new_for_path (readback).delete ();
     }
