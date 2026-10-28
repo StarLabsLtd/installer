@@ -69,6 +69,100 @@ internal class InstallerDaemon.NormalRoot {
             text (root, "uuid").down (), luks_uuid.down (), offset.to_string (), size.to_string ());
     }
 
+    private static void validate_settings_syntax (string lang, string layout, string variant) throws GLib.Error {
+        if (!Regex.match_simple ("\\A[A-Za-z0-9_.@+-]+\\z", lang) ||
+            !Regex.match_simple ("\\A[A-Za-z0-9_-]{1,64}\\z", layout) ||
+            !Regex.match_simple ("\\A[A-Za-z0-9_-]{0,64}\\z", variant)) {
+            throw new IOError.INVALID_ARGUMENT ("Invalid locale or keyboard selection");
+        }
+    }
+
+    internal static void validate_install_settings (string lang, string layout, string variant,
+                                                    string[] installed_locales) throws GLib.Error {
+        validate_settings_syntax (lang, layout, variant);
+        if (!(lang.replace (".UTF-8", ".utf8") in installed_locales)) {
+            throw new IOError.INVALID_ARGUMENT ("Selected language is not installed");
+        }
+        var context = new Rxkb.Context (Rxkb.ContextFlags.NO_FLAGS);
+        if (!context.parse_default_ruleset ()) {
+            throw new IOError.FAILED ("Could not load the XKB ruleset");
+        }
+        bool found = false;
+        for (var entry = context.get_first_layout (); entry != null; entry = entry.next ()) {
+            if (entry.get_name () == layout && entry.get_variant () == (variant == "" ? null : variant)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) throw new IOError.INVALID_ARGUMENT ("Selected keyboard layout or variant is unavailable");
+    }
+
+    private static int open_directory (int parent, string name) {
+        if (Posix.mkdirat (parent, name, 0755) != 0 && Posix.errno != Posix.EEXIST) {
+            return -1;
+        }
+        return Posix.openat (parent, name,
+            Posix.O_RDONLY | Posix.O_DIRECTORY | Posix.O_NOFOLLOW | Posix.O_CLOEXEC);
+    }
+
+    private static void write_settings_file (int directory, string name, string contents) throws GLib.Error {
+        var temporary = ".vale-installer-%d-%s".printf (Posix.getpid (), name);
+        int file = Posix.openat (directory, temporary,
+            Posix.O_WRONLY | Posix.O_CREAT | Posix.O_EXCL | Posix.O_NOFOLLOW | Posix.O_CLOEXEC, 0644);
+        if (file < 0) {
+            throw new IOError.FAILED ("Could not create temporary installation settings");
+        }
+        bool saved = Posix.write (file, contents.data, contents.length) == contents.length &&
+                     Posix.fsync (file) == 0;
+        if (Posix.close (file) != 0) saved = false;
+        if (saved) {
+            saved = Posix.renameat (directory, temporary, directory, name) == 0 &&
+                    Posix.fsync (directory) == 0;
+        }
+        if (!saved) {
+            Posix.unlinkat (directory, temporary, 0);
+            throw new IOError.FAILED ("Could not publish installation settings");
+        }
+    }
+
+    internal static void write_install_settings (string root, string lang, string layout,
+                                                 string variant) throws GLib.Error {
+        validate_settings_syntax (lang, layout, variant);
+        int etc = Posix.open (root + "/etc",
+            Posix.O_RDONLY | Posix.O_DIRECTORY | Posix.O_NOFOLLOW | Posix.O_CLOEXEC);
+        if (etc < 0) throw new IOError.FAILED ("Could not open Normal ROOT etc");
+        int x11 = -1;
+        int keyboard = -1;
+        GLib.Error? error = null;
+        try {
+            x11 = open_directory (etc, "X11");
+            if (x11 < 0) throw new IOError.FAILED ("Could not open Normal ROOT X11 settings");
+            keyboard = open_directory (x11, "xorg.conf.d");
+            if (keyboard < 0) throw new IOError.FAILED ("Could not open Normal ROOT keyboard settings");
+
+            write_settings_file (etc, "locale.conf", "LANG=%s\n".printf (lang));
+            var xkb = "Section \"InputClass\"\n" +
+                      "        Identifier \"system-keyboard\"\n" +
+                      "        MatchIsKeyboard \"on\"\n" +
+                      "        Option \"XkbLayout\" \"%s\"\n".printf (layout);
+            if (variant != "") xkb += "        Option \"XkbVariant\" \"%s\"\n".printf (variant);
+            xkb += "EndSection\n";
+            write_settings_file (keyboard, "00-keyboard.conf", xkb);
+        } catch (GLib.Error e) {
+            error = e;
+        }
+        if (keyboard >= 0 && Posix.close (keyboard) != 0 && error == null) {
+            error = new IOError.FAILED ("Could not close Normal ROOT keyboard settings");
+        }
+        if (x11 >= 0 && Posix.close (x11) != 0 && error == null) {
+            error = new IOError.FAILED ("Could not close Normal ROOT X11 settings");
+        }
+        if (Posix.close (etc) != 0 && error == null) {
+            error = new IOError.FAILED ("Could not close Normal ROOT etc");
+        }
+        if (error != null) throw error;
+    }
+
     internal static void write_config (string path, string config) throws GLib.Error {
         // Do not follow factory symlinks or overwrite a preconfigured target.
         int etc = Posix.open (path + "/etc", Posix.O_RDONLY | Posix.O_DIRECTORY | Posix.O_NOFOLLOW | Posix.O_CLOEXEC);

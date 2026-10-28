@@ -10,6 +10,7 @@ daemon_dependencies = [
     gio_dep,
     gio_unix_dep,
     gobject_dep,
+    xkbregistry_dep,
     pwquality_dep,
     dependency('polkit-gobject-1'),
 ]

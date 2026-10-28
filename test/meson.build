@@ -76,7 +76,8 @@ if installer_backend == 'repart'
         meson.project_source_root() / 'daemon' / 'NormalRoot.vala',
         meson.project_source_root() / 'daemon' / 'SwapFile.c',
         include_directories: include_directories('../daemon'),
-        dependencies: [glib_dep, gio_dep, json_glib_dep, meson.get_compiler('vala').find_library('posix')],
+        dependencies: [glib_dep, gio_dep, json_glib_dep, xkbregistry_dep,
+                       meson.get_compiler('vala').find_library('posix')],
         install: false
     )
     test('Normal ROOT and ESP publication', normal_root_test)

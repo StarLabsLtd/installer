@@ -249,9 +249,10 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     }
 
     private string provision_normal_swap (NormalRoot layout, string target, string work,
-                                         string keyfile, uint64 size, int disk_fd, string source) throws GLib.Error {
+                                         string keyfile, uint64 size, int disk_fd, string source,
+                                         InstallConfig config) throws GLib.Error {
         var plan = layout.root;
-        string config = "";
+        string swap_config = "";
         var path = work + "/target-root";
         File.new_for_path (path).make_directory ();
         string? loop = null;
@@ -299,8 +300,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 throw new IOError.FAILED ("Persistent swapfile has no qualified physical resume offset");
             }
             var luks_uuid = keyfile == "" ? "none" : run_capture ({"cryptsetup", "luksUUID", fd_path (loop_fd)});
-            config = layout.swap_config (luks_uuid, offset, size);
-            NormalRoot.write_config (path, config);
+            swap_config = layout.swap_config (luks_uuid, offset, size);
+            NormalRoot.write_config (path, swap_config);
+            NormalRoot.write_install_settings (path, config.lang, config.keyboard_layout, config.keyboard_variant);
             log_message (InstallerDaemon.LogLevel.INFO, "Qualified persistent swapfile at page offset %" + uint64.FORMAT, offset);
             var fstab = path + "/etc/fstab";
             Posix.Stat stat;
@@ -346,7 +348,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 "[Login]\nSleepOperation=hybrid-sleep suspend hibernate\nHandleLidSwitch=sleep\nHandleSuspendKey=sleep\n");
             run ({"setfiles", "-F", "-r", path,
                 source + "/usr/share/factory/etc/selinux/targeted/contexts/files/file_contexts",
-                path + "/swapfile", path + "/etc/vale", fstab, sleep_directory, logind_directory});
+                path + "/swapfile", path + "/etc/vale", path + "/etc/locale.conf",
+                path + "/etc/X11", path + "/etc/X11/xorg.conf.d",
+                path + "/etc/X11/xorg.conf.d/00-keyboard.conf", fstab, sleep_directory, logind_directory});
             run ({"sync", "-f", path});
         } catch (GLib.Error e) { error = e; }
         if (swap_fd >= 0 && Posix.close (swap_fd) != 0 && error == null) {
@@ -372,7 +376,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             error = new IOError.FAILED ("Could not close target ROOT alias");
         }
         if (error != null) throw error;
-        return config;
+        return swap_config;
     }
 
     private void size_dave_hibernate (DaveInstall dave) throws GLib.Error {
@@ -1563,8 +1567,10 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
     public async void install_with_default_disk_layout (InstallConfig config, string disk, bool encrypt, string encryption_password, GLib.BusName sender) throws GLib.Error {
         yield authorize_operation (sender);
         try {
+            NormalRoot.validate_install_settings (config.lang, config.keyboard_layout,
+                config.keyboard_variant, run_capture ({"/usr/bin/locale", "-a"}).split ("\n"));
             log_message (InstallerDaemon.LogLevel.INFO, "Clean install to " + disk);
-            yield install_in_thread (disk, encrypt, encryption_password);
+            yield install_in_thread (disk, encrypt, encryption_password, config);
         } finally {
             end_operation ();
         }
@@ -1624,15 +1630,16 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         dave.keyboard_variant = config.keyboard_variant;
         dave.srk_name = verified_srk_name;
         dave.uuid = Uuid.string_random ();
-        yield install_in_thread (disk, true, "", dave);
+        yield install_in_thread (disk, true, "", config, dave);
     }
 
-    private async void install_in_thread (string disk, bool encrypt, string password, DaveInstall? dave = null) throws GLib.Error {
+    private async void install_in_thread (string disk, bool encrypt, string password,
+                                          InstallConfig config, DaveInstall? dave = null) throws GLib.Error {
         GLib.Error? install_error = null;
         SourceFunc resume = install_in_thread.callback;
         var thread = new Thread<void*> (null, () => {
             try {
-                install (disk, encrypt, password, dave);
+                install (disk, encrypt, password, config, dave);
             } catch (GLib.Error e) {
                 install_error = e;
             }
@@ -1804,7 +1811,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         }
     }
 
-    private void install (string dest_dev, bool encrypt, string encryption_password, DaveInstall? dave = null) throws GLib.Error {
+    private void install (string dest_dev, bool encrypt, string encryption_password,
+                          InstallConfig config, DaveInstall? dave = null) throws GLib.Error {
         Posix.Stat selected;
         if (Posix.lstat (dest_dev, out selected) != 0 || !Posix.S_ISBLK (selected.st_mode) ||
             dest_dev != "/dev/" + Path.get_basename (dest_dev) || Posix.realpath (dest_dev) != dest_dev) {
@@ -1821,7 +1829,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         try {
             var sequence = get_contents (File.new_for_path ("/sys/block/" + Path.get_basename (dest_dev) + "/diskseq")).strip ();
             validate_target (dest_dev, fd, selected, sequence);
-            install_reserved_target (dest_dev, fd, selected, sequence, encrypt, encryption_password, dave);
+            install_reserved_target (dest_dev, fd, selected, sequence, encrypt, encryption_password, config, dave);
         } catch (GLib.Error e) {
             install_error = e;
         }
@@ -1841,7 +1849,9 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         });
     }
 
-    private void install_reserved_target (string dest_dev, int fd, Posix.Stat selected, string sequence, bool encrypt, string encryption_password, DaveInstall? dave = null) throws GLib.Error {
+    private void install_reserved_target (string dest_dev, int fd, Posix.Stat selected, string sequence,
+                                          bool encrypt, string encryption_password, InstallConfig config,
+                                          DaveInstall? dave = null) throws GLib.Error {
         var status = InstallerDaemon.Status () {
             step = INIT,
             percent = 0
@@ -2115,18 +2125,19 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                     }
                 }
                 validate_target (dest_dev, fd, selected, sequence);
-                var config = provision_normal_swap (written, target, work, keyfile, swap_size, fd, fd_path (media.fds[5]));
+                var swap_config = provision_normal_swap (written, target, work, keyfile,
+                    swap_size, fd, fd_path (media.fds[5]), config);
                 validate_target (dest_dev, fd, selected, sequence);
                 var esp = target + "@@" + json_integer (written.esp, "offset").to_string ();
                 var staged_config = work + "/repart/root-swap.conf";
-                FileUtils.set_contents (staged_config, config);
+                FileUtils.set_contents (staged_config, swap_config);
                 try {
                     run_capture ({"mtools", "-c", "mdir", "-i", esp, "::/EFI/Vale/"});
                 } catch (GLib.Error e) {
                     run_capture ({"mtools", "-c", "mmd", "-i", esp, "::/EFI/Vale"});
                 }
                 run_capture ({"mtools", "-c", "mcopy", "-n", "-i", esp, staged_config, "::/EFI/Vale/root-swap.conf"});
-                if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/EFI/Vale/root-swap.conf"}) != config.strip ()) {
+                if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/EFI/Vale/root-swap.conf"}) != swap_config.strip ()) {
                     throw new IOError.FAILED ("Normal ESP swap configuration differs from ROOT");
                 }
                 if (normal_seed_carrier != null) {
