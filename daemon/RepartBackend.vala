@@ -535,7 +535,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         run ({"mount", "-o", "remount,ro", root.path});
         // Copy the bounded factory image into the full planned partition.
         // Normal grows ext4 before allocating swap; Dave retains firstboot growth.
-        var formatting = new Regex ("^(Format|Encrypt|CopyFiles|KeyFile)=.*$", RegexCompileFlags.MULTILINE);
+        var formatting = new Regex ("^(Format|Encrypt|CopyFiles|ExcludeFiles|KeyFile)=.*$", RegexCompileFlags.MULTILINE);
         var copy = formatting.replace (original, original.length, 0, "");
         FileUtils.set_contents (definitions + "/40-root.conf", copy +
             "CopyBlocks=" + fd_path (root.fd) + "\nGrowFileSystem=yes\n");
@@ -702,6 +702,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             "CopyFiles=/etc/vale/dave-owner:/etc/vale/dave-owner\n" +
             "CopyFiles=/etc/vale/root-key.conf:/etc/vale/root-key.conf\n" +
             "CopyFiles=/etc/crypttab:/etc/crypttab\n" +
+            "ExcludeFiles=/usr/share/vale/install-root/etc/locale.conf\n" +
             "CopyFiles=/etc/locale.conf:/etc/locale.conf\n" +
             "CopyFiles=/etc/X11/xorg.conf.d/00-keyboard.conf:/etc/X11/xorg.conf.d/00-keyboard.conf\n" +
             "CopyFiles=/etc/dconf/db/local.d/00-vale-installer-keyboard:/etc/dconf/db/local.d/00-vale-installer-keyboard\n" +
