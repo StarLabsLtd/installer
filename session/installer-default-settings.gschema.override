@@ -20,7 +20,7 @@ cursor-theme='elementary'
 document-font-name='Open Sans 10'
 font-name='Inter 9'
 gtk-theme='io.elementary.stylesheet.blueberry'
-icon-theme='elementary'
+icon-theme='Vale'
 monospace-font-name='Roboto Mono 10'
 
 [org.gnome.desktop.peripherals.touchpad:Installer]
