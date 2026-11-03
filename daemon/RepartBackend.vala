@@ -1616,6 +1616,8 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             if (owner == recovery || owner.get_fd () == recovery.get_fd ()) {
                 throw new IOError.INVALID_ARGUMENT ("Distinct owner and recovery streams required");
             }
+            require_secure_boot ();
+            run_capture ({"/usr/lib/systemd/systemd-tpm2-setup", "--early=yes"});
             var identity = run_capture ({"/usr/bin/vale-tpm2-srk-verify"});
             string srk_name = "";
             foreach (var line in identity.split ("\n")) {
