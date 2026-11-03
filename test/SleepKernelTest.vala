@@ -2,7 +2,7 @@
 private const string HIBERNATION = "CONFIG_HIBERNATION=y\nCONFIG_HIBERNATION_SNAPSHOT_DEV=y\nCONFIG_ENCRYPTED_HIBERNATION=y\n";
 
 private const string SHARED = "CONFIG_SUSPEND=y\nCONFIG_PM_SLEEP_S2IDLE=y\nCONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY=y\n" + HIBERNATION;
-private const string DAVE = "root=dissect vale.mode=dave suspend=off";
+private const string DAVE = "root=dissect vale.mode=dave s2idle=off";
 
 private void main (string[] args) {
     Test.init (ref args);
@@ -35,10 +35,10 @@ private void main (string[] args) {
     });
     Test.add_func ("/sleep/reject-unguarded-dave-command-line", () => {
         foreach (var command_line in new string[] {
-            "vale.mode=dave", "suspend=off", "vale.mode=dave suspend=on",
-            DAVE + " suspend=off", DAVE + " suspend", DAVE + " vale.mode=dave",
-            "vale.mode=dave -- suspend=off", "vale.mode=dave suspend=\"off\"",
-            DAVE + "\n", "vale.mode=dave-recovery suspend=off",
+            "vale.mode=dave", "s2idle=off", "vale.mode=dave s2idle=on",
+            DAVE + " s2idle=off", DAVE + " suspend", DAVE + " vale.mode=dave",
+            "vale.mode=dave -- s2idle=off", "vale.mode=dave s2idle=\"off\"",
+            DAVE + "\n", "vale.mode=dave-recovery s2idle=off",
             string.nfill (2048, 'x') + " " + DAVE
         }) {
             try {

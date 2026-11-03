@@ -15,7 +15,7 @@ public class InstallModeView : AbstractInstallerView {
         normal.active = true;
         content_area.append (normal);
         content_area.append (dave);
-        var description = _("Normal Install offers optional drive encryption. Dave mode uses one password for your account and drive encryption, and hibernates instead of suspending.");
+        var description = _("Normal Install offers optional drive encryption. Dave mode uses one password for your account and drive encryption.");
         content_area.append (new Gtk.Label (description) {
             wrap = true, xalign = 0
         });

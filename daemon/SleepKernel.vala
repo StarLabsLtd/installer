@@ -24,7 +24,10 @@ internal class InstallerDaemon.SleepKernel {
                 throw new IOError.NOT_SUPPORTED ("Dave target command-line delimiter is not supported");
             }
             if (key == "suspend") {
-                if (suspend || word != "suspend=off") {
+                throw new IOError.NOT_SUPPORTED ("Dave target must retain platform suspend");
+            }
+            if (key == "s2idle") {
+                if (suspend || word != "s2idle=off") {
                     throw new IOError.NOT_SUPPORTED ("Invalid Dave target suspend policy");
                 }
                 suspend = true;
@@ -36,7 +39,7 @@ internal class InstallerDaemon.SleepKernel {
             }
         }
         if (!suspend || !mode) {
-            throw new IOError.NOT_SUPPORTED ("Dave target requires signed vale.mode=dave and suspend=off");
+            throw new IOError.NOT_SUPPORTED ("Dave target requires signed vale.mode=dave and s2idle=off");
         }
     }
 
