@@ -17,7 +17,7 @@ public class OwnerView : AbstractInstallerView {
     private Gtk.Label password_feedback;
     private Gtk.Entry confirmation;
     private Gtk.Entry recovery;
-    private Gtk.Entry hibernate_recovery;
+    private Gtk.PasswordEntryBuffer hibernate_recovery;
     private Gtk.CheckButton acknowledged;
     private Gtk.Button submit;
     private Gtk.Label status;
@@ -38,7 +38,7 @@ public class OwnerView : AbstractInstallerView {
         var heading = new Gtk.Label (title) { wrap = true };
         heading.add_css_class (Granite.STYLE_CLASS_H2_LABEL);
         title_area.append (heading);
-        title_area.append (new Gtk.Label (_("Your account password also unlocks the encrypted drive. Keep both recovery credentials separately.")) { wrap = true });
+        title_area.append (new Gtk.Label (_("Your account password also unlocks the encrypted drive. Keep the drive recovery credential separately.")) { wrap = true });
         spinner = new Gtk.Spinner () { visible = false };
         title_area.append (spinner);
         content_area.spacing = 6;
@@ -53,7 +53,7 @@ public class OwnerView : AbstractInstallerView {
         full_name = entry (_("Full Name"));
         hostname = entry (_("Computer Name"));
         password = entry (_("Owner Password"), true);
-        password.placeholder_text = _("At least 12 characters");
+        password.placeholder_text = _("At least 8 characters");
         password_feedback = new Gtk.Label (null) {
             wrap = true,
             xalign = 0,
@@ -65,15 +65,13 @@ public class OwnerView : AbstractInstallerView {
         recovery = entry (_("Drive Recovery Credential"), true);
         recovery.visibility = true;
         recovery.editable = false;
-        hibernate_recovery = entry (_("Hibernation Recovery Credential"), true);
-        hibernate_recovery.visibility = true;
-        hibernate_recovery.editable = false;
-        foreach (var field in new Gtk.Entry[] {recovery, hibernate_recovery}) {
+        hibernate_recovery = new Gtk.PasswordEntryBuffer ();
+        foreach (var field in new Gtk.Entry[] {recovery}) {
             field.width_chars = 64;
             field.max_width_chars = 64;
             field.add_css_class ("monospace");
         }
-        acknowledged = new Gtk.CheckButton.with_label (_("I saved BOTH recovery credentials separately"));
+        acknowledged = new Gtk.CheckButton.with_label (_("I saved the drive recovery credential"));
         content_area.append (acknowledged);
         status = new Gtk.Label (null) { wrap = true, xalign = 0 };
         content_area.append (status);
@@ -94,13 +92,13 @@ public class OwnerView : AbstractInstallerView {
                 // The generated temporary is erased before its allocation is freed.
                 InstallerDaemon.DaveReadiness.require_no_swap ();
                 recovery.text = "";
-                hibernate_recovery.text = "";
+                hibernate_recovery.set_text ("".data);
                 acknowledged.active = false;
                 var value = generate_recovery ();
                 recovery.text = value;
                 wipe (value);
                 value = generate_recovery ();
-                hibernate_recovery.text = value;
+                hibernate_recovery.set_text (value.data);
                 wipe (value);
             } catch (GLib.Error e) {
                 status.label = _("Recovery credential generation failed. Go back and try again.");
@@ -146,9 +144,9 @@ public class OwnerView : AbstractInstallerView {
         if (password.text.length > 511) {
             return _("The password is too long.");
         }
-        if (password.text.length < 12 ||
+        if (password.text.length < 8 ||
             password.text.contains ("\n") || password.text.contains ("\r")) {
-            return _("Use a password of at least 12 characters, without line breaks.");
+            return _("Use a password of at least 8 characters, without line breaks.");
         }
         if (password.text != confirmation.text) {
             return _("The passwords do not match.");
@@ -162,10 +160,10 @@ public class OwnerView : AbstractInstallerView {
             return _("Recovery credentials are unavailable. Go back and try again.");
         }
         if (password.text == recovery.text || password.text == hibernate_recovery.text) {
-            return _("Use a password different from either recovery credential.");
+            return _("Use a password different from the recovery credential.");
         }
         if (!acknowledged.active) {
-            return _("Save both recovery credentials separately, then confirm that you have saved them.");
+            return _("Save the drive recovery credential, then confirm that you have saved it.");
         }
         return null;
     }
@@ -187,7 +185,7 @@ public class OwnerView : AbstractInstallerView {
         password.text = "";
         confirmation.text = "";
         recovery.text = "";
-        hibernate_recovery.text = "";
+        hibernate_recovery.set_text ("".data);
         acknowledged.active = false;
     }
 

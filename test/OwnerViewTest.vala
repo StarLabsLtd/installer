@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-// Exercise the production owner form with public recovery fixtures and inert installation.
+// Exercise the production owner form with inert admission and installation boundaries.
 namespace Installer {
     public class App : Object { public static bool test_mode = true; }
     public class Daemon : Object {
@@ -13,6 +13,9 @@ namespace Installer {
     }
 }
 namespace InstallerDaemon {
+    internal class DaveReadiness {
+        internal static void require_no_swap () throws GLib.Error { }
+    }
     public struct InstallConfig {
         public string hostname;
         public string keyboard_layout;
@@ -82,19 +85,18 @@ public static int main (string[] args) {
     var password = field (view, "Owner Password");
     var confirmation = field (view, "Confirm Password");
     var recovery = field (view, "Drive Recovery Credential");
-    var hibernate = field (view, "Hibernation Recovery Credential");
-    var saved = (Gtk.CheckButton) control (view, "I saved BOTH recovery credentials separately");
+    assert (control (view, "Hibernation Recovery Credential") == null);
+    var saved = (Gtk.CheckButton) control (view, "I saved the drive recovery credential");
     var submit = (Gtk.Button) control (view, "Erase and Install");
     assert (saved != null && submit != null);
     username.text = "owner";
     name.text = "Test User";
     hostname.text = "fixture";
     recovery.text = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
-    hibernate.text = "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210";
     password.text = "short";
     confirmation.text = password.text;
     saved.active = true;
-    assert (!submit.sensitive && message (view, "at least 12"));
+    assert (!submit.sensitive && message (view, "at least 8"));
     username.text = "star";
     password.text = "star-quart77!";
     confirmation.text = password.text;
@@ -116,10 +118,10 @@ public static int main (string[] args) {
     assert (!submit.sensitive && message (view, "lowercase"));
     username.text = "owner";
     saved.active = false;
-    assert (!submit.sensitive && message (view, "Save both"));
+    assert (!submit.sensitive && message (view, "Save the drive"));
     saved.active = true;
     assert (submit.sensitive);
-    foreach (var key in new Gtk.Entry[] {recovery, hibernate}) {
+    foreach (var key in new Gtk.Entry[] {recovery}) {
         assert (key.buffer is Gtk.PasswordEntryBuffer);
         assert (key.visibility && !key.editable);
         int width, height;
@@ -128,7 +130,7 @@ public static int main (string[] args) {
     }
     submit.clicked ();
     assert (Installer.Daemon.calls == 0);
-    assert (password.text == "" && confirmation.text == "" && recovery.text == "" && hibernate.text == "");
+    assert (password.text == "" && confirmation.text == "" && recovery.text == "");
     assert (!submit.sensitive);
     window.destroy ();
     return 0;

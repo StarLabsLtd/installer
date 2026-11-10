@@ -46,9 +46,21 @@ static void password_feedback (void) {
     g_free (error);
 }
 
+static void eight_character_owner (void) {
+    const gchar *password = "V7!q2Zx9";
+    g_assert_true (vale_owner_password_valid ("owner", password));
+    g_assert_false (vale_owner_password_valid ("owner", "V7!q2Zx"));
+    GError *error = NULL;
+    int fd = vale_owner_credentials_fd ("a", "b", "c", password, &error);
+    g_assert_no_error (error);
+    g_assert_cmpint (fd, >=, 0);
+    close (fd);
+}
+
 int main (int argc, char **argv) {
     g_test_init (&argc, &argv, NULL);
     g_test_add_func ("/owner/password-policy", password_policy);
     g_test_add_func ("/owner/password-feedback", password_feedback);
+    g_test_add_func ("/owner/eight-character-minimum", eight_character_owner);
     return g_test_run ();
 }

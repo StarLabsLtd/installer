@@ -16,7 +16,7 @@ gchar *vale_owner_password_error (const gchar *username, const gchar *password) 
     if (!settings) return g_strdup ("Could not initialize password checking");
     int result = pwquality_read_config (settings, NULL, NULL);
     if (result >= 0)
-        result = pwquality_set_int_value (settings, PWQ_SETTING_MIN_LENGTH, 12);
+        result = pwquality_set_int_value (settings, PWQ_SETTING_MIN_LENGTH, 8);
     if (result >= 0)
         result = pwquality_check (settings, password, NULL, username, NULL);
     char message[256];
@@ -100,7 +100,7 @@ int vale_owner_credentials_fd (const gchar *username, const gchar *full_name,
     size_t offset = 0;
     for (size_t i = 0; i < G_N_ELEMENTS (fields); i++) {
         size_t size = strnlen (fields[i], bounds[i] + 1);
-        if (size > bounds[i] || (i == 3 && size < 12)) {
+        if (size > bounds[i] || (i == 3 && size < 8)) {
             g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_INVALID_ARGUMENT,
                                  "Owner fields are outside their byte limits");
             explicit_bzero (record, sizeof record);
@@ -158,7 +158,7 @@ gboolean vale_credentials_validate (int owner, int recovery, int hibernate_recov
     *username = NULL;
     *password_offset = 0;
     *password_size = 0;
-    if (!read_sealed (owner, record, 19, sizeof record, &size, error) ||
+    if (!read_sealed (owner, record, 15, sizeof record, &size, error) ||
         !read_sealed (recovery, key, 64, 64, &key_size, error) ||
         !read_sealed (hibernate_recovery, hibernate_key, 64, 64, &key_size, error)) goto done;
     struct stat identities[3];
@@ -174,7 +174,7 @@ gboolean vale_credentials_validate (int owner, int recovery, int hibernate_recov
         char *end = memchr (record + offset, 0, size - offset);
         if (!end) goto invalid;
         size_t length = end - (record + offset);
-        if (length == 0 || length > bounds[i] || (i == 3 && length < 12) ||
+        if (length == 0 || length > bounds[i] || (i == 3 && length < 8) ||
             !g_utf8_validate (record + offset, length, NULL)) goto invalid;
         fields[i] = record + offset;
         offset += length + 1;

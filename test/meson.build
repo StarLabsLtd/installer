@@ -149,7 +149,6 @@ owner_view_test = executable(
     'OwnerViewTest.vala',
     meson.project_source_root() / 'src' / 'Views' / 'AbstractInstallerView.vala',
     meson.project_source_root() / 'src' / 'Views' / 'OwnerView.vala',
-    meson.project_source_root() / 'common' / 'DaveReadiness.vala',
     meson.project_source_root() / 'common' / 'OwnerCredentials.c',
     include_directories: include_directories('../common'),
     dependencies: [gtk_dep, granite_dep, adw_dep, gio_unix_dep, pwquality_dep],
