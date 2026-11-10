@@ -82,21 +82,10 @@ if installer_backend == 'repart'
     )
     test('Normal ROOT and ESP publication', normal_root_test)
 
-    normal_seed_carrier_test = executable(
-        'NormalSeedCarrierTest',
-        'NormalSeedCarrierTest.vala',
-        meson.project_source_root() / 'daemon' / 'NormalSeedCarrier.vala',
-        meson.project_source_root() / 'daemon' / 'RepartCommand.vala',
-        dependencies: [glib_dep, gio_dep, json_glib_dep, meson.get_compiler('vala').find_library('posix')],
-        install: false
-    )
-    test('Normal reinstall seed carrier', normal_seed_carrier_test)
-
     normal_keymap_credential_test = executable(
         'NormalKeymapCredentialTest',
         'NormalKeymapCredentialTest.vala',
         meson.project_source_root() / 'daemon' / 'NormalKeymapCredential.vala',
-        meson.project_source_root() / 'daemon' / 'NormalSeedCarrier.vala',
         meson.project_source_root() / 'daemon' / 'RepartCommand.vala',
         dependencies: [glib_dep, gio_dep, json_glib_dep,
                        meson.get_compiler('vala').find_library('posix')],

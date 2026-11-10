@@ -103,13 +103,13 @@ private void test_encryption_input_and_esp_copy () {
         assert (actual == "test-credential");
 
         try {
-            InstallerDaemon.NormalSeedCarrier.sync_target_and_remove_staged (-1, null, credential);
+            InstallerDaemon.NormalKeymapCredential.sync_target_and_remove_staged (-1, credential);
             assert_not_reached ();
         } catch (GLib.Error e) { }
         assert (File.new_for_path (credential).query_exists ());
         int fd = Posix.open (image, Posix.O_RDWR | Posix.O_CLOEXEC);
         assert (fd >= 0);
-        InstallerDaemon.NormalSeedCarrier.sync_target_and_remove_staged (fd, null, credential);
+        InstallerDaemon.NormalKeymapCredential.sync_target_and_remove_staged (fd, credential);
         assert (!File.new_for_path (credential).query_exists ());
         assert (Posix.close (fd) == 0);
     } catch (GLib.Error e) {

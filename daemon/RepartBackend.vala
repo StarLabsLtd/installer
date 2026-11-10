@@ -1068,7 +1068,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/loader/loader.conf"}) != config.strip ()) {
             throw new IOError.FAILED ("Could not verify DAVE boot selection");
         }
-        NormalSeedCarrier.sync_target_and_remove_staged (target_fd, null, keymap_credential);
+        NormalKeymapCredential.sync_target_and_remove_staged (target_fd, keymap_credential);
         if (dave_crypto ({"luksUUID", fd_path (dave.root_fd)}) != dave.uuid ||
             !dave.metadata.equal (dave_metadata (fd_path (dave.root_fd), true))) {
             throw new IOError.FAILED ("Boot publication changed DAVE ROOT");
@@ -1900,7 +1900,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         uint64 swap_size = 0;
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
-        string? normal_seed_carrier = null;
         string? keymap_credential = null;
         var target = fd_path (fd);
         bool initial_secure_boot = false;
@@ -2091,15 +2090,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 dave.root_plan = dave_root_plan (plan);
                 dave.hibernate_plan = dave_hibernate_plan (plan, dave);
                 check_dave_stage (dave, media);
-            } else {
-                uint64[] existing_esps = {};
-                try {
-                    var table = run_capture ({"env", "LC_ALL=C", "/usr/sbin/sfdisk", "--json", target});
-                    existing_esps = NormalSeedCarrier.esp_offsets (table);
-                } catch (GLib.Error e) {
-                    if (!e.message.contains ("does not contain a recognized partition table")) throw e;
-                }
-                normal_seed_carrier = NormalSeedCarrier.stage_from_target (target, existing_esps, work);
             }
             if (dave != null || encrypt) {
                 var map_path = live_mount + "/usr/share/systemd/kbd-model-map";
@@ -2176,17 +2166,12 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/EFI/Vale/root-swap.conf"}) != swap_config.strip ()) {
                     throw new IOError.FAILED ("Normal ESP swap configuration differs from ROOT");
                 }
-                if (normal_seed_carrier != null) {
-                    NormalSeedCarrier.copy_to_new_esp (normal_seed_carrier, target,
-                        json_integer (written.esp, "offset"), work);
-                }
                 if (keymap_credential != null) {
                     NormalKeymapCredential.copy_to_new_esp (keymap_credential, target,
                         json_integer (written.esp, "offset"), work);
                 }
                 File.new_for_path (staged_config).delete ();
-                NormalSeedCarrier.sync_target_and_remove_staged (fd, normal_seed_carrier,
-                    keymap_credential);
+                NormalKeymapCredential.sync_target_and_remove_staged (fd, keymap_credential);
                 validate_target (dest_dev, fd, selected, sequence);
             }
 
