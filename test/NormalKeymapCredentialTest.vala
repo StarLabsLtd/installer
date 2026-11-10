@@ -122,9 +122,35 @@ private void test_encryption_input_and_esp_copy () {
     }
 }
 
+private void test_encryption_failure_details () {
+    string? work = null;
+    try {
+        work = DirUtils.make_tmp ("normal-keymap-error-XXXXXX");
+        var command = Path.build_filename (work, "systemd-creds-test");
+        FileUtils.set_contents (command,
+            "#!/bin/sh\ncat >/dev/null\nprintf 'fixture TPM unavailable\\n' >&2\nexit 1\n");
+        assert (Posix.chmod (command, 0700) == 0);
+        try {
+            InstallerDaemon.NormalKeymapCredential.encrypt ("uk", work, command);
+            assert_not_reached ();
+        } catch (GLib.IOError.FAILED e) {
+            assert (e.message.contains ("fixture TPM unavailable"));
+        }
+        assert (!File.new_for_path (Path.build_filename (work, "vconsole.keymap.cred")).query_exists ());
+    } catch (GLib.Error e) {
+        Test.message (e.message);
+        assert_not_reached ();
+    } finally {
+        if (work != null) {
+            try { run ({"rm", "-rf", "--", work}); } catch (GLib.Error e) { }
+        }
+    }
+}
+
 public int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/normal-keymap/exact-xkb-map", test_mapping);
     Test.add_func ("/normal-keymap/credential-and-esp-publication", test_encryption_input_and_esp_copy);
+    Test.add_func ("/normal-keymap/encryption-error-details", test_encryption_failure_details);
     return Test.run ();
 }

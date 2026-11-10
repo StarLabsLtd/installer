@@ -34,16 +34,18 @@ namespace InstallerDaemon.NormalKeymapCredential {
                             throws GLib.Error {
         var path = Path.build_filename (work, NAME + ".cred");
         var process = new Subprocess.newv ({command, "encrypt", "--with-key=tpm2", "--tpm2-pcrs=",
-            "--name=" + NAME, "-", path}, SubprocessFlags.STDIN_PIPE);
+            "--name=" + NAME, "-", path}, SubprocessFlags.STDIN_PIPE | SubprocessFlags.STDERR_PIPE);
+        string? error_output = null;
         try {
-            process.communicate_utf8 (keymap, null, null, null);
+            process.communicate_utf8 (keymap, null, null, out error_output);
         } catch (GLib.Error e) {
             process.force_exit ();
             try { process.wait (); } catch (GLib.Error wait_error) { }
             throw new GLib.IOError.FAILED ("Could not encrypt the console keymap: %s", e.message);
         }
         if (!process.get_successful ()) {
-            throw new GLib.IOError.FAILED ("Could not encrypt the console keymap");
+            throw new GLib.IOError.FAILED ("Could not encrypt the console keymap: %s",
+                error_output == null || error_output.strip () == "" ? "systemd-creds failed" : error_output.strip ());
         }
         Posix.Stat stat;
         if (Posix.lstat (path, out stat) != 0 || !Posix.S_ISREG (stat.st_mode) ||
