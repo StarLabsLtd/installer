@@ -96,6 +96,19 @@ internal class InstallerDaemon.NormalBoot {
         }
     }
 
+    internal static void select_profile (string image, bool dave, BootCommand command) throws GLib.Error {
+        var other = new Regex (dave ?
+            "\\Aelementary(?:-normal-commission)?_[0-9]+\\.efi\\z" :
+            "\\Aelementary-dave_[0-9]+\\.efi\\z");
+        var entries = command ({"mtools", "-c", "mdir", "-b", "-i", image, "::/EFI/Linux"});
+        foreach (var entry in entries.strip ().split ("\n")) {
+            var name = Path.get_basename (entry);
+            if (other.match (name)) {
+                command ({"mtools", "-c", "mdel", "-i", image, "::/EFI/Linux/" + name});
+            }
+        }
+    }
+
     internal void verify_target (string image, string work) throws GLib.Error {
         guard ();
         foreach (var path in files.get_keys ()) {

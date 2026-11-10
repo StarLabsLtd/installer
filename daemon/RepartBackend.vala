@@ -1068,6 +1068,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/loader/loader.conf"}) != config.strip ()) {
             throw new IOError.FAILED ("Could not verify DAVE boot selection");
         }
+        NormalBoot.select_profile (esp, true, run_capture);
         NormalKeymapCredential.sync_target_and_remove_staged (target_fd, keymap_credential);
         if (dave_crypto ({"luksUUID", fd_path (dave.root_fd)}) != dave.uuid ||
             !dave.metadata.equal (dave_metadata (fd_path (dave.root_fd), true))) {
@@ -2171,6 +2172,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                         json_integer (written.esp, "offset"), work);
                 }
                 File.new_for_path (staged_config).delete ();
+                NormalBoot.select_profile (esp, false, run_capture);
                 NormalKeymapCredential.sync_target_and_remove_staged (fd, keymap_credential);
                 validate_target (dest_dev, fd, selected, sequence);
             }

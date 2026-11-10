@@ -146,3 +146,18 @@ owner_view_test = executable(
 
 test('Owner form validation and recovery layout', owner_view_test,
     env: ['LC_ALL=C', 'GSETTINGS_BACKEND=memory'])
+
+if installer_backend == 'repart'
+    boot_profile_test = executable(
+        'BootProfileTest',
+        'BootProfileTest.vala',
+        meson.project_source_root() / 'daemon' / 'NormalBoot.vala',
+        meson.project_source_root() / 'daemon' / 'RepartCommand.vala',
+        include_directories: include_directories('../daemon'),
+        dependencies: [glib_dep, gio_dep,
+                       meson.get_compiler('vala').find_library('posix')],
+        link_with: backend_libraries,
+        install: false
+    )
+    test('Installed boot profile selection', boot_profile_test)
+endif
