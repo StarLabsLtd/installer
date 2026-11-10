@@ -1,34 +1,10 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 namespace InstallerDaemon.NormalSeedCarrier {
-    private const uint64 COUNTER_HANDLE = 0x01801100;
     private const string ESP_TYPE = "c12a7328-f81f-11d2-ba4b-00a0c93ec93b";
     private const string DOS_ESP_TYPE = "ef";
     private const uint64 MIN_SIZE = 80;
     private const uint64 MAX_SIZE = 4096;
-
-    internal bool counter_is_present (string output) throws GLib.Error {
-        bool found = false;
-        foreach (var line in output.split ("\n")) {
-            var handle = line.strip ();
-            if (handle == "") continue;
-            if (handle.has_prefix ("- ")) handle = handle.substring (2).strip ();
-            if (!Regex.match_simple ("\\A0x[0-9a-fA-F]{1,8}\\z", handle)) {
-                throw new GLib.IOError.INVALID_DATA ("Invalid TPM NV handle listing");
-            }
-            var value = uint64.parse (handle.substring (2), 16);
-            if (value == COUNTER_HANDLE) found = true;
-        }
-        return found;
-    }
-
-    internal void require_carrier (bool counter_present, bool carrier_present) throws GLib.Error {
-        if (counter_present && !carrier_present) {
-            throw new GLib.IOError.BUSY (
-                "Cannot erase this disk: the Normal TPM counter exists but its seed carrier is missing"
-            );
-        }
-    }
 
     internal uint64[] esp_offsets (string data) throws GLib.Error {
         var parser = new Json.Parser ();
@@ -86,7 +62,7 @@ namespace InstallerDaemon.NormalSeedCarrier {
 
     private uint8[] read_carrier (string image) throws GLib.Error {
         var process = new Subprocess.newv ({"mtools", "-c", "mtype", "-i", image,
-            "::/EFI/Vale/normal-seed"}, SubprocessFlags.STDOUT_PIPE);
+            "::/EFI/Vale/normal-snapshot-seed"}, SubprocessFlags.STDOUT_PIPE);
         var stream = process.get_stdout_pipe ();
         uint8[] carrier = new uint8[MAX_SIZE + 1];
         size_t used = 0;
@@ -121,9 +97,9 @@ namespace InstallerDaemon.NormalSeedCarrier {
             var image = esp_image (disk, offset);
             try {
                 RepartCommand.capture ({"env", "LC_ALL=C", "mtools", "-c", "mdir", "-b", "-i",
-                    image, "::/EFI/Vale/normal-seed"});
+                    image, "::/EFI/Vale/normal-snapshot-seed"});
             } catch (GLib.Error e) {
-                if (e.message.contains ("File \"::/EFI/Vale/normal-seed\" not found")) continue;
+                if (e.message.contains ("File \"::/EFI/Vale/normal-snapshot-seed\" not found")) continue;
                 throw new GLib.IOError.FAILED ("Could not inspect the existing target ESP: %s", e.message);
             }
             if (staged != null) {
@@ -150,10 +126,10 @@ namespace InstallerDaemon.NormalSeedCarrier {
     internal void copy_to_new_esp (string staged, string disk, uint64 offset, string work) throws GLib.Error {
         var image = esp_image (disk, offset);
         RepartCommand.capture ({"mtools", "-c", "mcopy", "-o", "-i", image,
-            staged, "::/EFI/Vale/normal-seed"});
+            staged, "::/EFI/Vale/normal-snapshot-seed"});
         var readback = Path.build_filename (work, "normal-seed-readback");
         RepartCommand.capture ({"mtools", "-c", "mcopy", "-o", "-i", image,
-            "::/EFI/Vale/normal-seed", readback});
+            "::/EFI/Vale/normal-snapshot-seed", readback});
         if (!same_bytes (staged, readback)) {
             throw new GLib.IOError.FAILED ("Normal seed carrier differs after writing the new ESP");
         }

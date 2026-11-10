@@ -2092,8 +2092,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 dave.hibernate_plan = dave_hibernate_plan (plan, dave);
                 check_dave_stage (dave, media);
             } else {
-                bool counter_present = NormalSeedCarrier.counter_is_present (
-                    run_capture ({"/usr/bin/tpm2_getcap", "-T", "device:/dev/tpmrm0", "handles-nv-index"}));
                 uint64[] existing_esps = {};
                 try {
                     var table = run_capture ({"env", "LC_ALL=C", "/usr/sbin/sfdisk", "--json", target});
@@ -2102,7 +2100,6 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                     if (!e.message.contains ("does not contain a recognized partition table")) throw e;
                 }
                 normal_seed_carrier = NormalSeedCarrier.stage_from_target (target, existing_esps, work);
-                NormalSeedCarrier.require_carrier (counter_present, normal_seed_carrier != null);
             }
             if (dave != null || encrypt) {
                 var map_path = live_mount + "/usr/share/systemd/kbd-model-map";

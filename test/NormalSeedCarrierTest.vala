@@ -14,30 +14,6 @@ private string make_image (string directory, string name) throws GLib.Error {
     return path;
 }
 
-private void test_counter_listing () {
-    try {
-        assert (InstallerDaemon.NormalSeedCarrier.counter_is_present (
-            "- 0x81000001\n- 0x1801100\n"));
-        assert (!InstallerDaemon.NormalSeedCarrier.counter_is_present ("- 0x81000001\n"));
-        assert (!InstallerDaemon.NormalSeedCarrier.counter_is_present (""));
-        try {
-            InstallerDaemon.NormalSeedCarrier.counter_is_present ("TPM unavailable\n");
-            assert_not_reached ();
-        } catch (GLib.Error e) { }
-    } catch (GLib.Error e) { assert_not_reached (); }
-}
-
-private void test_preflight () {
-    try {
-        InstallerDaemon.NormalSeedCarrier.require_carrier (false, false);
-        InstallerDaemon.NormalSeedCarrier.require_carrier (true, true);
-        try {
-            InstallerDaemon.NormalSeedCarrier.require_carrier (true, false);
-            assert_not_reached ();
-        } catch (GLib.IOError.BUSY e) { }
-    } catch (GLib.Error e) { assert_not_reached (); }
-}
-
 private void test_esp_offsets () {
     const string TABLE = "{\"partitiontable\":{\"label\":\"gpt\",\"sectorsize\":512,\"partitions\":[" +
         "{\"start\":2048,\"size\":1048576,\"type\":\"c12a7328-f81f-11d2-ba4b-00a0c93ec93b\"}," +
@@ -78,13 +54,13 @@ private void test_stage_and_copy () {
         for (int i = 0; i < expected.length; i++) expected[i] = (uint8) (i ^ 0x5a);
         var fixture = Path.build_filename (work, "fixture");
         FileUtils.set_data (fixture, expected);
-        run ({"mcopy", "-i", source, fixture, "::/EFI/Vale/normal-seed"});
+        run ({"mcopy", "-i", source, fixture, "::/EFI/Vale/normal-snapshot-seed"});
 
         var staged = InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, carrier_work);
         assert (staged != null);
         InstallerDaemon.NormalSeedCarrier.copy_to_new_esp (staged, destination, 0, carrier_work);
         var actual_path = Path.build_filename (work, "actual");
-        run ({"mcopy", "-o", "-i", destination, "::/EFI/Vale/normal-seed", actual_path});
+        run ({"mcopy", "-o", "-i", destination, "::/EFI/Vale/normal-snapshot-seed", actual_path});
         uint8[] actual;
         FileUtils.get_data (actual_path, out actual);
         assert (actual.length == expected.length);
@@ -93,7 +69,7 @@ private void test_stage_and_copy () {
         var changed = new uint8[128];
         for (int i = 0; i < changed.length; i++) changed[i] = (uint8) (i ^ 0xa5);
         FileUtils.set_data (fixture, changed);
-        run ({"mcopy", "-o", "-i", source, fixture, "::/EFI/Vale/normal-seed"});
+        run ({"mcopy", "-o", "-i", source, fixture, "::/EFI/Vale/normal-snapshot-seed"});
         var restaged = InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, carrier_work);
         assert (restaged != null);
         uint8[] restaged_data;
@@ -101,7 +77,7 @@ private void test_stage_and_copy () {
         assert (restaged_data.length == changed.length);
         for (int i = 0; i < changed.length; i++) assert (restaged_data[i] == changed[i]);
         InstallerDaemon.NormalSeedCarrier.copy_to_new_esp (restaged, destination, 0, carrier_work);
-        run ({"mcopy", "-o", "-i", destination, "::/EFI/Vale/normal-seed", actual_path});
+        run ({"mcopy", "-o", "-i", destination, "::/EFI/Vale/normal-snapshot-seed", actual_path});
         FileUtils.get_data (actual_path, out actual);
         for (int i = 0; i < changed.length; i++) assert (actual[i] == changed[i]);
 
@@ -126,7 +102,7 @@ private void test_stage_and_copy () {
 
         var oversized = new uint8[4097];
         FileUtils.set_data (fixture, oversized);
-        run ({"mcopy", "-o", "-i", source, fixture, "::/EFI/Vale/normal-seed"});
+        run ({"mcopy", "-o", "-i", source, fixture, "::/EFI/Vale/normal-snapshot-seed"});
         try {
             InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, work);
             assert_not_reached ();
@@ -149,6 +125,13 @@ private void test_missing_carrier () {
         work = DirUtils.make_tmp ("normal-seed-missing-XXXXXX");
         var source = make_image (work, "source.img");
         assert (InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, work) == null);
+        run ({"mmd", "-i", source, "::/EFI"});
+        run ({"mmd", "-i", source, "::/EFI/Vale"});
+        var legacy = Path.build_filename (work, "legacy-carrier");
+        FileUtils.set_data (legacy, new uint8[80]);
+        run ({"mcopy", "-i", source, legacy, "::/EFI/Vale/normal-seed"});
+        // DAVE's carrier is not a counterless Normal seed.
+        assert (InstallerDaemon.NormalSeedCarrier.stage_from_target (source, {0}, work) == null);
     } catch (GLib.Error e) {
         Test.message (e.message);
         assert_not_reached ();
@@ -161,8 +144,6 @@ private void test_missing_carrier () {
 
 public int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/normal-seed/counter-listing", test_counter_listing);
-    Test.add_func ("/normal-seed/preflight", test_preflight);
     Test.add_func ("/normal-seed/esp-offsets", test_esp_offsets);
     Test.add_func ("/normal-seed/stage-copy-verify", test_stage_and_copy);
     Test.add_func ("/normal-seed/missing", test_missing_carrier);
