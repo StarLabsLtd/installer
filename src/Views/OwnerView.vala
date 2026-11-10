@@ -7,13 +7,14 @@ public class OwnerView : AbstractInstallerView {
     private static extern int owner_fd (string username, string full_name, string hostname, string password) throws GLib.Error;
     [CCode (cname = "vale_recovery_fd", cheader_filename = "OwnerCredentials.h")]
     private static extern int recovery_fd (string recovery) throws GLib.Error;
-    [CCode (cname = "vale_owner_password_valid", cheader_filename = "OwnerCredentials.h")]
-    private static extern bool password_valid (string username, string password);
+    [CCode (cname = "vale_owner_password_error", cheader_filename = "OwnerCredentials.h")]
+    private static extern string? password_policy_error (string username, string password);
 
     private Gtk.Entry username;
     private Gtk.Entry full_name;
     private Gtk.Entry hostname;
     private Gtk.Entry password;
+    private Gtk.Label password_feedback;
     private Gtk.Entry confirmation;
     private Gtk.Entry recovery;
     private Gtk.Entry hibernate_recovery;
@@ -53,6 +54,13 @@ public class OwnerView : AbstractInstallerView {
         hostname = entry (_("Computer Name"));
         password = entry (_("Owner Password"), true);
         password.placeholder_text = _("At least 12 characters");
+        password_feedback = new Gtk.Label (null) {
+            wrap = true,
+            xalign = 0,
+            max_width_chars = 42
+        };
+        password_feedback.add_css_class ("error");
+        content_area.append (password_feedback);
         confirmation = entry (_("Confirm Password"), true);
         recovery = entry (_("Drive Recovery Credential"), true);
         recovery.visibility = true;
@@ -145,8 +153,9 @@ public class OwnerView : AbstractInstallerView {
         if (password.text != confirmation.text) {
             return _("The passwords do not match.");
         }
-        if (!password_valid (username.text, password.text)) {
-            return _("This password does not meet the password policy. Choose a longer, less predictable password.");
+        var policy_error = password_policy_error (username.text, password.text);
+        if (policy_error != null) {
+            return policy_error;
         }
         if (recovery.text.length != 64 || hibernate_recovery.text.length != 64 ||
             recovery.text == hibernate_recovery.text) {
@@ -163,7 +172,14 @@ public class OwnerView : AbstractInstallerView {
 
     private void update_submit () {
         var error = validation_error ();
-        validation.label = pending ? "" : error ?? "";
+        var policy_error = password.text == "" ? null : password_policy_error (username.text, password.text);
+        password_feedback.label = pending ? "" : policy_error ?? "";
+        if (!pending && policy_error != null) {
+            password.add_css_class ("error");
+        } else {
+            password.remove_css_class ("error");
+        }
+        validation.label = pending || error == policy_error ? "" : error ?? "";
         submit.sensitive = !pending && error == null;
     }
 

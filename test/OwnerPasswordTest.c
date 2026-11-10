@@ -2,6 +2,7 @@
 #include "OwnerCredentials.h"
 #include <gio/gio.h>
 #include <unistd.h>
+#include <string.h>
 
 static void password_policy (void) {
     const gchar *passwords[] = {"InstalledOwnerFixture739!", "quartzLemon!47.Nebula"};
@@ -31,8 +32,23 @@ static void password_policy (void) {
     }
 }
 
+static void password_feedback (void) {
+    gchar *error = vale_owner_password_error ("star", "star-quart77!");
+    g_assert_nonnull (error);
+    g_assert_false (vale_owner_password_valid ("star", "star-quart77!"));
+    g_assert_null (strstr (error, "star-quart77!"));
+    g_free (error);
+    g_assert_null (vale_owner_password_error ("sean", "star-quart77!"));
+    g_assert_true (vale_owner_password_valid ("sean", "star-quart77!"));
+    error = vale_owner_password_error ("sean", "short");
+    g_assert_nonnull (error);
+    g_assert_cmpstr (error, !=, "");
+    g_free (error);
+}
+
 int main (int argc, char **argv) {
     g_test_init (&argc, &argv, NULL);
     g_test_add_func ("/owner/password-policy", password_policy);
+    g_test_add_func ("/owner/password-feedback", password_feedback);
     return g_test_run ();
 }

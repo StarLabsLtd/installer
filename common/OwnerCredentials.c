@@ -11,14 +11,24 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-gboolean vale_owner_password_valid (const gchar *username, const gchar *password) {
+gchar *vale_owner_password_error (const gchar *username, const gchar *password) {
     pwquality_settings_t *settings = pwquality_default_settings ();
-    if (!settings) return FALSE;
-    /* Match the installed password stack before accepting a disk password. */
-    gboolean valid = pwquality_read_config (settings, NULL, NULL) >= 0 &&
-        pwquality_set_int_value (settings, PWQ_SETTING_MIN_LENGTH, 12) >= 0 &&
-        pwquality_check (settings, password, NULL, username, NULL) >= 0;
+    if (!settings) return g_strdup ("Could not initialize password checking");
+    int result = pwquality_read_config (settings, NULL, NULL);
+    if (result >= 0)
+        result = pwquality_set_int_value (settings, PWQ_SETTING_MIN_LENGTH, 12);
+    if (result >= 0)
+        result = pwquality_check (settings, password, NULL, username, NULL);
+    char message[256];
+    gchar *error = result < 0 ? g_strdup (pwquality_strerror (message, sizeof message, result, NULL)) : NULL;
     pwquality_free_settings (settings);
+    return error;
+}
+
+gboolean vale_owner_password_valid (const gchar *username, const gchar *password) {
+    gchar *error = vale_owner_password_error (username, password);
+    gboolean valid = error == NULL;
+    g_free (error);
     return valid;
 }
 

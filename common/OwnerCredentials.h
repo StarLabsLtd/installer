@@ -4,6 +4,7 @@
 
 int vale_hibernate_bootstrap_fd (GError **error);
 gchar *vale_recovery_generate (GError **error);
+gchar *vale_owner_password_error (const gchar *username, const gchar *password);
 gboolean vale_owner_password_valid (const gchar *username, const gchar *password);
 int vale_owner_credentials_fd (const gchar *username, const gchar *full_name,
                               const gchar *hostname, const gchar *password,

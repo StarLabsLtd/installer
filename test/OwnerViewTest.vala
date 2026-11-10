@@ -95,6 +95,14 @@ public static int main (string[] args) {
     confirmation.text = password.text;
     saved.active = true;
     assert (!submit.sensitive && message (view, "at least 12"));
+    username.text = "star";
+    password.text = "star-quart77!";
+    confirmation.text = password.text;
+    var feedback = password.get_next_sibling () as Gtk.Label;
+    assert (feedback != null && feedback.label != "");
+    assert (password.has_css_class ("error") && !submit.sensitive);
+    username.text = "owner";
+    assert (feedback.label == "" && !password.has_css_class ("error") && submit.sensitive);
     password.text = "quartzLemon!47.Nebula";
     confirmation.text = password.text;
     assert (submit.sensitive);
