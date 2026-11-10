@@ -20,6 +20,7 @@ public class OwnerView : AbstractInstallerView {
     private Gtk.CheckButton acknowledged;
     private Gtk.Button submit;
     private Gtk.Label status;
+    private Gtk.Label validation;
     private Gtk.Spinner spinner;
     private bool pending = false;
 
@@ -29,15 +30,29 @@ public class OwnerView : AbstractInstallerView {
 
     construct {
         title = _("DAVE Owner and Recovery");
-        title_area.append (new Gtk.Label (title) { wrap = true });
+        body_area.orientation = Gtk.Orientation.VERTICAL;
+        body_area.homogeneous = false;
+        title_area.valign = Gtk.Align.START;
+        title_area.remove_css_class (Granite.STYLE_CLASS_H2_LABEL);
+        var heading = new Gtk.Label (title) { wrap = true };
+        heading.add_css_class (Granite.STYLE_CLASS_H2_LABEL);
+        title_area.append (heading);
         title_area.append (new Gtk.Label (_("Your account password also unlocks the encrypted drive. Keep both recovery credentials separately.")) { wrap = true });
         spinner = new Gtk.Spinner () { visible = false };
         title_area.append (spinner);
         content_area.spacing = 6;
+        content_clamp.child = null;
+        content_clamp.vexpand = true;
+        content_clamp.child = new Gtk.ScrolledWindow () {
+            child = content_area,
+            hscrollbar_policy = Gtk.PolicyType.NEVER,
+            vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
+        };
         username = entry (_("Username"));
         full_name = entry (_("Full Name"));
         hostname = entry (_("Computer Name"));
         password = entry (_("Owner Password"), true);
+        password.placeholder_text = _("At least 12 characters");
         confirmation = entry (_("Confirm Password"), true);
         recovery = entry (_("Drive Recovery Credential"), true);
         recovery.visibility = true;
@@ -45,11 +60,22 @@ public class OwnerView : AbstractInstallerView {
         hibernate_recovery = entry (_("Hibernation Recovery Credential"), true);
         hibernate_recovery.visibility = true;
         hibernate_recovery.editable = false;
+        foreach (var field in new Gtk.Entry[] {recovery, hibernate_recovery}) {
+            field.width_chars = 64;
+            field.max_width_chars = 64;
+            field.add_css_class ("monospace");
+        }
         acknowledged = new Gtk.CheckButton.with_label (_("I saved BOTH recovery credentials separately"));
         content_area.append (acknowledged);
         status = new Gtk.Label (null) { wrap = true, xalign = 0 };
         content_area.append (status);
         submit = new Gtk.Button.with_label (_("Erase and Install")) { sensitive = false };
+        validation = new Gtk.Label (null) {
+            wrap = true,
+            xalign = 0,
+            max_width_chars = 42
+        };
+        action_box_start.append (validation);
         action_box_end.append (submit);
         foreach (var field in new Gtk.Entry[] {username, full_name, hostname, password, confirmation}) {
             field.changed.connect (update_submit);
@@ -95,21 +121,50 @@ public class OwnerView : AbstractInstallerView {
         return field;
     }
 
-    private bool valid_fields () {
-        return Regex.match_simple ("\\A[a-z_][a-z0-9_-]{0,31}\\z", username.text) &&
-            Regex.match_simple ("\\A[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\z", hostname.text) &&
-            full_name.text.length > 0 && full_name.text.length <= 256 && !full_name.text.contains (":") &&
-            !full_name.text.contains ("\n") && !full_name.text.contains ("\r") &&
-            password.text.length >= 12 && password.text.length <= 511 &&
-            !password.text.contains ("\n") && !password.text.contains ("\r") &&
-            password.text == confirmation.text && recovery.text.length == 64 &&
-            hibernate_recovery.text.length == 64 && recovery.text != hibernate_recovery.text &&
-            password.text != recovery.text && password.text != hibernate_recovery.text && acknowledged.active &&
-            password_valid (username.text, password.text);
+    private string? validation_error () {
+        if (!Regex.match_simple ("\\A[a-z_][a-z0-9_-]{0,31}\\z", username.text)) {
+            return _("Use a username of up to 32 lowercase letters, numbers, underscores or hyphens, starting with a letter or underscore.");
+        }
+        if (!Regex.match_simple ("\\A[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\z", hostname.text)) {
+            return _("Use a computer name of up to 63 letters, numbers or hyphens, starting and ending with a letter or number.");
+        }
+        if (full_name.text.length > 256) {
+            return _("The full name is too long.");
+        }
+        if (full_name.text.length == 0 || full_name.text.contains (":") ||
+            full_name.text.contains ("\n") || full_name.text.contains ("\r")) {
+            return _("Enter a full name without colons or line breaks.");
+        }
+        if (password.text.length > 511) {
+            return _("The password is too long.");
+        }
+        if (password.text.length < 12 ||
+            password.text.contains ("\n") || password.text.contains ("\r")) {
+            return _("Use a password of at least 12 characters, without line breaks.");
+        }
+        if (password.text != confirmation.text) {
+            return _("The passwords do not match.");
+        }
+        if (!password_valid (username.text, password.text)) {
+            return _("This password does not meet the password policy. Choose a longer, less predictable password.");
+        }
+        if (recovery.text.length != 64 || hibernate_recovery.text.length != 64 ||
+            recovery.text == hibernate_recovery.text) {
+            return _("Recovery credentials are unavailable. Go back and try again.");
+        }
+        if (password.text == recovery.text || password.text == hibernate_recovery.text) {
+            return _("Use a password different from either recovery credential.");
+        }
+        if (!acknowledged.active) {
+            return _("Save both recovery credentials separately, then confirm that you have saved them.");
+        }
+        return null;
     }
 
     private void update_submit () {
-        submit.sensitive = !pending && valid_fields ();
+        var error = validation_error ();
+        validation.label = pending ? "" : error ?? "";
+        submit.sensitive = !pending && error == null;
     }
 
     private void clear_secrets () {
@@ -121,7 +176,9 @@ public class OwnerView : AbstractInstallerView {
     }
 
     private async void request_installation () {
-        if (pending || !valid_fields ()) return;
+        if (pending || validation_error () != null) {
+            return;
+        }
         if (Installer.App.test_mode) {
             clear_secrets ();
             status.label = _("Test mode does not install to disk.");

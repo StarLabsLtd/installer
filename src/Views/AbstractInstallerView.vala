@@ -12,6 +12,8 @@ public abstract class AbstractInstallerView : Adw.NavigationPage {
     protected Gtk.Box content_area;
     protected Gtk.Box action_box_start;
     protected Gtk.Box action_box_end;
+    protected Gtk.Box body_area;
+    protected Adw.Clamp content_clamp;
 
     protected AbstractInstallerView (bool cancellable = false) {
         Object (cancellable: cancellable);
@@ -25,17 +27,17 @@ public abstract class AbstractInstallerView : Adw.NavigationPage {
 
         content_area = new Gtk.Box (VERTICAL, 24);
 
-        var content_clamp = new Adw.Clamp () {
+        content_clamp = new Adw.Clamp () {
             child = content_area
         };
 
-        var box = new Gtk.Box (HORIZONTAL, 12) {
+        body_area = new Gtk.Box (HORIZONTAL, 12) {
             homogeneous = true,
             hexpand = true,
             vexpand = true,
         };
-        box.append (title_area);
-        box.append (content_clamp);
+        body_area.append (title_area);
+        body_area.append (content_clamp);
 
         action_box_end = new Gtk.Box (HORIZONTAL, 6) {
             halign = END,
@@ -74,7 +76,7 @@ public abstract class AbstractInstallerView : Adw.NavigationPage {
             margin_bottom = 12,
             margin_start = 12
         };
-        main_box.append (box);
+        main_box.append (body_area);
         main_box.append (action_area);
 
         child = main_box;

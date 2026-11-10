@@ -143,3 +143,18 @@ success_view_test = executable(
 
 test('Success view restart policy', success_view_test, timeout: 45,
     env: ['LC_ALL=C', 'GSETTINGS_BACKEND=memory'])
+
+owner_view_test = executable(
+    'OwnerViewTest',
+    'OwnerViewTest.vala',
+    meson.project_source_root() / 'src' / 'Views' / 'AbstractInstallerView.vala',
+    meson.project_source_root() / 'src' / 'Views' / 'OwnerView.vala',
+    meson.project_source_root() / 'common' / 'DaveReadiness.vala',
+    meson.project_source_root() / 'common' / 'OwnerCredentials.c',
+    include_directories: include_directories('../common'),
+    dependencies: [gtk_dep, granite_dep, adw_dep, gio_unix_dep, pwquality_dep],
+    install: false
+)
+
+test('Owner form validation and recovery layout', owner_view_test,
+    env: ['LC_ALL=C', 'GSETTINGS_BACKEND=memory'])
