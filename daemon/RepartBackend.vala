@@ -1005,7 +1005,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
 
     private void publish_dave_boot (DaveInstall dave, string[] first, string destination, string work,
                                     int target_fd, Posix.Stat selected, string sequence,
-                                    string keymap_credential) throws GLib.Error {
+                                    string keymap_addon) throws GLib.Error {
         require_dave_boot_selection ();
         string[] publish = {};
         foreach (var argument in first) {
@@ -1056,7 +1056,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         // Use the retained whole-disk descriptor; never mount the claimed target.
         var esp = fd_path (target_fd) + "@@" + esp_offset.to_string ();
         run_capture ({"mtools", "-c", "mdir", "-i", esp, "::/EFI/Linux/elementary-dave_*.efi"});
-        NormalKeymapCredential.copy_to_new_esp (keymap_credential, fd_path (target_fd),
+        BootKeymap.copy_to_new_esp (keymap_addon, fd_path (target_fd),
             esp_offset, work);
         var config = run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/loader/loader.conf"});
         var defaults = new Regex ("^default[\\t ]+.*$", MULTILINE);
@@ -1069,7 +1069,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
             throw new IOError.FAILED ("Could not verify DAVE boot selection");
         }
         NormalBoot.select_profile (esp, true, run_capture);
-        NormalKeymapCredential.sync_target_and_remove_staged (target_fd, keymap_credential);
+        BootKeymap.sync_target_and_remove_staged (target_fd, keymap_addon);
         if (dave_crypto ({"luksUUID", fd_path (dave.root_fd)}) != dave.uuid ||
             !dave.metadata.equal (dave_metadata (fd_path (dave.root_fd), true))) {
             throw new IOError.FAILED ("Boot publication changed DAVE ROOT");
@@ -1901,7 +1901,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         uint64 swap_size = 0;
         NormalRoot? normal_plan = null;
         NormalBoot? normal_boot = null;
-        string? keymap_credential = null;
+        string? keymap_addon = null;
         var target = fd_path (fd);
         bool initial_secure_boot = false;
         uint64 sector_size = 0;
@@ -2101,9 +2101,10 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 }
                 string map;
                 FileUtils.get_contents (map_path, out map);
-                var keymap = NormalKeymapCredential.map_xkb_layout (
+                var keymap = BootKeymap.map_xkb_layout (
                     map, config.keyboard_layout, config.keyboard_variant);
-                keymap_credential = NormalKeymapCredential.encrypt (keymap, work);
+                keymap_addon = BootKeymap.stage (keymap, live_mount + "/usr/share/vale/keymaps",
+                    media.identities[5].st_dev, work);
             }
 
             status.step = InstallerDaemon.Step.PARTITION;
@@ -2140,7 +2141,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 check_media (media);
                 check_dave_stage (dave, media);
                 publish_dave_boot (dave, repart_command, dest_dev, work, fd, selected, sequence,
-                    keymap_credential);
+                    keymap_addon);
             }
 
             if (dave == null) {
@@ -2167,13 +2168,13 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
                 if (run_capture ({"mtools", "-c", "mtype", "-i", esp, "::/EFI/Vale/root-swap.conf"}) != swap_config.strip ()) {
                     throw new IOError.FAILED ("Normal ESP swap configuration differs from ROOT");
                 }
-                if (keymap_credential != null) {
-                    NormalKeymapCredential.copy_to_new_esp (keymap_credential, target,
+                if (keymap_addon != null) {
+                    BootKeymap.copy_to_new_esp (keymap_addon, target,
                         json_integer (written.esp, "offset"), work);
                 }
                 File.new_for_path (staged_config).delete ();
                 NormalBoot.select_profile (esp, false, run_capture);
-                NormalKeymapCredential.sync_target_and_remove_staged (fd, keymap_credential);
+                BootKeymap.sync_target_and_remove_staged (fd, keymap_addon);
                 validate_target (dest_dev, fd, selected, sequence);
             }
 

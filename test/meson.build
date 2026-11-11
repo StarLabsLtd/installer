@@ -82,16 +82,16 @@ if installer_backend == 'repart'
     )
     test('Normal ROOT and ESP publication', normal_root_test)
 
-    normal_keymap_credential_test = executable(
-        'NormalKeymapCredentialTest',
-        'NormalKeymapCredentialTest.vala',
-        meson.project_source_root() / 'daemon' / 'NormalKeymapCredential.vala',
+    boot_keymap_test = executable(
+        'BootKeymapTest',
+        'BootKeymapTest.vala',
+        meson.project_source_root() / 'daemon' / 'BootKeymap.vala',
         meson.project_source_root() / 'daemon' / 'RepartCommand.vala',
         dependencies: [glib_dep, gio_dep, json_glib_dep,
                        meson.get_compiler('vala').find_library('posix')],
         install: false
     )
-    test('Normal first-unlock keymap credential', normal_keymap_credential_test)
+    test('Persistent first-unlock keymap add-on', boot_keymap_test)
 
     loop_backing_test = executable(
         'LoopBackingTest',

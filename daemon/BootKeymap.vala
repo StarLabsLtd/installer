@@ -1,9 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
-namespace InstallerDaemon.NormalKeymapCredential {
-    private const string NAME = "vconsole.keymap";
-    private const string ESP_PATH = "::/loader/credentials/vconsole.keymap.cred";
-    private const uint64 MAX_CREDENTIAL_SIZE = 65536;
+namespace InstallerDaemon.BootKeymap {
+    private const string ESP_PATH = "::/loader/addons/vale-keymap.addon.efi";
+    private const uint64 MAX_ADDON_SIZE = 1024 * 1024;
 
     private string first_component (string value) {
         var comma = value.index_of (",");
@@ -30,28 +29,20 @@ namespace InstallerDaemon.NormalKeymapCredential {
         throw new GLib.IOError.NOT_SUPPORTED ("No console keymap matches the selected XKB layout and variant");
     }
 
-    internal string encrypt (string keymap, string work, string command = "/usr/bin/systemd-creds")
-                            throws GLib.Error {
-        var path = Path.build_filename (work, NAME + ".cred");
-        var process = new Subprocess.newv ({command, "encrypt", "--with-key=tpm2", "--tpm2-pcrs=",
-            "--name=" + NAME, "-", path}, SubprocessFlags.STDIN_PIPE | SubprocessFlags.STDERR_PIPE);
-        string? error_output = null;
-        try {
-            process.communicate_utf8 (keymap, null, null, out error_output);
-        } catch (GLib.Error e) {
-            process.force_exit ();
-            try { process.wait (); } catch (GLib.Error wait_error) { }
-            throw new GLib.IOError.FAILED ("Could not encrypt the console keymap: %s", e.message);
+    internal string stage (string keymap, string source, uint64 source_device, string work)
+                           throws GLib.Error {
+        if (!Regex.match_simple ("\\A[A-Za-z0-9][A-Za-z0-9_.+-]*\\z", keymap)) {
+            throw new GLib.IOError.INVALID_DATA ("Invalid console keymap name");
         }
-        if (!process.get_successful ()) {
-            throw new GLib.IOError.FAILED ("Could not encrypt the console keymap: %s",
-                error_output == null || error_output.strip () == "" ? "systemd-creds failed" : error_output.strip ());
-        }
+        var input = Path.build_filename (source, keymap + ".addon.efi");
         Posix.Stat stat;
-        if (Posix.lstat (path, out stat) != 0 || !Posix.S_ISREG (stat.st_mode) ||
-            stat.st_size <= 0 || stat.st_size > MAX_CREDENTIAL_SIZE || Posix.chmod (path, 0600) != 0) {
-            throw new GLib.IOError.FAILED ("systemd-creds produced an invalid keymap credential");
+        if (Posix.lstat (input, out stat) != 0 || !Posix.S_ISREG (stat.st_mode) ||
+            stat.st_dev != source_device || stat.st_size <= 0 || stat.st_size > MAX_ADDON_SIZE) {
+            throw new GLib.IOError.FAILED ("Missing authenticated console keymap add-on: %s", keymap);
         }
+        // The caller retains the recovery's verity-checked, read-only filesystem.
+        var path = Path.build_filename (work, "vale-keymap.addon.efi");
+        File.new_for_path (input).copy (File.new_for_path (path), FileCopyFlags.NONE);
         return path;
     }
 
@@ -70,15 +61,15 @@ namespace InstallerDaemon.NormalKeymapCredential {
     internal void copy_to_new_esp (string staged, string disk, uint64 offset, string work) throws GLib.Error {
         var image = "%s@@%s".printf (disk, offset.to_string ());
         try {
-            RepartCommand.capture ({"mtools", "-c", "mdir", "-b", "-i", image, "::/loader/credentials"});
+            RepartCommand.capture ({"mtools", "-c", "mdir", "-b", "-i", image, "::/loader/addons"});
         } catch (GLib.Error e) {
-            RepartCommand.capture ({"mtools", "-c", "mmd", "-i", image, "::/loader/credentials"});
+            RepartCommand.capture ({"mtools", "-c", "mmd", "-i", image, "::/loader/addons"});
         }
         RepartCommand.capture ({"mtools", "-c", "mcopy", "-o", "-i", image, staged, ESP_PATH});
-        var readback = Path.build_filename (work, "vconsole.keymap-readback.cred");
+        var readback = Path.build_filename (work, "vale-keymap-readback.efi");
         RepartCommand.capture ({"mtools", "-c", "mcopy", "-i", image, ESP_PATH, readback});
         if (!same_bytes (staged, readback)) {
-            throw new GLib.IOError.FAILED ("Console keymap credential differs after writing the ESP");
+            throw new GLib.IOError.FAILED ("Console keymap add-on differs after writing the ESP");
         }
         File.new_for_path (readback).delete ();
     }
