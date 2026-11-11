@@ -2210,7 +2210,7 @@ public class InstallerDaemon.RepartBackend : InstallerInterface, GLib.Object {
         if (normal_boot != null) {
             normal_boot.publish (dest_dev, (uint32) json_integer (normal_plan.esp, "partno") + 1,
                 json_string (normal_plan.esp, "uuid"), json_integer (normal_plan.esp, "offset") / sector_size,
-                json_integer (normal_plan.esp, "raw_size") / sector_size, true);
+                json_integer (normal_plan.esp, "raw_size") / sector_size, encrypt);
         } else if (dave != null) {
             require_dave_boot_selection ();
         }
