@@ -41,6 +41,9 @@ You can also use `--test` mode for development to disable destructive behaviors 
 
     io.elementary.installer --test
 
+Dave mode is always shown. Authenticated recovery, verified launch, TPM,
+storage, no-swap and owner admission checks still apply before installation.
+
 For debug messages, set the `G_MESSAGES_DEBUG` environment variable, e.g. to `all`:
 
     G_MESSAGES_DEBUG=all io.elementary.installer

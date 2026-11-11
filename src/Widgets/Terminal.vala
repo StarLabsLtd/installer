@@ -58,10 +58,7 @@ public class Installer.Terminal : Gtk.Box {
 
         append (scrolled_window);
 
-        Idle.add (() => {
-            attempt_scroll ();
-            return GLib.Source.CONTINUE;
-        });
+        scrolled_window.vadjustment.changed.connect (attempt_scroll);
     }
 
     public void attempt_scroll () {

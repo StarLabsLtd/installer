@@ -62,8 +62,10 @@ public class Installer.TryInstallView : AbstractInstallerView {
         };
         type_box.append (demo_button);
         type_box.append (clean_install_button);
-        type_box.append (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
-        type_box.append (custom_button);
+        if (Build.DISTINST_BACKEND) {
+            type_box.append (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
+            type_box.append (custom_button);
+        }
 
         var type_scrolled = new Gtk.ScrolledWindow () {
             child = type_box,

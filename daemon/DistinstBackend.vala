@@ -15,12 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-[DBus (name = "io.elementary.InstallerDaemon")]
-public class InstallerDaemon.DistinstBackend : GLib.Object {
-    public signal void on_log_message (InstallerDaemon.LogLevel level, string message);
-    public signal void on_status (InstallerDaemon.Status status);
-    public signal void on_error (InstallerDaemon.Error error);
-
+public class InstallerDaemon.DistinstBackend : InstallerInterface, GLib.Object {
     private Distinst.Disks disks;
 
     construct {
@@ -36,6 +31,7 @@ public class InstallerDaemon.DistinstBackend : GLib.Object {
     }
 
     public DiskInfo get_disks (bool get_partitions = false) throws GLib.Error {
+        ensure_idle ();
         disks = Distinst.Disks.probe ();
 
         if (get_partitions) {
@@ -124,12 +120,20 @@ public class InstallerDaemon.DistinstBackend : GLib.Object {
         return result;
     }
 
-    public int decrypt_partition (string path, string pv, string password) throws GLib.Error {
-        return disks.decrypt_partition (path, Distinst.LvmEncryption () {
-            physical_volume = pv,
-            password = password,
-            keydata = null
-        });
+    public async int decrypt_partition (string path, string pv, string password, GLib.BusName sender) throws GLib.Error {
+        yield authorize_operation (sender);
+        try {
+            if (disks == null) {
+                throw new GLib.IOError.NOT_INITIALIZED ("Disks have not been probed");
+            }
+            return disks.decrypt_partition (path, Distinst.LvmEncryption () {
+                physical_volume = pv,
+                password = password,
+                keydata = null
+            });
+        } finally {
+            end_operation ();
+        }
     }
 
     public Disk get_logical_device (string pv) throws GLib.Error {
@@ -164,18 +168,30 @@ public class InstallerDaemon.DistinstBackend : GLib.Object {
         };
     }
 
-    public void install_with_default_disk_layout (InstallConfig config, string disk, bool encrypt, string encryption_password) throws GLib.Error {
-        var disks = new Distinst.Disks ();
-        default_disk_configuration (disks, disk, encrypt ? encryption_password : null);
+    public async void install_with_default_disk_layout (InstallConfig config, string disk, bool encrypt, string encryption_password, GLib.BusName sender) throws GLib.Error {
+        yield authorize_operation (sender);
+        try {
+            var disks = new Distinst.Disks ();
+            default_disk_configuration (disks, disk, encrypt ? encryption_password : null);
 
-        install (config, (owned) disks);
+            install (config, (owned) disks);
+        } catch (GLib.Error e) {
+            end_operation ();
+            throw e;
+        }
     }
 
-    public void install_with_custom_disk_layout (InstallConfig config, Mount[] disk_config, LuksCredentials[] credentials) throws GLib.Error {
-        var disks = new Distinst.Disks ();
-        custom_disk_configuration (disks, disk_config, credentials);
+    public async void install_with_custom_disk_layout (InstallConfig config, Mount[] disk_config, LuksCredentials[] credentials, GLib.BusName sender) throws GLib.Error {
+        yield authorize_operation (sender);
+        try {
+            var disks = new Distinst.Disks ();
+            custom_disk_configuration (disks, disk_config, credentials);
 
-        install (config, (owned) disks);
+            install (config, (owned) disks);
+        } catch (GLib.Error e) {
+            end_operation ();
+            throw e;
+        }
     }
 
     private void install (InstallConfig config, owned Distinst.Disks disks) {
@@ -207,30 +223,44 @@ public class InstallerDaemon.DistinstBackend : GLib.Object {
         distinst_config.keyboard_model = null;
         distinst_config.keyboard_variant = config.keyboard_variant == "" ? null : config.keyboard_variant;
 
-        new Thread<void*> (null, () => {
-            if (installer.install ((owned) disks, distinst_config) != 0) {
-                Idle.add (() => {
+        Thread<void*>? thread = null;
+        thread = new Thread<void*> (null, () => {
+            int result = installer.install ((owned) disks, distinst_config);
+            Idle.add (() => {
+                thread.join ();
+                if (result != 0) {
                     on_error (InstallerDaemon.Error ());
-                    return GLib.Source.REMOVE;
-                });
-            }
+                }
+                end_operation ();
+                return Source.REMOVE;
+            });
 
             return null;
         });
     }
 
-    public void set_demo_mode_locale (string locale) throws GLib.Error {
-        GLib.FileUtils.set_contents ("/etc/default/locale", "LANG=" + locale);
+    public async void set_demo_mode_locale (string locale, GLib.BusName sender) throws GLib.Error {
+        yield authorize_operation (sender);
+        try {
+            GLib.FileUtils.set_contents ("/etc/default/locale", "LANG=" + locale);
+        } finally {
+            end_operation ();
+        }
     }
 
-    public void trigger_demo_mode () throws GLib.Error {
-        var demo_mode_file = GLib.File.new_for_path ("/var/lib/lightdm/demo-mode");
+    public async void trigger_demo_mode (GLib.BusName sender) throws GLib.Error {
+        yield authorize_operation (sender);
         try {
-            demo_mode_file.create (GLib.FileCreateFlags.NONE);
-        } catch (GLib.Error e) {
-            if (!(e is GLib.IOError.EXISTS)) {
-                throw e;
+            var demo_mode_file = GLib.File.new_for_path ("/var/lib/lightdm/demo-mode");
+            try {
+                demo_mode_file.create (GLib.FileCreateFlags.NONE);
+            } catch (GLib.Error e) {
+                if (!(e is GLib.IOError.EXISTS)) {
+                    throw e;
+                }
             }
+        } finally {
+            end_operation ();
         }
     }
 

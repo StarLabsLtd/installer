@@ -1,0 +1,8 @@
+// Live images may place their installer account in this dedicated group.
+// Do not grant this group to ordinary accounts on the installed system.
+polkit.addRule(function(action, subject) {
+    if (action.id == "io.elementary.installer.modify-system" &&
+        subject.local && subject.active && subject.isInGroup("installer")) {
+        return polkit.Result.YES;
+    }
+});

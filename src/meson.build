@@ -15,6 +15,8 @@ vala_files = [
     'Views/DiskView.vala',
     'Views/DriversView.vala',
     'Views/EncryptView.vala',
+    'Views/InstallModeView.vala',
+    'Views/OwnerView.vala',
     'Views/ErrorView.vala',
     'Views/KeyboardLayoutView.vala',
     'Views/LanguageView.vala',
@@ -35,6 +37,7 @@ vala_files = [
 ]
 
 configuration_data = configuration_data()
+configuration_data.set('DISTINST_BACKEND', installer_backend == 'distinst' ? 'true' : 'false')
 configuration_data.set('GETTEXT_PACKAGE', meson.project_name())
 configuration_data.set('LANG_LIST', get_option('supported_languages'))
 configuration_data.set_quoted('LOCALEDIR', get_option('prefix') / get_option('localedir'))
@@ -54,6 +57,7 @@ config_file = configure_file(
 
 gui_dependencies = [
     gee_dep,
+    gio_unix_dep,
     glib_dep,
     gobject_dep,
     granite_dep,
@@ -69,6 +73,8 @@ gui_dependencies = [
 ]
 
 executable(meson.project_name(), vala_files, config_file,
+           '../common/OwnerCredentials.c',
            asresources,
+           include_directories: include_directories('../common'),
            dependencies : gui_dependencies,
            install: true)

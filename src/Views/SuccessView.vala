@@ -20,16 +20,21 @@ public class SuccessView : AbstractInstallerView {
     private int seconds_remaining = RESTART_TIMEOUT;
     private Gtk.Label secondary_label;
 
-    construct {
+    private bool commissioning_pending;
+
+    public SuccessView (bool commissioning_pending = false) {
+        this.commissioning_pending = commissioning_pending;
         var image = new Gtk.Image.from_icon_name ("process-completed") {
             pixel_size = 128
         };
 
-        title = _("Continue Setting Up");
+        title = commissioning_pending ? _("Installation Pending Commissioning") : _("Continue Setting Up");
 
         var title_label = new Gtk.Label (title);
 
-        var primary_label = new Gtk.Label (_("%s has been installed").printf (Utils.get_pretty_name ())) {
+        var primary_label = new Gtk.Label (commissioning_pending ?
+            _("DAVE installation is staged. Commissioning must finish before hibernation is available.") :
+            _("%s has been installed").printf (Utils.get_pretty_name ())) {
             wrap = true,
             xalign = 0
         };
@@ -59,13 +64,17 @@ public class SuccessView : AbstractInstallerView {
         shutdown_button.clicked.connect (Utils.shutdown);
 
         var restart_button = new Gtk.Button.with_label (_("Restart Device"));
-        restart_button.add_css_class (Granite.CssClass.SUGGESTED);
+        var suggested_button = commissioning_pending ? shutdown_button : restart_button;
+        suggested_button.add_css_class (Granite.CssClass.SUGGESTED);
         restart_button.clicked.connect (Utils.restart);
 
         action_box_end.append (shutdown_button);
         action_box_end.append (restart_button);
 
         update_secondary_label ();
+        if (commissioning_pending) {
+            return;
+        }
 
         Timeout.add_seconds (RESTART_TIMEOUT, () => {
             Utils.restart ();
@@ -85,6 +94,10 @@ public class SuccessView : AbstractInstallerView {
     }
 
     private void update_secondary_label () {
+        if (commissioning_pending) {
+            secondary_label.label = _("Remove the installation media and select the installed drive in your firmware boot menu to finish commissioning.");
+            return;
+        }
         secondary_label.label = ngettext (
             "Your device will automatically restart in %i second.",
             "Your device will automatically restart in %i seconds.",
