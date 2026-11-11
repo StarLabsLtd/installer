@@ -177,7 +177,7 @@ public class OwnerView : AbstractInstallerView {
         } else {
             password.remove_css_class ("error");
         }
-        validation.label = pending || error == policy_error ? "" : error ?? "";
+        validation.label = pending || recovery.text == "" || error == policy_error ? "" : error ?? "";
         submit.sensitive = !pending && error == null;
     }
 

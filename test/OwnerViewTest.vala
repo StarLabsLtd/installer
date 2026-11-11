@@ -4,11 +4,19 @@ namespace Installer {
     public class App : Object { public static bool test_mode = true; }
     public class Daemon : Object {
         public static uint calls;
+        [CCode (cname = "vale_credentials_validate", cheader_filename = "OwnerCredentials.h")]
+        private static extern bool validate_credentials (int owner, int recovery, int hibernate,
+            string hostname, out string username, out uint64 offset, out uint64 size) throws Error;
         public static Daemon get_default () { return new Daemon (); }
         public async void install_dave (InstallerDaemon.InstallConfig config, string disk,
             UnixInputStream owner, UnixInputStream recovery, UnixInputStream hibernate) throws Error {
             calls++;
-            assert_not_reached ();
+            string username;
+            uint64 offset, size;
+            assert (validate_credentials (owner.get_fd (), recovery.get_fd (), hibernate.get_fd (),
+                config.hostname, out username, out offset, out size));
+            assert (username == "vale" && size == 9);
+            throw new IOError.FAILED ("Fixture backend refusal");
         }
     }
 }
@@ -71,6 +79,7 @@ private Gtk.Entry field (Gtk.Widget root, string label) {
 public static int main (string[] args) {
     if (!Gtk.init_check ()) return 77;
     Adw.init ();
+    Gtk.Settings.get_default ().gtk_enable_animations = false;
     var view = new OwnerView ();
     var navigation = new Adw.NavigationView ();
     navigation.add (view);
@@ -132,6 +141,32 @@ public static int main (string[] args) {
     assert (Installer.Daemon.calls == 0);
     assert (password.text == "" && confirmation.text == "" && recovery.text == "");
     assert (!submit.sensitive);
+    Installer.App.test_mode = false;
+    var failed = new OwnerView ();
+    navigation.push (failed);
+    Timeout.add (200, () => { loop.quit (); return Source.REMOVE; });
+    loop.run ();
+    field (failed, "Username").text = "vale";
+    field (failed, "Full Name").text = "vale";
+    field (failed, "Computer Name").text = "horizon";
+    // A nine-character password must reach the backend before its refusal.
+    field (failed, "Owner Password").text = "P7x!M2q@R";
+    field (failed, "Confirm Password").text = field (failed, "Owner Password").text;
+    var failed_saved = (Gtk.CheckButton) control (failed, "I saved the drive recovery credential");
+    failed_saved.active = true;
+    var failed_submit = (Gtk.Button) control (failed, "Erase and Install");
+    assert (failed_submit.sensitive);
+    failed_submit.clicked ();
+    Timeout.add (200, () => { loop.quit (); return Source.REMOVE; });
+    loop.run ();
+    assert (Installer.Daemon.calls == 1);
+    assert (message (failed, "DAVE installation is unavailable"));
+    assert (!message (failed, "Fixture backend refusal"));
+    assert (field (failed, "Owner Password").text == "");
+    assert (field (failed, "Confirm Password").text == "");
+    assert (field (failed, "Drive Recovery Credential").text == "");
+    assert (!failed_saved.active && !failed_submit.sensitive);
+    assert (!message (failed, "at least 8"));
     window.destroy ();
     return 0;
 }
