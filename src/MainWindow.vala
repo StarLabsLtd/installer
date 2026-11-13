@@ -34,7 +34,6 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
     private KeyboardLayoutView keyboard_layout_view;
     private bool dave_mode = false;
     private bool check_ignored = false;
-    private uint orca_timeout_id = 0;
 
     construct {
         language_view = new LanguageView ();
@@ -55,40 +54,7 @@ public class Installer.MainWindow : Gtk.ApplicationWindow, PantheonWayland.Exten
         add_action (back_action);
 
         language_view.next_step.connect (() => {
-            // Don't prompt for screen reader if we're able to navigate without it
-            if (orca_timeout_id != 0) {
-                Source.remove (orca_timeout_id);
-            }
-
             load_keyboard_view ();
-        });
-
-        var mediakeys_settings = new Settings ("org.gnome.settings-daemon.plugins.media-keys");
-        var a11y_settings = new Settings ("org.gnome.desktop.a11y.applications");
-
-        orca_timeout_id = Timeout.add_seconds (10, () => {
-            orca_timeout_id = 0;
-
-            if (a11y_settings.get_boolean ("screen-reader-enabled")) {
-                return Source.REMOVE;
-            }
-
-            var shortcut_string = Granite.accel_to_string (
-                mediakeys_settings.get_strv ("screenreader")[0]
-            );
-
-            // Espeak can't read ⌘
-            shortcut_string = shortcut_string.replace ("⌘", "Super");
-
-            var orca_prompt = "Screen reader can be turned on with the keyboard shorcut %s".printf (shortcut_string);
-
-            try {
-                Process.spawn_command_line_async ("espeak '%s'".printf (orca_prompt));
-            } catch (SpawnError e) {
-                critical ("Couldn't read Orca prompt: %s", e.message);
-            }
-
-            return Source.REMOVE;
         });
 
         child.realize.connect (() => {
